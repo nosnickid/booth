@@ -59,12 +59,13 @@ function center(r) {
 }
 
 function drawFlower(r) {
+  console.log(r);
   r = center(r);
     translate(r.x, r.y);
-    for (var i = 0; i < 10; i ++) {
-      ellipse(0, 30, 20, 80);
-      rotate(PI/5);
-    }
+    //for (var i = 0; i < 10; i ++) {
+      ellipse(0, 30, r.width, 80)
+    //  rotate(PI/5);
+    //}
     translate(-r.x, -r.y);
 }
 
