@@ -6,15 +6,22 @@ console.log('hiiii');
 
     window.onload = function() {
       var video = document.getElementById('video');
-      var canvas = document.getElementById('canvas');
-      var context = canvas.getContext('2d');
-      var tracker = new tracking.ColorTracker();
+      canvas = document.getElementById('canvas');
+      context = canvas.getContext('2d');
+      
+      tracking.ColorTracker.registerColor('custom', function(r, g, b) {
+        return true;
+      });
+      
+      var tracker = new tracking.ColorTracker(["custom"]);
       tracking.track('#video', tracker, { camera: true });
+      
       tracker.on('track', function(event) {
+        
         context.clearRect(0, 0, canvas.width, canvas.height);
         event.data.forEach(function(rect) {
           if (rect.color === 'custom') {
-            rect.color = tracker.customColor;
+            rect.color = "#ffffff";
           }
           context.strokeStyle = rect.color;
           context.strokeRect(rect.x, rect.y, rect.width, rect.height);
