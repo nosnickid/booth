@@ -76,11 +76,6 @@ function onTrack(event) {
   event.data.forEach(function (r) {
     //rect(r.x, r.y, r.width, r.height);
     
-    buff[counter] = r;
-    for (i = 0; i < trail_length; ++i) {
-      drawFlower(buff[trail_length]);
-    }
-    
-    counter = counter+1 % trail_length;
+    drawFlower(r);
   })
 }
