@@ -10,23 +10,24 @@ console.log('hiiii');
       context = canvas.getContext('2d');
       
       tracking.ColorTracker.registerColor('custom', function(r, g, b) {
-        return true;
+        return r >= 210 && g >= 210 && b >= 210;
       });
       
-      var tracker = new tracking.ColorTracker(["custom"]);
+      var tracker = new tracking.ColorTracker(["cyan", "magenta"]);
       tracking.track('#video', tracker, { camera: true });
-      
+      testing = false;
       tracker.on('track', function(event) {
-        
         context.clearRect(0, 0, canvas.width, canvas.height);
         event.data.forEach(function(rect) {
-          if (rect.color === 'custom') {
-            rect.color = "#ffffff";
+          if (!testing) {
+            console.log("hello");
+            testing = true;
           }
-          context.strokeStyle = rect.color;
+          console.log(rect)
+          context.strokeStyle = "#000";
           context.strokeRect(rect.x, rect.y, rect.width, rect.height);
           context.font = '11px Helvetica';
-          context.fillStyle = "#fff";
+          context.fillStyle = "#000";
           context.fillText('x: ' + rect.x + 'px', rect.x + rect.width + 5, rect.y + 11);
           context.fillText('y: ' + rect.y + 'px', rect.x + rect.width + 5, rect.y + 22);
         });
