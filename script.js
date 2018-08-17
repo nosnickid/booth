@@ -71,7 +71,7 @@ function drawFlower(r) {
 function onTrack(event) {
   clear();
   strokeWeight(4);
-  stroke(255, 0, 0);
+  stroke(255, 255, 0);
   noFill();
   event.data.forEach(function (r) {
     //rect(r.x, r.y, r.width, r.height);
