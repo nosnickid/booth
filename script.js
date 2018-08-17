@@ -40,8 +40,31 @@ function setup() {
     tracker.on('track', onTrack);
 }
 
-function center(rect) {
-  return [r.x + r.width/2, r+y
+starter = {x: 100, y: 100};
+history = [];
+
+
+counter = 0;
+trail_length = 10;
+for (i=0; i < trail_length; i++) {
+  history[i] = starter;
+}
+
+function center(r) {
+  return {
+    x: r.x + r.width/2,
+    y: r.y + r.height/2,
+  }
+}
+
+function drawFlower(r) {
+  r = center(r);
+    translate(r.x, r.y);
+    for (var i = 0; i < 10; i ++) {
+      ellipse(0, 30, 20, 80);
+      rotate(PI/5);
+    }
+    translate(-r.x, -r.y);
 }
 
 function onTrack(event) {
@@ -53,11 +76,11 @@ function onTrack(event) {
     //rect(r.x, r.y, r.width, r.height);
     
     // A design for a simple flower
-  translate(r.x, r.y);
-  for (var i = 0; i < 10; i ++) {
-    ellipse(0, 30, 20, 80);
-    rotate(PI/5);
-  }
-    translate(-r.x, -r.y);
+
+    //var c = center(r);
+    drawFlower(r);
+    
+    history[counter] = r;
+    counter = counter+1 % 5;
   })
 }
