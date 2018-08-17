@@ -27,6 +27,7 @@ function setup() {
     tracking.ColorTracker.registerColor('custom', function(r, g, b) {
      return r >= 240 && g >= 240 && b >= 240;
     });
+    //tracking.Image.blur(pixels, width, height, 30);
   
     var tracker = new tracking.ColorTracker(["cyan", "magenta", "custom"]);
 
@@ -39,12 +40,24 @@ function setup() {
     tracker.on('track', onTrack);
 }
 
+function center(rect) {
+  return [r.x + r.width/2, r+y
+}
+
 function onTrack(event) {
   clear();
   strokeWeight(4);
   stroke(255, 0, 0);
   noFill();
   event.data.forEach(function (r) {
-    rect(r.x, r.y, r.width, r.height);
+    //rect(r.x, r.y, r.width, r.height);
+    
+    // A design for a simple flower
+  translate(r.x, r.y);
+  for (var i = 0; i < 10; i ++) {
+    ellipse(0, 30, 20, 80);
+    rotate(PI/5);
+  }
+    translate(-r.x, -r.y);
   })
 }
