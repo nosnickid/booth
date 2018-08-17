@@ -25,7 +25,7 @@ function setup() {
     // capture.hide(); // tracking.js can't track the video when it's hidden
 
     tracking.ColorTracker.registerColor('custom', function(r, g, b) {
-     return r >= 240 && g >= 240 && b >= 240;
+     return r >= 230 && g >= 230 && b >= 230;
     });
     //tracking.Image.blur(pixels, width, height, 30);
   
@@ -41,14 +41,15 @@ function setup() {
 }
 
 starter = {x: 100, y: 100};
-history = [];
+buff = [10];
 
 
 counter = 0;
 trail_length = 10;
 for (i=0; i < trail_length; i++) {
-  history[i] = starter;
+  buff.push(starter);
 }
+console.log(buff);
 
 function center(r) {
   return {
@@ -75,12 +76,11 @@ function onTrack(event) {
   event.data.forEach(function (r) {
     //rect(r.x, r.y, r.width, r.height);
     
-    // A design for a simple flower
-
-    //var c = center(r);
-    drawFlower(r);
+    buff[counter] = r;
+    for (i = 0; i < trail_length; ++i) {
+      drawFlower(buff[trail_length]);
+    }
     
-    history[counter] = r;
-    counter = counter+1 % 5;
+    counter = counter+1 % trail_length;
   })
 }
