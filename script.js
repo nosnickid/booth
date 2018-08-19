@@ -61,11 +61,21 @@ function drawFlower(r) {
   translate(-c.x, -c.y);
 }
 
+
+toDraw = [];
+
 function onTrack(event) {
   clear();
   event.data.forEach(function (r) {
-    //rect(r.x, r.y, r.width, r.height);
-    
-    drawFlower(r);
+    toDraw.append(new Flower(r.x, r.y, r.height));
   })
+}
+
+function draw () {
+
+    thing.draw()
+    if thing.keep(Date.now) {
+      toDraw 
+    }
+  }
 }

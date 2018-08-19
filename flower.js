@@ -1,4 +1,7 @@
 class Flower {
+  
+  SUSTAIN = 100;
+
   constructor(x, y, size) {
     this.x = x;
     this.y = y
@@ -6,9 +9,14 @@ class Flower {
     this.created = Date.now()
   }
   
-  draw() {
+  ellapsed(now) {
+    return now - this.created;
+  }
+  
+  draw(now) {
     strokeWeight(4);
-    stroke(255, 255, 0);
+    fade = (SUSTAIN - ellapsed(now)) / SUSTAIN
+    stroke(255*fade, 255*fade, 0);
     noFill()    
     var c = center(r);
     translate(c.x, c.y);
@@ -20,6 +28,6 @@ class Flower {
   }
   
   keep(now) {
-    return now + 100 < this.created;
+    return ellapsed(now) < SUSTAIN;
   }
 }
