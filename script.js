@@ -59,7 +59,7 @@ function center(r) {
 }
 
 function drawFlower(r) {
-  c = center(r);
+  var c = center(r);
     translate(c.x, c.y);
     for (var i = 0; i < 10; i ++) {
       ellipse(0, 30, r.height/3, r.height)
