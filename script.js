@@ -44,31 +44,21 @@ for (i=0; i < trail_length; i++) {
 }
 console.log(buff);
 
-function drawFlower(r) {
-  var c = center(r);
-  translate(c.x, c.y);
-  for (var i = 0; i < 10; i ++) {
-    ellipse(0, 30, r.height/3, r.height)
-    rotate(PI/5);
-  }
-  translate(-c.x, -c.y);
-}
-
-
 toDraw = [];
 
 function onTrack(event) {
   event.data.forEach(function (r) {
-    toDraw.push(new Flower(r.x, r.y, r.height));
+    toDraw.push(new Flower(r));
   })
 }
 
 function draw() {
+  now = Date.now()
   clear();
   nextToDraw = [];
   toDraw.forEach((thing) => {
-    thing.draw()
-    if(thing.keep(Date.now())) {
+    thing.draw(now)
+    if(thing.keep(now)) {
       nextToDraw.push(thing);
     }
   });

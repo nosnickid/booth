@@ -1,11 +1,9 @@
-const SUSTAIN = 100;
+const SUSTAIN = 1000;
 
 class Flower {
 
-  constructor(x, y, size) {
-    this.x = x;
-    this.y = y
-    this.size = size;
+  constructor(rect) {
+    this.rect = rect;
     this.created = Date.now()
   }
   
@@ -13,19 +11,27 @@ class Flower {
     return now - this.created;
   }
   
-  draw(now) {
-    strokeWeight(4);
-    var fade = (SUSTAIN - this.ellapsed(now)) / SUSTAIN
-    stroke(255*fade, 255*fade, 0);
-    noFill()    
-    var rect = {x: this.x, y: this.y, height: this.height, width: this.width};
-    var c = center(rect);
+  drawFlowerShape(rect) {
+    var c = center(rect);    
     translate(c.x, c.y);
     for (var i = 0; i < 10; i ++) {
       ellipse(0, 30, rect.height/3, rect.height)
       rotate(PI/5);
     }
-    translate(-c.x, -c.y); 
+    translate(-c.x, -c.y);
+  }
+  
+  drawCircleShape(rect) {
+    ellipse(rect.x, rect.y, rect.height, rect.height);
+  }
+          
+  draw(now) {
+    strokeWeight(4);
+    var fade = (SUSTAIN - this.ellapsed(now)) / SUSTAIN
+    console.log(now);
+    stroke(255, 255, 0, 255 * fade);
+    noFill();   
+    this.drawCircleShape(this.rect);
   }
   
   keep(now) {
