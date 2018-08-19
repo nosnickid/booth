@@ -4,3 +4,5 @@ function center(r) {
     y: r.y + r.height/2,
   }
 }
+
+module.exports = [center];

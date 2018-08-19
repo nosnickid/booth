@@ -2,10 +2,15 @@
     to your site with Javascript */
 
 // prints "hi" in the browser's dev tools console
+
+import Flower from 'flower';
+
 console.log('hiiii');
 
 var capture;
 var tracker;
+
+
 
 function setup() {
     var w = 640,
@@ -65,17 +70,19 @@ function drawFlower(r) {
 toDraw = [];
 
 function onTrack(event) {
-  clear();
   event.data.forEach(function (r) {
     toDraw.append(new Flower(r.x, r.y, r.height));
   })
 }
 
-function draw () {
-
+function draw() {
+  clear();
+  nexttoDraw = [];
+  toDraw.forEach((thing) => {
     thing.draw()
-    if thing.keep(Date.now) {
-      toDraw 
+    if(thing.keep(Date.now())) {
+      nextToDraw.append(thing);
     }
-  }
+  });
+  toDraw = nextToDraw;
 }

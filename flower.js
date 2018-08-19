@@ -1,3 +1,5 @@
+import center from 'utils';
+
 class Flower {
   
   SUSTAIN = 100;
@@ -31,3 +33,5 @@ class Flower {
     return ellapsed(now) < SUSTAIN;
   }
 }
+
+module.exports = [Flower];
