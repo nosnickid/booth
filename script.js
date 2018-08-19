@@ -1,15 +1,5 @@
-/* If you're feeling fancy you can add interactivity 
-    to your site with Javascript */
-
-// prints "hi" in the browser's dev tools console
-
-import Flower from 'flower';
-
-console.log('hiiii');
-
 var capture;
 var tracker;
-
 
 
 function setup() {
@@ -27,7 +17,6 @@ function setup() {
     capture.elt.setAttribute('playsinline', '');
     capture.size(w, h);
     cnv = createCanvas(w, h);
-    // capture.hide(); // tracking.js can't track the video when it's hidden
 
     tracking.ColorTracker.registerColor('custom', function(r, g, b) {
      return r >= 230 && g >= 230 && b >= 230;
@@ -40,7 +29,6 @@ function setup() {
     tracking.track('#p5video', tracker, {
         camera: true
     });
-  
   
     tracker.on('track', onTrack);
 }
@@ -71,17 +59,17 @@ toDraw = [];
 
 function onTrack(event) {
   event.data.forEach(function (r) {
-    toDraw.append(new Flower(r.x, r.y, r.height));
+    toDraw.push(new Flower(r.x, r.y, r.height));
   })
 }
 
 function draw() {
   clear();
-  nexttoDraw = [];
+  nextToDraw = [];
   toDraw.forEach((thing) => {
     thing.draw()
     if(thing.keep(Date.now())) {
-      nextToDraw.append(thing);
+      nextToDraw.push(thing);
     }
   });
   toDraw = nextToDraw;

@@ -1,8 +1,6 @@
-import center from 'utils';
+const SUSTAIN = 100;
 
 class Flower {
-  
-  SUSTAIN = 100;
 
   constructor(x, y, size) {
     this.x = x;
@@ -17,21 +15,20 @@ class Flower {
   
   draw(now) {
     strokeWeight(4);
-    fade = (SUSTAIN - ellapsed(now)) / SUSTAIN
+    var fade = (SUSTAIN - this.ellapsed(now)) / SUSTAIN
     stroke(255*fade, 255*fade, 0);
     noFill()    
-    var c = center(r);
+    var rect = {x: this.x, y: this.y, height: this.height, width: this.width};
+    var c = center(rect);
     translate(c.x, c.y);
     for (var i = 0; i < 10; i ++) {
-      ellipse(0, 30, r.height/3, r.height)
+      ellipse(0, 30, rect.height/3, rect.height)
       rotate(PI/5);
     }
     translate(-c.x, -c.y); 
   }
   
   keep(now) {
-    return ellapsed(now) < SUSTAIN;
+    return this.ellapsed(now) < SUSTAIN;
   }
 }
-
-module.exports = [Flower];
