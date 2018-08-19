@@ -51,28 +51,18 @@ for (i=0; i < trail_length; i++) {
 }
 console.log(buff);
 
-function center(r) {
-  return {
-    x: r.x + r.width/2,
-    y: r.y + r.height/2,
-  }
-}
-
 function drawFlower(r) {
   var c = center(r);
-    translate(c.x, c.y);
-    for (var i = 0; i < 10; i ++) {
-      ellipse(0, 30, r.height/3, r.height)
-      rotate(PI/5);
-    }
-    translate(-c.x, -c.y);
+  translate(c.x, c.y);
+  for (var i = 0; i < 10; i ++) {
+    ellipse(0, 30, r.height/3, r.height)
+    rotate(PI/5);
+  }
+  translate(-c.x, -c.y);
 }
 
 function onTrack(event) {
   clear();
-  strokeWeight(4);
-  stroke(255, 255, 0);
-  noFill();
   event.data.forEach(function (r) {
     //rect(r.x, r.y, r.width, r.height);
     
