@@ -69,14 +69,30 @@ function onTrack(event) {
       width: trackingRect.width,
       height: trackingRect.height,
       color: trackingRect.color,
+      time: Date.now(),
     };
+    
+    var timeGap;
+    if (trackerHistory[rect.color].length === 0) {
+      timeGap = Infinity;
+    } else {
+      timeGap = rect.time - trackerHistory[rect.color].last().time;
+    }
+    
+    if (timeGap > 500) {
+      newAppearance(rect);
+    }
     
     trackerHistory[rect.color].push(rect);
     var smoothed = getLatestSmoothed(trackerHistory[rect.color]);
     
-    continueGesture();
-    toDraw.push(new Flower(smoothed));
+    continueGesture(rect);
+    //toDraw.push(new Flower(smoothed));
   });
+}
+
+function newAppearance(rect) {
+  newGesture(rect); 
 }
 
 function draw() {
