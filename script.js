@@ -4,7 +4,7 @@ var tracker;
 const historySize = 50;
 
 trackerHistory = {
-  "cyan": new CBuffer(historySize),
+  //"cyan": new CBuffer(historySize),
   "white": new CBuffer(historySize),
 }
 
