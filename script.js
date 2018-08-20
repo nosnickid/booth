@@ -80,23 +80,19 @@ function onTrack(event) {
       timeGap = rect.time - trackerHistory[rect.color].last().time;
     }
     
-    if (timeGap > 500) {
+    if (timeGap > 2000) {
       newAppearance(rect);
     }
     
     trackerHistory[rect.color].push(rect);
     var smoothed = getLatestSmoothed(trackerHistory[rect.color]);
     
-    //continueGesture(smoothed);
+    continueGesture(smoothed);
     toDraw.push(new Flower(smoothed));
   });
 }
 
-function mouseDragged() {
-  
-}
-
-function mousePressed(rect) {
+function newAppearance(rect) {
   newGesture(rect); 
 }
 
