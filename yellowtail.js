@@ -9,6 +9,7 @@ var tmpXp;
 var tmpYp;
 
 function yellowtailSetup() {
+  stroke(0);
 	gestureArray = [];
 	nGestures = 36;  // Number of gestures
 	minMove = 3;     // Minimum travel for a new point
@@ -68,6 +69,7 @@ function continueGesture(point) {
 function renderGesture(gesture, w, h) {
     if (gesture.exists) {
         if (gesture.nPolys > 0) {
+            console.log(gesture);
             var polygons = gesture.polygons;
             var crosses = gesture.crosses;
 
