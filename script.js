@@ -54,7 +54,6 @@ function getLatestSmoothed(history) {
   
   var smoothedPos = average(curr, predictedPos);
   
-  console.log(predictedPos);
   var newRect = {x: smoothedPos.x, y: smoothedPos.y,
                  height: curr.height, width: curr.width, color: curr.color};
   
@@ -74,6 +73,8 @@ function onTrack(event) {
     
     trackerHistory[rect.color].push(rect);
     var smoothed = getLatestSmoothed(trackerHistory[rect.color]);
+    
+    continueGesture();
     toDraw.push(new Flower(smoothed));
   });
 }

@@ -1,19 +1,3 @@
-/**
- * Yellowtail
- * by Golan Levin (www.flong.com). 
- * Translated to p5.js by Nick Fox-Gieg
- *
- * Click, drag, and release to create a kinetic gesture.
- * 
- * Yellowtail (1998-2000) is an interactive software system for the gestural 
- * creation and performance of real-time abstract animation. Yellowtail repeats 
- * a user's strokes end-over-end, enabling simultaneous specification of a 
- * line's shape and quality of movement. Each line repeats according to its 
- * own period, producing an ever-changing and responsive display of lively, 
- * worm-like textures.
- */
-
-"use strict";
 
 var gestureArray;
 var nGestures;  // Number of gestures
@@ -24,7 +8,7 @@ var tempP; // Polygon
 var tmpXp;
 var tmpYp;
 
-function setup() {
+function yellowtailSetup() {
 	gestureArray = [];
 	nGestures = 36;  // Number of gestures
 	minMove = 3;     // Minimum travel for a new point
@@ -33,11 +17,6 @@ function setup() {
 	tempP; // Polygon
 	tmpXp = [];
 	tmpYp = [];
-
-	createCanvas(800, 600);
-	background(0, 0, 0);
-	//noStroke();
-    stroke(255);
 
 	currentGestureID = -1;
 	gestureArray = new Array(nGestures);
@@ -49,9 +28,14 @@ function setup() {
 	clearGestures();
 }
 
+function clearGestures() {
+    for (let i = 0; i < nGestures; i++) {
+        gestureArray[i].clear();
+    }
+}
 
-function draw() {
-    background(0);
+
+function yellowtailDraw() {
 
     updateGeometry();
 
@@ -61,40 +45,22 @@ function draw() {
     }
 }
 
-function mousePressed() {
+function newGesture(point) {
     currentGestureID = (currentGestureID + 1) % nGestures;
     var G = gestureArray[currentGestureID];
     G.clear();
     G.clearPolys();
-    G.addPoint(mouseX, mouseY);
+    G.addPoint(point.x, point.y);
 }
 
-function mouseDragged() {
+function continueGesture(point) {
     if (currentGestureID >= 0) {
         var G = gestureArray[currentGestureID];
-        if (G.distToLast(mouseX, mouseY) > minMove) {
-            G.addPoint(mouseX, mouseY);
+        if (G.distToLast(point.x, point.y) > minMove) {
+            G.addPoint(point.x, point.y);
             G.smooth();
             G.compile();
         }
-    }
-}
-
-function keyPressed() {
-    if (key == '+' || key == '=') {
-        if (currentGestureID >= 0) {
-            var th = gestureArray[currentGestureID].thickness; // float
-            gestureArray[currentGestureID].thickness = min(96, th+1);
-            gestureArray[currentGestureID].compile();
-        }
-    } else if (key == '-') {
-        if (currentGestureID >= 0) {
-            var th = gestureArray[currentGestureID].thickness; // float
-            gestureArray[currentGestureID].thickness = max(2, th-1);
-            gestureArray[currentGestureID].compile();
-        }
-    } else if (key == ' ') {
-        clearGestures();
     }
 }
 
