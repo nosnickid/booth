@@ -50,7 +50,7 @@ function getLatestSmoothed(history) {
   var curr = history.get(history.length-1); // new point
   var prev1 = history.get(history.length-2);
   var prev2 = history.get(history.length-3); 
-  var predictedPos = prev1 + delta(prev1, prev2); // where rect would be based on prev motion
+  var predictedPos = add(prev1, delta(prev1, prev2)); // where rect would be based on prev motion
   
   var smoothedPos = average(curr, predictedPos);
   

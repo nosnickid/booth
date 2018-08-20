@@ -12,13 +12,12 @@ class Flower {
   }
   
   drawFlowerShape(rect) {
-    var c = center(rect);    
-    translate(c.x, c.y);
+    translate(rect.x, rect.y);
     for (var i = 0; i < 10; i ++) {
       ellipse(0, 30, rect.height/3, rect.height)
       rotate(PI/5);
     }
-    translate(-c.x, -c.y);
+    translate(-rect.x, -rect.y);
   }
   
   drawCircleShape(rect) {
@@ -34,6 +33,6 @@ class Flower {
   }
   
   keep(now) {
-    return this.ellapsed(now) < SUSTAIN;
+    return false // this.ellapsed(now) < SUSTAIN;
   }
 }
