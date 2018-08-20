@@ -74,7 +74,7 @@ function onTrack(event) {
     
     var timeGap;
     var length = trackerHistory[rect.color].length;
-    if (length  === 0 || length > 600 /* test termination */) {
+    if (length  === 0) {
       timeGap = Infinity;
     } else {
       timeGap = rect.time - trackerHistory[rect.color].last().time;
@@ -87,7 +87,7 @@ function onTrack(event) {
     trackerHistory[rect.color].push(rect);
     var smoothed = getLatestSmoothed(trackerHistory[rect.color]);
     
-    continueGesture(rect);
+    continueGesture(smoothed);
     toDraw.push(new Flower(smoothed));
   });
 }
