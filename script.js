@@ -42,21 +42,39 @@ toDraw = [];
 
 
 function getLatestSmoothed(history) {
-  var curr = center(history.get(history.length-1)); // new point
-  var prev1 = center(history.get(history.length-2));
-  var prev2 = center(history.get(history.length-3)); 
+  if (history.length < 3) {
+    return history.first() 
+  }
+
+  
+  var curr = history.get(history.length-1); // new point
+  var prev1 = history.get(history.length-2);
+  var prev2 = history.get(history.length-3); 
   var predictedPos = prev1 + delta(prev1, prev2); // where rect would be based on prev motion
   
   var smoothedPos = average(curr, predictedPos);
-  var newRect = {x: smoothedPos.x, y: smoothedPos.y, height: curr.height, width: curr.width};
+  
+  console.log(predictedPos);
+  var newRect = {x: smoothedPos.x, y: smoothedPos.y,
+                 height: curr.height, width: curr.width, color: curr.color};
   
   return newRect;
 }
 
 function onTrack(event) {
-  event.data.forEach(function (r) {
-    trackerHistory[r.color].push(r);
-    toDraw.push(new Flower(r));
+  event.data.forEach(function (trackingRect) {
+    var c = center(trackingRect);
+    var rect = {
+      x: c.x,
+      y: c.y,
+      width: trackingRect.width,
+      height: trackingRect.height,
+      color: trackingRect.color,
+    };
+    
+    trackerHistory[rect.color].push(rect);
+    var smoothed = getLatestSmoothed(trackerHistory[rect.color]);
+    toDraw.push(new Flower(smoothed));
   });
 }
 
