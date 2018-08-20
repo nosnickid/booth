@@ -25,10 +25,8 @@ class Flower {
   }
           
   draw(now) {
-    strokeWeight(4);
     var fade = (SUSTAIN - this.ellapsed(now)) / SUSTAIN
-    stroke(255, 255, 0, 255 * fade);
-    noFill();   
+    fill(255, 0, 0, 255 * fade);   
     this.drawFlowerShape(this.rect);
   }
   

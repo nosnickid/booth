@@ -71,10 +71,7 @@ function renderGesture(gesture, w, h) {
     if (gesture.exists) {
       
       // debug shit
-      stroke(255);
-      strokeWeight(4);
-    ellipse(100, 100, 100, 100);
-    console.log(gesture);
+    //console.log(gesture);
       //
       
       

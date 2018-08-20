@@ -88,7 +88,7 @@ function onTrack(event) {
     var smoothed = getLatestSmoothed(trackerHistory[rect.color]);
     
     continueGesture(rect);
-    //toDraw.push(new Flower(smoothed));
+    toDraw.push(new Flower(smoothed));
   });
 }
 
@@ -97,9 +97,9 @@ function newAppearance(rect) {
 }
 
 function draw() {
-  yellowtailDraw();  
   var now = Date.now()
   clear();
+  yellowtailDraw();
   nextToDraw = [];
   toDraw.forEach((thing) => {
     thing.draw(now)
