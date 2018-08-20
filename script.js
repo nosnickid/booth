@@ -9,20 +9,18 @@ trackerHistory = {
 }
 
 function setup() {
-    var w = 640,
-        h = 480;
     capture = createCapture({
         audio: false,
         video: {
-            width: w,
-            height: h
+            width: canvasWidth,
+            height: canvasHeight
         }
     }, function() {
         console.log('capture ready.')
     });
     capture.elt.setAttribute('playsinline', '');
-    capture.size(w, h);
-    cnv = createCanvas(w, h);
+    capture.size(canvasWidth, canvasHeight);
+    cnv = createCanvas(canvasWidth, canvasHeight);
 
     tracking.ColorTracker.registerColor('white', function(r, g, b) {
      return r >= 230 && g >= 230 && b >= 230;
@@ -36,6 +34,8 @@ function setup() {
     });
   
     tracker.on('track', onTrack);
+  
+    yellowtailSetup();
 }
 
 toDraw = [];
@@ -87,7 +87,7 @@ function onTrack(event) {
     var smoothed = getLatestSmoothed(trackerHistory[rect.color]);
     
     continueGesture(rect);
-    //toDraw.push(new Flower(smoothed));
+    toDraw.push(new Flower(smoothed));
   });
 }
 
@@ -96,6 +96,7 @@ function newAppearance(rect) {
 }
 
 function draw() {
+  yellowtailDraw();  
   var now = Date.now()
   clear();
   nextToDraw = [];

@@ -22,7 +22,7 @@ function yellowtailSetup() {
 	gestureArray = new Array(nGestures);
 	
 	for (let i = 0; i < nGestures; i++) {
-	  gestureArray[i] = new Gesture(width, height);
+	  gestureArray[i] = new Gesture(canvasWidth, canvasHeight);
 	}
 	
 	clearGestures();
@@ -41,7 +41,7 @@ function yellowtailDraw() {
 
     fill(255, 255, 245);
     for (let i = 0; i < nGestures; i++) {
-        renderGesture(gestureArray[i], width, height);
+        renderGesture(gestureArray[i], canvasWidth, canvasHeight);
     }
 }
 
