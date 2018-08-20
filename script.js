@@ -4,7 +4,7 @@ var tracker;
 const historySize = 50;
 
 trackerHistory = {
-  //"cyan": new CBuffer(historySize),
+  "cyan": new CBuffer(historySize),
   "white": new CBuffer(historySize),
 }
 
@@ -74,7 +74,7 @@ function onTrack(event) {
     
     var timeGap;
     var length = trackerHistory[rect.color].length;
-    if (length  === 0) {
+    if (length === 0) {
       timeGap = Infinity;
     } else {
       timeGap = rect.time - trackerHistory[rect.color].last().time;
@@ -87,12 +87,16 @@ function onTrack(event) {
     trackerHistory[rect.color].push(rect);
     var smoothed = getLatestSmoothed(trackerHistory[rect.color]);
     
-    continueGesture(smoothed);
+    //continueGesture(smoothed);
     toDraw.push(new Flower(smoothed));
   });
 }
 
-function newAppearance(rect) {
+function mouseDragged() {
+  
+}
+
+function mousePressed(rect) {
   newGesture(rect); 
 }
 

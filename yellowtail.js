@@ -58,6 +58,7 @@ function continueGesture(point) {
     if (currentGestureID >= 0) {
         var G = gestureArray[currentGestureID];
         if (G.distToLast(point.x, point.y) > minMove) {
+            console.log("new point", point);
             G.addPoint(point.x, point.y);
             G.smooth();
             G.compile();
