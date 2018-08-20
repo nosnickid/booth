@@ -2,6 +2,11 @@ var capture;
 var tracker;
 
 
+trackerHistory = {
+  "cyan": [],
+  "white": [],
+}
+
 function setup() {
     var w = 640,
         h = 480;
@@ -18,12 +23,12 @@ function setup() {
     capture.size(w, h);
     cnv = createCanvas(w, h);
 
-    tracking.ColorTracker.registerColor('custom', function(r, g, b) {
+    tracking.ColorTracker.registerColor('white', function(r, g, b) {
      return r >= 230 && g >= 230 && b >= 230;
     });
     //tracking.Image.blur(pixels, width, height, 30);
   
-    var tracker = new tracking.ColorTracker(["cyan", "magenta", "custom"]);
+    var tracker = new tracking.ColorTracker(Object.keys(trackerHistory));
 
     capture.elt.id = 'p5video';
     tracking.track('#p5video', tracker, {
@@ -33,23 +38,14 @@ function setup() {
     tracker.on('track', onTrack);
 }
 
-starter = {x: 100, y: 100};
-buff = [10];
-
-
-counter = 0;
-trail_length = 10;
-for (i=0; i < trail_length; i++) {
-  buff.push(starter);
-}
-console.log(buff);
-
 toDraw = [];
+
 
 function onTrack(event) {
   event.data.forEach(function (r) {
+    trackerHistory[r.color].push
     toDraw.push(new Flower(r));
-  })
+  });
 }
 
 function draw() {
