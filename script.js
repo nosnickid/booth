@@ -73,7 +73,8 @@ function onTrack(event) {
     };
     
     var timeGap;
-    if (trackerHistory[rect.color].length === 0) {
+    var length = trackerHistory[rect.color].length;
+    if (length  === 0 || length > 30 /* test termination */) {
       timeGap = Infinity;
     } else {
       timeGap = rect.time - trackerHistory[rect.color].last().time;
