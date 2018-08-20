@@ -74,7 +74,7 @@ function onTrack(event) {
     
     var timeGap;
     var length = trackerHistory[rect.color].length;
-    if (length  === 0 || length > 30 /* test termination */) {
+    if (length  === 0 || length > 600 /* test termination */) {
       timeGap = Infinity;
     } else {
       timeGap = rect.time - trackerHistory[rect.color].last().time;
