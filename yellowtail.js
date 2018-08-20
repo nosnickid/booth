@@ -67,9 +67,11 @@ function continueGesture(point) {
 
 
 function renderGesture(gesture, w, h) {
+  stroke(255);  
+    ellipse(100, 100, 100, 100);
+  //console.log("adfasd");
     if (gesture.exists) {
         if (gesture.nPolys > 0) {
-            console.log(gesture);
             var polygons = gesture.polygons;
             var crosses = gesture.crosses;
 
