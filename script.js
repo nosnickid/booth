@@ -41,11 +41,17 @@ function setup() {
 toDraw = [];
 
 
+function getLatestSmoothed(history) {
+  var rect_i0 = history.get(history.length-1); // new point
+  var rect_i1 = history.get(history.length-2);
+  var rect_i2 = history.get(history.length-3); 
+  delta = 
+  return newRect;
+}
+
 function onTrack(event) {
   event.data.forEach(function (r) {
-
     trackerHistory[r.color].push(r);
-
     toDraw.push(new Flower(r));
   });
 }
