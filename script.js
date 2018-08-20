@@ -42,10 +42,14 @@ toDraw = [];
 
 
 function getLatestSmoothed(history) {
-  var rect_i0 = history.get(history.length-1); // new point
-  var rect_i1 = history.get(history.length-2);
-  var rect_i2 = history.get(history.length-3); 
-  delta = 
+  var curr = center(history.get(history.length-1)); // new point
+  var prev1 = center(history.get(history.length-2));
+  var prev2 = center(history.get(history.length-3)); 
+  var predictedPos = prev1 + delta(prev1, prev2); // where rect would be based on prev motion
+  
+  var smoothedPos = average(curr, predictedPos);
+  var newRect = {x: smoothedPos.x, y: smoothedPos.y, height: curr.height, width: curr.width};
+  
   return newRect;
 }
 
