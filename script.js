@@ -61,6 +61,8 @@ function getLatestSmoothed(history) {
 }
 
 function onTrack(event) {
+  
+  
   event.data.forEach(function (trackingRect) {
     var c = center(trackingRect);
     var rect = {
