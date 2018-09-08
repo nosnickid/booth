@@ -38,7 +38,7 @@ function clearGestures() {
 
 function yellowtailDraw() {
 
-    //updateGeometry();
+    updateGeometry();
 
     fill(255, 255, 245);
     for (let i = 0; i < nGestures; i++) {
@@ -150,7 +150,6 @@ function advanceGesture(gesture) {
     // Move a Gesture one step
     if (gesture.exists) { // check
         var nPts = gesture.nPoints;
-        var nPts1 = nPts-1;
         var path = [];
         var jx = gesture.jumpDx;
         var jy = gesture.jumpDy;
@@ -158,13 +157,13 @@ function advanceGesture(gesture) {
         if (nPts > 0) {
             path = gesture.path;
             
-            for (let i = nPts1; i > 0; i--) {
+            for (let i = nPts-1; i > 0; i--) {
                 path[i].x = path[i - 1].x;
                 path[i].y = path[i - 1].y;
             }
             
-            path[0].x = path[nPts1].x - jx;
-            path[0].y = path[nPts1].y - jy;
+            path[0].x = path[nPts - 1].x;
+            path[0].y = path[nPts - 1].y;
             gesture.compile();
         }
     }
