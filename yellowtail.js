@@ -38,11 +38,11 @@ function clearGestures() {
 
 function yellowtailDraw() {
 
-    updateGeometry();
+    //updateGeometry();
 
     fill(255, 255, 245);
     for (let i = 0; i < nGestures; i++) {
-        renderGesture(gestureArray[i], 0, 0);//canvasWidth, canvasHeight);
+        renderGesture(gestureArray[i], canvasWidth, canvasHeight);
     }
 }
 

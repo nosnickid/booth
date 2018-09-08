@@ -27,7 +27,7 @@ class Flower {
   draw(now) {
     var fade = (SUSTAIN - this.ellapsed(now)) / SUSTAIN
     fill(255, 0, 255, 255 * fade);   
-    this.drawFlowerShape(this.rect);
+    //this.drawFlowerShape(this.rect);
   }
   
   keep(now) {
