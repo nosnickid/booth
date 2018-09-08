@@ -61,7 +61,11 @@ function getLatestSmoothed(history) {
 }
 
 function onTrack(event) {
-  
+  if (event.data.length > 0) {
+    stuffOnScreen = true;
+  } else {
+    stuffOnScreen = false; 
+  }
   
   event.data.forEach(function (trackingRect) {
     var c = center(trackingRect);
@@ -90,7 +94,7 @@ function onTrack(event) {
     var smoothed = getLatestSmoothed(trackerHistory[rect.color]);
     
     continueGesture(smoothed);
-    toDraw.push(new Flower(smoothed));
+    //toDraw.push(new Flower(smoothed));
   });
 }
 

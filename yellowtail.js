@@ -59,7 +59,7 @@ function continueGesture(point) {
     if (currentGestureID >= 0) {
         var G = gestureArray[currentGestureID];
         if (G.distToLast(point.x, point.y) > minMove) {
-            console.log("new point", point);
+            //console.log("new point", point);
             G.addPoint(point.x, point.y);
             G.smooth();
             G.compile();
@@ -139,7 +139,7 @@ function updateGeometry() {
         if ((J = gestureArray[g]).exists) {
             if (g != currentGestureID) {
                 advanceGesture(J);
-            } else if (!mouseIsPressed) {
+            } else if (!stuffOnScreen) {
                 advanceGesture(J);
             }
         }
@@ -156,13 +156,21 @@ function advanceGesture(gesture) {
 
         if (nPts > 0) {
             path = gesture.path;
+          /*
+            for (let i = nPts-1; i > 0; i--) {
+                path[i].x = path[i - 1].x;
+                path[i].y = path[i - 1].y;
+            }
+            
+            path[0].x = path[nPts - 1].x + jx;
+            path[0].y = path[nPts - 1].y + jy;
+          */
           
             for (let i = nPts-1; i > 0; i--) {
                 path[i].p = path[i - 1].p;
             }
             
-            path[0].p = path[nPts - 1].p;
-            path[0].p = path[nPts - 1].p;            
+            path[0].p = path[nPts - 1].p
             
             gesture.compile();
         }

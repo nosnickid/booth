@@ -240,7 +240,7 @@ class Gesture {
 
 	smooth() {
         // average neighboring points
-        var weight = 18;
+        var weight = 28;
         var scale = 1.0 / (weight + 2);
         var nPointsMinusTwo = this.nPoints - 2;
         var lower, upper, center;
