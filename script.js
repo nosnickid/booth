@@ -80,7 +80,7 @@ function onTrack(event) {
       timeGap = rect.time - trackerHistory[rect.color].last().time;
     }
     
-    if (timeGap > 2000) {
+    if (timeGap > 20000) {
       newAppearance(rect);
     }
     

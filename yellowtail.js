@@ -12,7 +12,7 @@ function yellowtailSetup() {
   stroke(0);
 	gestureArray = [];
 	nGestures = 36;  // Number of gestures
-	minMove = 3;     // Minimum travel for a new point
+	minMove = 30;     // Minimum travel for a new point
 	currentGestureID;
 
 	tempP; // Polygon
