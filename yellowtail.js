@@ -9,10 +9,10 @@ var tmpXp;
 var tmpYp;
 
 function yellowtailSetup() {
-  stroke(0);
+  stroke(255);
 	gestureArray = [];
 	nGestures = 36;  // Number of gestures
-	minMove = 30;     // Minimum travel for a new point
+	minMove = 3;     // Minimum travel for a new point
 	currentGestureID;
 
 	tempP; // Polygon
@@ -42,11 +42,12 @@ function yellowtailDraw() {
 
     fill(255, 255, 245);
     for (let i = 0; i < nGestures; i++) {
-        renderGesture(gestureArray[i], canvasWidth, canvasHeight);
+        renderGesture(gestureArray[i], 0, 0);//canvasWidth, canvasHeight);
     }
 }
 
 function newGesture(point) {
+    console.log("new gesture", point)
     currentGestureID = (currentGestureID + 1) % nGestures;
     var G = gestureArray[currentGestureID];
     G.clear();
