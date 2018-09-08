@@ -152,8 +152,8 @@ function advanceGesture(gesture) {
         var nPts = gesture.nPoints;
         var nPts1 = nPts-1;
         var path = [];
-        var jx = gesture.jumpDx;
-        var jy = gesture.jumpDy;
+        var jx = 0;//gesture.jumpDx;
+        var jy = 0;//gesture.jumpDy;
 
         if (nPts > 0) {
             path = gesture.path;

@@ -97,7 +97,6 @@ function newAppearance(rect) {
 }
 
 function draw() {
-  //scale(-1.0,1.0);
   var now = Date.now()
   clear();
   yellowtailDraw();
