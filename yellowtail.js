@@ -9,7 +9,7 @@ var tmpXp;
 var tmpYp;
 
 function yellowtailSetup() {
-  stroke(255);
+  stroke(0);
 	gestureArray = [];
 	nGestures = 1;  // Number of gestures
 	minMove = 3;     // Minimum travel for a new point
