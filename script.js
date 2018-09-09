@@ -4,7 +4,7 @@ var tracker;
 const historySize = 50;
 
 trackerHistory = {
-  "cyan": new CBuffer(historySize),
+  "red": new CBuffer(historySize),
   "white": new CBuffer(historySize),
 }
 
@@ -23,7 +23,10 @@ function setup() {
     cnv = createCanvas(canvasWidth, canvasHeight);
 
     tracking.ColorTracker.registerColor('white', function(r, g, b) {
-     return r >= 230 && g >= 230 && b >= 230;
+     return r >= 250 && g >= 250 && b >= 250;
+    });
+    tracking.ColorTracker.registerColor('red', function(r, g, b) {
+     return r >= 230 && g <= 50 && b <= 50;
     });
   
     var tracker = new tracking.ColorTracker(Object.keys(trackerHistory));
