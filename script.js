@@ -97,7 +97,7 @@ function onTrack(event) {
     var smoothed = getLatestSmoothed(trackerHistory[rect.color]);
     
     continueGesture(smoothed);
-    //toDraw.push(new Flower(smoothed));
+    toDraw.push(new Flower(smoothed));
   });
 }
 
