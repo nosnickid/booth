@@ -4,7 +4,7 @@ var tracker;
 const historySize = 50;
 
 trackerHistory = {
-  "red": new CBuffer(historySize),
+  // "red": new CBuffer(historySize),
   "white": new CBuffer(historySize),
 }
 
@@ -25,9 +25,9 @@ function setup() {
     tracking.ColorTracker.registerColor('white', function(r, g, b) {
      return r >= 230 && g >= 230 && b >= 230;
     });
-    tracking.ColorTracker.registerColor('red', function(r, g, b) {
-     return r >= 240 && g <= 240 && b <= 230;
-    });
+    // tracking.ColorTracker.registerColor('red', function(r, g, b) {
+    //  return r >= 240 && g <= 240 && b <= 230;
+    // });
   
     var tracker = new tracking.ColorTracker(Object.keys(trackerHistory));
 
@@ -55,7 +55,7 @@ function getLatestSmoothed(history) {
   var prev2 = history.get(history.length-3); 
   var predictedPos = add(prev1, delta(prev1, prev2)); // where rect would be based on prev motion
   
-  var smoothedPos = average(curr, predictedPos);
+  var smoothedPos = average(curr, prev1);
   
   var newRect = {x: smoothedPos.x, y: smoothedPos.y,
                  height: curr.height, width: curr.width, color: curr.color};
@@ -97,7 +97,7 @@ function onTrack(event) {
     var smoothed = getLatestSmoothed(trackerHistory[rect.color]);
     
     continueGesture(smoothed);
-    toDraw.push(new Flower(smoothed));
+    //toDraw.push(new Flower(smoothed));
   });
 }
 

@@ -250,8 +250,8 @@ class Gesture {
             center = this.path[i];
             upper = this.path[i+1];
 
-            center.x = (lower.x + weight * center.x + upper.x) * scale;
-            center.y = (lower.y + weight * center.y + upper.y) * scale;
+           // center.x = (lower.x + weight * center.x + upper.x) * scale;
+            //center.y = (lower.y + weight * center.y + upper.y) * scale;
         }
     }
 
