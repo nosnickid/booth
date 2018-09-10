@@ -45,24 +45,24 @@ toDraw = [];
 
 
 function getLatestSmoothed(history, curr) {
-  if (history.length < 11) {
+  
+  var iterations = 15;
+  
+  if (history.length < iterations) {
     return curr;
   }
   
   var avg = new Point(0, 0);
-  var p = new Point(0,0);
-  for(var i = 0; i < 10; ++i) 
+  
+  for(var i = 0; i < iterations; ++i) 
   {
       var rect = history.get(history.length-1-i);
-      p.x = rect.x;
-      p.y = rect.y;
-      
-      avg = avg.add(p); 
+      avg = avg.add(new Point(rect.x,rect.y)); 
   }
    
-  avg = scale(avg, 1.0 / 11.0);
+  avg = avg.multiply(1.0 / iterations);
   
-  var smoothedPos = add(curr, avg);//average(curr, avg);
+  var smoothedPos = avg.interpolate(new Point(curr.x, curr.y), .5);
   
   var newRect = {x: smoothedPos.x, y: smoothedPos.y,
                  height: 100, width: 100, color: curr.color};
@@ -88,17 +88,17 @@ function onTrack(event) {
       time: Date.now(),
     };
     
-//     var timeGap;
-//     var length = trackerHistory[rect.color].length;
-//     if (length === 0) {
-//       timeGap = Infinity;
-//     } else {
-//       timeGap = rect.time - trackerHistory[rect.color].last().time;
-//     }
+    var timeGap;
+    var length = trackerHistory[rect.color].length;
+    if (length === 0) {
+      timeGap = Infinity;
+    } else {
+      timeGap = rect.time - trackerHistory[rect.color].last().time;
+    }
     
-//     if (timeGap > 3000) {
-//       newAppearance(rect);
-//     }
+    if (timeGap > 3000) {
+      newAppearance(rect);
+    }
     
     var smoothed = getLatestSmoothed(trackerHistory[rect.color], rect);    
     trackerHistory[rect.color].push(smoothed);
@@ -115,8 +115,7 @@ function newAppearance(rect) {
 function draw() {
   var now = Date.now()
   clear();
-  //scale(-1.0,1.0);    // flip x-axis backwards
-  //yellowtailDraw();
+  yellowtailDraw();
   nextToDraw = [];
   toDraw.forEach((thing) => {
     thing.draw(now)

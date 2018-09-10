@@ -7,6 +7,9 @@ Point.prototype.y = null;
 Point.prototype.add = function(v){
 	return new Point(this.x + v.x, this.y + v.y);
 };
+Point.prototype.multiply = function(s){
+	return new Point(this.x * s, this.y * s);
+};
 Point.prototype.clone = function(){
 	return new Point(this.x, this.y);
 };
