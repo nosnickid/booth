@@ -45,9 +45,9 @@ toDraw = [];
 
 
 function getLatestSmoothed(history) {
-  if (history.length < 3) {
-    return history.first() 
-  }
+  // if (history.length < 3) {
+    return history.last() 
+  // }
 
   
   var curr = history.get(history.length-1); // new point
@@ -55,7 +55,7 @@ function getLatestSmoothed(history) {
   var prev2 = history.get(history.length-3); 
   var predictedPos = add(prev1, delta(prev1, prev2)); // where rect would be based on prev motion
   
-  var smoothedPos = average(curr, prev1);
+  var smoothedPos = history.first();//average(curr, prev1);
   
   var newRect = {x: smoothedPos.x, y: smoothedPos.y,
                  height: curr.height, width: curr.width, color: curr.color};
@@ -81,23 +81,23 @@ function onTrack(event) {
       time: Date.now(),
     };
     
-    var timeGap;
-    var length = trackerHistory[rect.color].length;
-    if (length === 0) {
-      timeGap = Infinity;
-    } else {
-      timeGap = rect.time - trackerHistory[rect.color].last().time;
-    }
+//     var timeGap;
+//     var length = trackerHistory[rect.color].length;
+//     if (length === 0) {
+//       timeGap = Infinity;
+//     } else {
+//       timeGap = rect.time - trackerHistory[rect.color].last().time;
+//     }
     
-    if (timeGap > 3000) {
-      newAppearance(rect);
-    }
+//     if (timeGap > 3000) {
+//       newAppearance(rect);
+//     }
     
     trackerHistory[rect.color].push(rect);
     var smoothed = getLatestSmoothed(trackerHistory[rect.color]);
     
     continueGesture(smoothed);
-    //toDraw.push(new Flower(smoothed));
+    toDraw.push(new Flower(smoothed));
   });
 }
 
@@ -109,7 +109,7 @@ function draw() {
   var now = Date.now()
   clear();
   //scale(-1.0,1.0);    // flip x-axis backwards
-  yellowtailDraw();
+  //yellowtailDraw();
   nextToDraw = [];
   toDraw.forEach((thing) => {
     thing.draw(now)
