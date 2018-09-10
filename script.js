@@ -23,10 +23,10 @@ function setup() {
     cnv = createCanvas(canvasWidth, canvasHeight);
 
     tracking.ColorTracker.registerColor('white', function(r, g, b) {
-     return r >= 145 && g >= 145 && b >= 145;
+     return r >= 230 && g >= 230 && b >= 230;
     });
     tracking.ColorTracker.registerColor('red', function(r, g, b) {
-     return r >= 230 && g <= 50 && b <= 50;
+     return r >= 240 && g <= 240 && b <= 230;
     });
   
     var tracker = new tracking.ColorTracker(Object.keys(trackerHistory));
@@ -61,6 +61,11 @@ function getLatestSmoothed(history) {
                  height: curr.height, width: curr.width, color: curr.color};
   
   return newRect;
+}
+
+function mirror(x, length) {
+ var result = (length/2) -x;
+  if (result 
 }
 
 function onTrack(event) {

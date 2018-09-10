@@ -225,10 +225,10 @@ class Gesture {
             xpts = apoly.xpoints;
             ypts = apoly.ypoints;
 
-            xpts[0] = this.w - floor(ax);
-            xpts[1] = this.w - floor(bx);
-            xpts[2] = this.w - floor((p2.x));
-            xpts[3] = this.w - floor((p2.x));
+            xpts[0] = floor(ax);
+            xpts[1] = floor(bx);
+            xpts[2] = floor((p2.x));
+            xpts[3] = floor((p2.x));
 
             ypts[0] = floor(ay);
             ypts[1] = floor(by);
