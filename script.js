@@ -63,11 +63,6 @@ function getLatestSmoothed(history) {
   return newRect;
 }
 
-function mirror(x, length) {
- var result = (length/2) -x;
-  if (result 
-}
-
 function onTrack(event) {
   if (event.data.length > 0) {
     stuffOnScreen = true;
@@ -78,7 +73,7 @@ function onTrack(event) {
   event.data.forEach(function (trackingRect) {
     var c = center(trackingRect);
     var rect = {
-      x: c.x,
+      x: canvasWidth - c.x,
       y: c.y,
       width: trackingRect.width,
       height: trackingRect.height,
