@@ -23,7 +23,7 @@ function setup() {
     cnv = createCanvas(canvasWidth, canvasHeight);
 
     tracking.ColorTracker.registerColor('white', function(r, g, b) {
-     return r >= 230 && g >= 230 && b >= 230;
+     return r >= 250 && g >= 250 && b >= 250;
     });
     // tracking.ColorTracker.registerColor('red', function(r, g, b) {
     //  return r >= 240 && g <= 240 && b <= 230;
@@ -104,7 +104,7 @@ function onTrack(event) {
     trackerHistory[rect.color].push(smoothed);
     
     continueGesture(smoothed);
-    toDraw.push(new Flower(smoothed));
+    //toDraw.push(new Flower(smoothed));
   });
 }
 
