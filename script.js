@@ -49,12 +49,20 @@ function getLatestSmoothed(history, curr) {
     return curr;
   }
   
-  var avg = ;
-  for(var i = 0; i < 10; ++i)
-      avg = avg.add(history.get(history.length-i));
+  var avg = new Point(0, 0);
+  var p = new Point(0,0);
+  for(var i = 0; i < 10; ++i) 
+  {
+      var rect = history.get(history.length-1-i);
+      p.x = rect.x;
+      p.y = rect.y;
+      
+      avg = avg.add(p); 
+  }
+   
+  avg = scale(avg, 1.0 / 11.0);
   
-  
-  var smoothedPos = average(curr, avg);
+  var smoothedPos = add(curr, avg);//average(curr, avg);
   
   var newRect = {x: smoothedPos.x, y: smoothedPos.y,
                  height: 100, width: 100, color: curr.color};

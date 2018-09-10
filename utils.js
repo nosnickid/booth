@@ -5,6 +5,13 @@ function add(p1, p2) {
   }
 }
 
+function scale(p1, s) {
+  return {
+    x: p1.x * s,
+    y: p1.y * s,
+  }
+}
+
 function average(p1, p2) {
   return {
     x: (p1.x + p2.x) / 2,
