@@ -1,7 +1,7 @@
 var capture;
 var tracker;
 
-const historySize = 50;
+const historySize = 5000;
 
 trackerHistory = {
   // "red": new CBuffer(historySize),
@@ -44,21 +44,20 @@ function setup() {
 toDraw = [];
 
 
-function getLatestSmoothed(history) {
-  // if (history.length < 3) {
-    return history.last() 
-  // }
-
+function getLatestSmoothed(history, curr) {
+  if (history.length < 11) {
+    return curr;
+  }
   
-  var curr = history.get(history.length-1); // new point
-  var prev1 = history.get(history.length-2);
-  var prev2 = history.get(history.length-3); 
-  var predictedPos = add(prev1, delta(prev1, prev2)); // where rect would be based on prev motion
+  var avg = ;
+  for(var i = 0; i < 10; ++i)
+      avg = avg.add(history.get(history.length-i));
   
-  var smoothedPos = history.first();//average(curr, prev1);
+  
+  var smoothedPos = average(curr, avg);
   
   var newRect = {x: smoothedPos.x, y: smoothedPos.y,
-                 height: curr.height, width: curr.width, color: curr.color};
+                 height: 100, width: 100, color: curr.color};
   
   return newRect;
 }
@@ -93,8 +92,8 @@ function onTrack(event) {
 //       newAppearance(rect);
 //     }
     
-    trackerHistory[rect.color].push(rect);
-    var smoothed = getLatestSmoothed(trackerHistory[rect.color]);
+    var smoothed = getLatestSmoothed(trackerHistory[rect.color], rect);    
+    trackerHistory[rect.color].push(smoothed);
     
     continueGesture(smoothed);
     toDraw.push(new Flower(smoothed));
