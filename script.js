@@ -46,7 +46,7 @@ toDraw = [];
 
 function getLatestSmoothed(history, curr) {
   
-  var iterations = 15;
+  var iterations = 2;
   
   if (history.length < iterations) {
     return curr;
