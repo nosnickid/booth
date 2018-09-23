@@ -77,12 +77,8 @@ function getLatestSmoothed(history, curr) {
 }
 
 function decideColor(pixels, rect) {
-  //first we need to slice the pixels that are part of this rect out of the larger pixels array
-  var startIdx = rect.x * canvasWidth + rect.y
-  var endIdx = (rect.x+rect.width) * canvasWidth + (rect.y + rect.height)
-  console.log(startIdx);
-  for (var i=startIdx; i+=4; i <= endIdx) {
-    pixels[i] = 0;
+  for (var i=startIdx; i <= endIdx; i+=4) {
+    pixels[i+2] = 0;
   }
 }
 
@@ -139,6 +135,7 @@ function onTrack(event) {
     
     //toDraw.push(new Flower(smoothed));
   });
+  capture.updatePixels();
 }
 
 function newAppearance(rect) {
