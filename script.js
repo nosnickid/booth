@@ -79,7 +79,7 @@ function getLatestSmoothed(history, curr) {
 function decideColor(pixels, rect) {
   for (var i=rect.y; i <= rect.y+rect.height; i++) {
     for (var j=rect.x; j<= rect.x+rect.width; j++) {
-      pixels[index2Dto1D(i,j)] = 0;
+      pixels[index2Dto1D(j,i)] = 0;
     }
   }
 }
@@ -98,7 +98,7 @@ function onTrack(event) {
   event.data.forEach(function (trackingRect) {
     toDraw.push(diagnosticRect(trackingRect));
         
-    decideColor(capture.pixels, trackingRect);
+    //decideColor(capture.pixels, trackingRect);
     
     var c = center(trackingRect);
     var rect = {
