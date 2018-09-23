@@ -40,3 +40,11 @@ function center(r) {
     y: r.y + r.height/2,
   }
 }
+	
+function colorDistance(target, actual) {
+  return Math.sqrt(
+    (target.r - actual.r) * (target.r - actual.r) +
+    (target.g - actual.g) * (target.g - actual.g) +
+    (target.b - actual.b) * (target.b - actual.b)
+  );
+}

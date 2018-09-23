@@ -26,7 +26,7 @@ function setup() {
      return r >= 250 && g >= 250 && b >= 250;
     });
      tracking.ColorTracker.registerColor('red', function(r, g, b) {
-       
+       return (r > 250 && g < 50 && b < 50) || (r > 240 && (g < 220 && g > 180) && (b < 210 && b > 70));
     });
   
     var tracker = new tracking.ColorTracker(Object.keys(trackerHistory));
