@@ -78,7 +78,8 @@ function onTrack(event) {
   }
   
   event.data.forEach(function (trackingRect) {
-
+    
+    
     var c = center(trackingRect);
     var rect = {
       x: canvasWidth - c.x,
@@ -89,11 +90,11 @@ function onTrack(event) {
       time: Date.now(),
     };
   
-    if (rect.width * rect.height < 2000) { return };
+    if (rect.width * rect.height < 1000) { return };
     if (rect.width > rect.height*2) { return };
     if (rect.height > rect.width*2) { return };
 
-
+    
     
     var timeGap;
     var length = trackerHistory[rect.color].length;
@@ -111,6 +112,7 @@ function onTrack(event) {
     trackerHistory[rect.color].push(smoothed);
     
     continueGesture(smoothed);
+    
     //toDraw.push(new Flower(smoothed));
   });
 }
