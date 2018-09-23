@@ -26,9 +26,7 @@ function setup() {
      return r >= 250 && g >= 250 && b >= 250;
     });
      tracking.ColorTracker.registerColor('red', function(r, g, b) {
-      var bluegood = (b * 3 < (r+20));
-      var greengood = (g * 3 < (r+20));
-      return bluegood && greengood && r > 150;
+       
     });
   
     var tracker = new tracking.ColorTracker(Object.keys(trackerHistory));
@@ -90,10 +88,7 @@ function onTrack(event) {
       color: trackingRect.color,
       time: Date.now(),
     };
-    
-    if (rect.width * rect.height < 2000) {
-      return; 
-    }
+  
     
     var timeGap;
     var length = trackerHistory[rect.color].length;
