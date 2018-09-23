@@ -78,7 +78,7 @@ function onTrack(event) {
   }
   
   event.data.forEach(function (trackingRect) {
-    drawDiagnosticRect(trackingRect);
+    toDraw.push(diagnosticRect(trackingRect));
     var c = center(trackingRect);
     var rect = {
       x: canvasWidth - c.x,
@@ -123,22 +123,31 @@ function newAppearance(rect) {
 function drawVideoOnCanvas(capture) {
   // code adapted from https://forum.processing.org/two/discussion/9309/how-to-flip-image
   push();
-  translate(capture.width,0);
+  translate(canvasWidth, 0);
   scale(-1,1);
   image(capture, 0, 0, canvasWidth, canvasHeight);
   pop();
 }
 
 // note that this works with a trackingRect, not a centered rect
-function drawDiagnosticRect(trackingRect) {
-  var { x, y, width, height } = trackingRect; 
-  push()
-  fill(0,0,0,255);
-  stroke(255, 204, 0);
-  strokeWeight(2);
-  rect(x.y, width, height);
-  pop()
-}
+function diagnosticRect(trackingRect) {
+  return {
+    draw: (now) => {
+      console.log("foo");
+      var { x, y, width, height } = trackingRect; 
+      push()
+      // I'll admit I'm now sure why this has to be mirrored
+      translate(canvasWidth, 0)
+      scale(-1,1);
+      fill(0,0,0,0);
+      stroke(255, 204, 0);
+      strokeWeight(2);
+      rect(x,y, width, height);
+      pop()
+    },
+    keep: (now) => false,
+  }
+};
 
 function draw() {
   var now = Date.now()
