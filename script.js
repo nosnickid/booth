@@ -4,7 +4,7 @@ var tracker;
 const historySize = 5000;
 
 trackerHistory = {
-  "red": new CBuffer(historySize),
+  //"red": new CBuffer(historySize),
   //"white": new CBuffer(historySize),
 }
 
@@ -26,9 +26,9 @@ function setup() {
      return r >= 250 && g >= 250 && b >= 250;
     });
      tracking.ColorTracker.registerColor('red', function(r, g, b) {
-      var bluegood = (b * 2 > (r-2)) && (b * 2 < (r+2));
-      var greengood = (g * 2 > (r-2)) && (g * 2 < (r+2));
-      return bluegood && greengood;
+      var bluegood = (b * 2 < (r+20));
+      var greengood = (g * 2 < (r+20));
+      return bluegood && greengood && r > 150;
     });
   
     var tracker = new tracking.ColorTracker(Object.keys(trackerHistory));
