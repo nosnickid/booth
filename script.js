@@ -124,6 +124,7 @@ function newAppearance(rect) {
 function draw() {
   var now = Date.now()
   clear();
+  image(capture, 0, 0, canvasWidth, canvasHeight);
   yellowtailDraw();
   nextToDraw = [];
   toDraw.forEach((thing) => {
