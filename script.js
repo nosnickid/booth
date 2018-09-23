@@ -77,8 +77,10 @@ function getLatestSmoothed(history, curr) {
 }
 
 function decideColor(pixels, rect) {
-  for (var i=startIdx; i <= endIdx; i+=4) {
-    pixels[i+2] = 0;
+  for (var i=rect.y; i <= rect.y+rect.height; i++) {
+    for (var j=rect.x; j<= rect.x+rect.width; j++) {
+      pixels[index2Dto1D(i,j)] = 0;
+    }
   }
 }
 

@@ -50,5 +50,5 @@ function colorDistance(target, actual) {
 }
 
 function index2Dto1D(x, y) {
- return y * canvasWidth + x; 
+ return ((y * canvasWidth) + x) * 4;
 }
