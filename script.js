@@ -85,6 +85,7 @@ function onTrack(event) {
   
   event.data.forEach(function (trackingRect) {
     toDraw.push(diagnosticRect(trackingRect));
+    console.log(capture.get(trackingRect.x, trackingRect.y, trackingRect.width, trackingRect.height));
     var c = center(trackingRect);
     var rect = {
       x: canvasWidth - c.x,
