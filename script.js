@@ -64,8 +64,14 @@ function getLatestSmoothed(history, curr) {
   
   var smoothedPos = avg.interpolate(new Point(curr.x, curr.y), .5);
   
-  var newRect = {x: smoothedPos.x, y: smoothedPos.y,
-                 height: 100, width: 100, color: curr.color};
+  var newRect = {
+    x: smoothedPos.x,
+    y: smoothedPos.y,
+    height: curr.height,
+    width: curr.width,
+    color: curr.color,
+    time: curr.time
+  };
   
   return newRect;
 }
@@ -89,10 +95,11 @@ function onTrack(event) {
       time: Date.now(),
     };
   
+    // filter out a bunch of things that probably aren't a lightbulb
     if (rect.width * rect.height < 1000) { return };
+    if (rect.width * rect.height > 10000) { return };
     if (rect.width > rect.height*2) { return };
     if (rect.height > rect.width*2) { return };
-
     
     
     var timeGap;
@@ -100,10 +107,13 @@ function onTrack(event) {
     if (length === 0) {
       timeGap = Infinity;
     } else {
+      console.log(rect.time, trackerHistory[rect.color].last().time);
       timeGap = rect.time - trackerHistory[rect.color].last().time;
     }
     
-    if (timeGap > 3000) {
+    console.log(timeGap);
+    
+    if (timeGap > 500) {
       newAppearance(rect);
     }
     
@@ -133,7 +143,6 @@ function drawVideoOnCanvas(capture) {
 function diagnosticRect(trackingRect) {
   return {
     draw: (now) => {
-      console.log("foo");
       var { x, y, width, height } = trackingRect; 
       push()
       // I'll admit I'm now sure why this has to be mirrored
