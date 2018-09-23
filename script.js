@@ -1,7 +1,7 @@
 var capture;
 var tracker;
 
-const historySize = 5000;
+const historySize = 50;
 
 trackerHistory = {
   //"red": new CBuffer(historySize),
@@ -46,7 +46,7 @@ toDraw = [];
 
 function getLatestSmoothed(history, curr) {
   
-  var iterations = 2;
+  var iterations = 3;
   
   if (history.length < iterations) {
     return curr;
@@ -96,7 +96,7 @@ function onTrack(event) {
     };
   
     // filter out a bunch of things that probably aren't a lightbulb
-    if (rect.width * rect.height < 1000) { return };
+    if (rect.width * rect.height < 800) { return };
     if (rect.width * rect.height > 10000) { return };
     if (rect.width > rect.height*2) { return };
     if (rect.height > rect.width*2) { return };
@@ -107,13 +107,11 @@ function onTrack(event) {
     if (length === 0) {
       timeGap = Infinity;
     } else {
-      console.log(rect.time, trackerHistory[rect.color].last().time);
       timeGap = rect.time - trackerHistory[rect.color].last().time;
     }
-    
-    console.log(timeGap);
-    
+        
     if (timeGap > 500) {
+      trackerHistory[rect.color].empty();
       newAppearance(rect);
     }
     
