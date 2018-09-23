@@ -76,8 +76,19 @@ function getLatestSmoothed(history, curr) {
   return newRect;
 }
 
+function decideColor(pixels, rect) {
+  //first we need to slice the pixels that are part of this rect out of the larger pixels array
+  var startIdx = rect.x * canvasWidth + rect.y
+  var endIdx = (rect.x+rect.width) * canvasWidth + (rect.y + rect.height)
+  console.log(startIdx);
+  for (var i=startIdx; i+=4; i <= endIdx) {
+    pixels[i] = 0;
+  }
+}
+
 function onTrack(event) {
   
+  // necessary to use capture.pixels later.
   capture.loadPixels()
   
   if (event.data.length > 0) {
@@ -89,7 +100,7 @@ function onTrack(event) {
   event.data.forEach(function (trackingRect) {
     toDraw.push(diagnosticRect(trackingRect));
         
-    
+    decideColor(capture.pixels, trackingRect);
     
     var c = center(trackingRect);
     var rect = {
