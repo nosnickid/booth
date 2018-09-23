@@ -78,6 +78,8 @@ function getLatestSmoothed(history, curr) {
 
 function onTrack(event) {
   
+  capture.loadPixels()
+  
   if (event.data.length > 0) {
     stuffOnScreen = true;
   } else {
@@ -86,7 +88,7 @@ function onTrack(event) {
   
   event.data.forEach(function (trackingRect) {
     toDraw.push(diagnosticRect(trackingRect));
-    
+        
     
     
     var c = center(trackingRect);
