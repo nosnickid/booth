@@ -4,8 +4,8 @@ var tracker;
 const historySize = 5000;
 
 trackerHistory = {
-  "red": new CBuffer(historySize),
-  //"white": new CBuffer(historySize),
+  //"red": new CBuffer(historySize),
+  "white": new CBuffer(historySize),
 }
 
 function setup() {
@@ -25,7 +25,7 @@ function setup() {
     tracking.ColorTracker.registerColor('white', function(r, g, b) {
      return r >= 250 && g >= 250 && b >= 250;
     });
-     tracking.ColorTracker.registerColor('red', function(r, g, b) {
+    tracking.ColorTracker.registerColor('red', function(r, g, b) {
        return colorDistance({r: r, g: g, b: b}, {r: 240, g: 185, b: 200}) < 50;
     });
   
@@ -38,7 +38,7 @@ function setup() {
   
     tracker.on('track', onTrack);
   
-    //yellowtailSetup();
+    yellowtailSetup();
 }
 
 toDraw = [];
@@ -89,6 +89,7 @@ function onTrack(event) {
       time: Date.now(),
     };
   
+    if (rect.width * rect.height < 2000) { return };
     
     var timeGap;
     var length = trackerHistory[rect.color].length;
