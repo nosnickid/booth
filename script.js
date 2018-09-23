@@ -21,7 +21,7 @@ function setup() {
     capture.elt.setAttribute('playsinline', '');
     capture.size(canvasWidth, canvasHeight);
     cnv = createCanvas(canvasWidth, canvasHeight);
-
+  
     tracking.ColorTracker.registerColor('white', function(r, g, b) {
      return r >= 250 && g >= 250 && b >= 250;
     });
@@ -77,6 +77,7 @@ function getLatestSmoothed(history, curr) {
 }
 
 function onTrack(event) {
+  
   if (event.data.length > 0) {
     stuffOnScreen = true;
   } else {
@@ -85,10 +86,9 @@ function onTrack(event) {
   
   event.data.forEach(function (trackingRect) {
     toDraw.push(diagnosticRect(trackingRect));
-    if (capture.drawingContext) {
-      console.log(capture.get(2,3));
-    }
-
+    
+    
+    
     var c = center(trackingRect);
     var rect = {
       x: canvasWidth - c.x,
