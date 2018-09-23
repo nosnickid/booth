@@ -26,7 +26,7 @@ function setup() {
      return r >= 250 && g >= 250 && b >= 250;
     });
      tracking.ColorTracker.registerColor('red', function(r, g, b) {
-       return (r > 250 && g < 50 && b < 50) || (r > 240 && (g < 220 && g > 180) && (b < 210 && b > 70));
+       return colorDistance({r: r, g: g, b: b}, {r: 240, g: 185, b: 200}) < 50;
     });
   
     var tracker = new tracking.ColorTracker(Object.keys(trackerHistory));
@@ -38,7 +38,7 @@ function setup() {
   
     tracker.on('track', onTrack);
   
-    yellowtailSetup();
+    //yellowtailSetup();
 }
 
 toDraw = [];
