@@ -74,22 +74,32 @@ function getLatestSmoothed(history, curr) {
 
 function analyzeColor(pixels, rect) {
   // sum up to the r, g, b value so we can average them later
+  
+  const WHITE_THRESH = 250
+  const HIGH_THRESH = 220;
+  const OW_THRESH = 20;
+  
   let totals = [0,0,0];
   let pixelCount = 0;
   let overrepresentations = [0,0,0];
+  let veryColoredPixels = [0,0,0];
   for (let y=rect.y; y <= rect.y+rect.height; y++) {
     for (let x=rect.x; x<= rect.x+rect.width; x++) {      
       let r = pixels[index2Dto1D(x, y)];
       let g = pixels[index2Dto1D(x, y)+1];
       let b = pixels[index2Dto1D(x, y)+2];
       // skip white pixels
-      if (r > 230 && g > 230 && b > 230) { continue };
+      if (r > WHITE_THRESH && g > WHITE_THRESH && b > 230) { continue };
+      if (r > 220 && g < 20 && b < 20) { veryColoredPixels[0] += 1 };
+      if (r < 20 && g > 220 && b > 220) { veryColoredPixels[0] += 1 };
+
       totals[0] += r;
       totals[1] += g;
       totals[2] += b;
       overrepresentations[0] += (r - g) + (r - b);
       overrepresentations[1] += (g - r) + (g - b);
       overrepresentations[2] += (b - r) + (b - g);
+
       pixelCount += 1;
     }
   }
@@ -97,7 +107,6 @@ function analyzeColor(pixels, rect) {
   let data = {
     "average_nonwhite_rgb": [totals[0]/pixelCount, totals[1]/pixelCount, totals[2]/pixelCount],
     "overreps": overrepresentations[0]
-    "major
   };
   
   return data;
