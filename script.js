@@ -72,7 +72,7 @@ function getLatestSmoothed(history, curr) {
   return newRect;
 }
 
-function decideColor(pixels, rect) {
+function analyzeColor(pixels, rect) {
   // sum up to the r, g, b value so we can average them later
   let totals = [0,0,0];
   let pixelCount = 0;
@@ -83,10 +83,16 @@ function decideColor(pixels, rect) {
       let b = pixels[index2Dto1D(x, y)+2];
       // skip white pixels
       if (r > 250 && g > 250 && b > 250) { continue };
+      totals[0] += r;
+      totals[1] += g;
+      totals[2] += b;
       pixelCount += 1;
     }
   }
-  return {"average_nonwhite_rgb": [totals[0]/pixelCount, totals[1]/pixelCount, totals[2]/pixelCount]};
+
+  let data = {"average_nonwhite_rgb": [totals[0]/pixelCount, totals[1]/pixelCount, totals[2]/pixelCount]};
+  
+  console.log(rect, data["average_nonwhite_rgb"]);
 }
 
 function onTrack(event) {
@@ -103,7 +109,7 @@ function onTrack(event) {
   event.data.forEach(function (trackingRect) {
     toDraw.push(diagnosticRect(trackingRect));
         
-    console.log(decideColor(capture.pixels, trackingRect));
+    analyzeColor(capture.pixels, trackingRect);
     
     var c = center(trackingRect);
     var rect = {
