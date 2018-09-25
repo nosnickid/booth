@@ -97,6 +97,7 @@ function analyzeColor(pixels, rect) {
   let data = {
     "average_nonwhite_rgb": [totals[0]/pixelCount, totals[1]/pixelCount, totals[2]/pixelCount],
     "overreps": overrepresentations[0]
+    "major
   };
   
   return data;
