@@ -4,7 +4,6 @@ var tracker;
 const historySize = 50;
 
 trackerHistory = {
-  //"red": new CBuffer(historySize),
   "white": new CBuffer(historySize),
 }
 
@@ -24,9 +23,6 @@ function setup() {
   
     tracking.ColorTracker.registerColor('white', function(r, g, b) {
      return r >= 250 && g >= 250 && b >= 250;
-    });
-    tracking.ColorTracker.registerColor('red', function(r, g, b) {
-       return colorDistance({r: r, g: g, b: b}, {r: 240, g: 185, b: 200}) < 50;
     });
   
     var tracker = new tracking.ColorTracker(Object.keys(trackerHistory));
@@ -77,11 +73,20 @@ function getLatestSmoothed(history, curr) {
 }
 
 function decideColor(pixels, rect) {
-  for (var i=rect.y; i <= rect.y+rect.height; i++) {
-    for (var j=rect.x; j<= rect.x+rect.width; j++) {
-      pixels[index2Dto1D(j,i)] = 0;
+  // sum up to the r, g, b value so we can average them later
+  let totals = [0,0,0];
+  let pixelCount = 0;
+  for (let y=rect.y; y <= rect.y+rect.height; y++) {
+    for (let x=rect.x; x<= rect.x+rect.width; x++) {      
+      let r = pixels[index2Dto1D(x, y)];
+      let g = pixels[index2Dto1D(x, y)+1];
+      let b = pixels[index2Dto1D(x, y)+2];
+      // skip white pixels
+      if (r > 250 && g > 250 && b > 250) { continue };
+      pixelCount += 1;
     }
   }
+  return {"average_nonwhite_rgb": [totals[0]/pixelCount, totals[1]/pixelCount, totals[2]/pixelCount]};
 }
 
 function onTrack(event) {
@@ -98,7 +103,7 @@ function onTrack(event) {
   event.data.forEach(function (trackingRect) {
     toDraw.push(diagnosticRect(trackingRect));
         
-    //decideColor(capture.pixels, trackingRect);
+    console.log(decideColor(capture.pixels, trackingRect));
     
     var c = center(trackingRect);
     var rect = {
@@ -111,10 +116,10 @@ function onTrack(event) {
     };
   
     // filter out a bunch of things that probably aren't a lightbulb
-    if (rect.width * rect.height < 800) { return };
-    if (rect.width * rect.height > 10000) { return };
-    if (rect.width > rect.height*2) { return };
-    if (rect.height > rect.width*2) { return };
+    //if (rect.width * rect.height < 800) { return };
+    //if (rect.width * rect.height > 10000) { return };
+    //if (rect.width > rect.height*2) { return };
+    //if (rect.height > rect.width*2) { return };
     
     
     var timeGap;
