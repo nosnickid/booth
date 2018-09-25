@@ -42,7 +42,7 @@ toDraw = [];
 
 function getLatestSmoothed(history, curr) {
   
-  var iterations = 10;
+  var iterations = 2;
   
   if (history.length < iterations) {
     return curr;
@@ -83,7 +83,7 @@ function analyzeColor(pixels, rect) {
       let g = pixels[index2Dto1D(x, y)+1];
       let b = pixels[index2Dto1D(x, y)+2];
       // skip white pixels
-      if (r > 250 && g > 250 && b > 250) { continue };
+      if (r > 230 && g > 230 && b > 230) { continue };
       totals[0] += r;
       totals[1] += g;
       totals[2] += b;
@@ -111,6 +111,7 @@ function onTrack(event) {
     stuffOnScreen = true;
   } else {
     stuffOnScreen = false; 
+    return;
   }
   
   let reddestTrackingRect = event.data.reduce(function(reddestSoFar, trackingRect) {
