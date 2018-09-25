@@ -77,7 +77,7 @@ function analyzeColor(pixels, rect) {
   
   const WHITE_THRESH = 250
   const HIGH_THRESH = 220;
-  const OW_THRESH = 20;
+  const LOW_THRESH = 20;
   
   let totals = [0,0,0];
   let pixelCount = 0;
