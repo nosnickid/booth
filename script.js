@@ -76,6 +76,7 @@ function analyzeColor(pixels, rect) {
   // sum up to the r, g, b value so we can average them later
   let totals = [0,0,0];
   let pixelCount = 0;
+  let overrepresentations = [0,0,0];
   for (let y=rect.y; y <= rect.y+rect.height; y++) {
     for (let x=rect.x; x<= rect.x+rect.width; x++) {      
       let r = pixels[index2Dto1D(x, y)];
@@ -86,13 +87,19 @@ function analyzeColor(pixels, rect) {
       totals[0] += r;
       totals[1] += g;
       totals[2] += b;
+      overrepresentations[0] += (r - g) + (r - b);
+      overrepresentations[1] += (g - r) + (g - b);
+      overrepresentations[2] += (b - r) + (b - g);
       pixelCount += 1;
     }
   }
 
-  let data = {"average_nonwhite_rgb": [totals[0]/pixelCount, totals[1]/pixelCount, totals[2]/pixelCount]};
+  let data = {
+    "average_nonwhite_rgb": [totals[0]/pixelCount, totals[1]/pixelCount, totals[2]/pixelCount],
+    "red_overrep": overrepresentations[0]
+  };
   
-  console.log(rect, data["average_nonwhite_rgb"]);
+  console.log(rect, data["red_overrep"]);
 }
 
 function onTrack(event) {
