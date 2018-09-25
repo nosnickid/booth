@@ -96,10 +96,10 @@ function analyzeColor(pixels, rect) {
 
   let data = {
     "average_nonwhite_rgb": [totals[0]/pixelCount, totals[1]/pixelCount, totals[2]/pixelCount],
-    "red_overrep": overrepresentations[0]
+    "overreps": overrepresentations[0]
   };
   
-  console.log(rect, data["red_overrep"]);
+  return data;
 }
 
 function onTrack(event) {
@@ -113,50 +113,62 @@ function onTrack(event) {
     stuffOnScreen = false; 
   }
   
-  event.data.forEach(function (trackingRect) {
-    toDraw.push(diagnosticRect(trackingRect));
-        
-    analyzeColor(capture.pixels, trackingRect);
-    
-    var c = center(trackingRect);
-    var rect = {
-      x: canvasWidth - c.x,
-      y: c.y,
-      width: trackingRect.width,
-      height: trackingRect.height,
-      color: trackingRect.color,
-      time: Date.now(),
-    };
-  
-    // filter out a bunch of things that probably aren't a lightbulb
-    //if (rect.width * rect.height < 800) { return };
-    //if (rect.width * rect.height > 10000) { return };
-    //if (rect.width > rect.height*2) { return };
-    //if (rect.height > rect.width*2) { return };
-    
-    
-    var timeGap;
-    var length = trackerHistory[rect.color].length;
-    if (length === 0) {
-      timeGap = Infinity;
+  let reddestTrackingRect = event.data.reduce(function(reddestSoFar, trackingRect) {
+    let currData = analyzeColor(capture.pixels, trackingRect);
+    // TODO cache this on the trackingRect after computing it if necessary
+    let bestData = analyzeColor(capture.pixels, reddestSoFar);
+    if (currData["overreps"][0] > bestData["overreps"][0]) {
+      return trackingRect;
     } else {
-      timeGap = rect.time - trackerHistory[rect.color].last().time;
+      return reddestSoFar;
     }
-        
-    if (timeGap > 500) {
-      trackerHistory[rect.color].empty();
-      newAppearance(rect);
-    }
-    
-    var smoothed = getLatestSmoothed(trackerHistory[rect.color], rect);    
-    trackerHistory[rect.color].push(smoothed);
-    
-    continueGesture(smoothed);
-    
-    //toDraw.push(new Flower(smoothed));
   });
+  
+  let trackingRect = reddestTrackingRect;
+  
+  toDraw.push(diagnosticRect(trackingRect));      
+    
+    
+  var c = center(trackingRect);
+  var rect = {
+    x: canvasWidth - c.x,
+    y: c.y,
+    width: trackingRect.width,
+    height: trackingRect.height,
+    color: trackingRect.color,
+    time: Date.now(),
+  };
+  
+  // filter out a bunch of things that probably aren't a lightbulb
+  //if (rect.width * rect.height < 800) { return };
+  //if (rect.width * rect.height > 10000) { return };
+  //if (rect.width > rect.height*2) { return };
+  //if (rect.height > rect.width*2) { return };
+  
+  
+  var timeGap;
+  var length = trackerHistory[rect.color].length;
+  if (length === 0) {
+    timeGap = Infinity;
+  } else {
+    timeGap = rect.time - trackerHistory[rect.color].last().time;
+  }
+    
+  if (timeGap > 500) {
+    trackerHistory[rect.color].empty();
+    newAppearance(rect);
+  }
+   
+  var smoothed = getLatestSmoothed(trackerHistory[rect.color], rect);    
+  trackerHistory[rect.color].push(smoothed);
+  
+  continueGesture(smoothed);
+   
+    //toDraw.push(new Flower(smoothed));
+  
   capture.updatePixels();
-}
+};
+
 
 function newAppearance(rect) {
   newGesture(rect); 
