@@ -113,10 +113,9 @@ function analyzeColor(pixels, rect) {
 
   let data = {
     "average_nonwhite_rgb": [totals[0]/pixelCount, totals[1]/pixelCount, totals[2]/pixelCount],
-    "overreps": overrepresentations[0],
+    "overreps": overrepresentations,
     "very_colored": veryColoredPixels,
   };
-  console.log(data["overreps"]);
   return data;
 }
 
@@ -132,6 +131,8 @@ function onTrack(event) {
     return;
   }
   
+  event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));   
+  
   let reddestTrackingRect = event.data.reduce(function(reddestSoFar, trackingRect) {
     let currData = analyzeColor(capture.pixels, trackingRect);
     // TODO cache this on the trackingRect after computing it if necessary
@@ -143,9 +144,7 @@ function onTrack(event) {
     }
   });
   
-  let trackingRect = reddestTrackingRect;
-  
-  toDraw.push(diagnosticRect(trackingRect));      
+  let trackingRect = reddestTrackingRect;   
     
     
   var c = center(trackingRect);
