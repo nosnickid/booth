@@ -90,8 +90,15 @@ function analyzeColor(pixels, rect) {
       let b = pixels[index2Dto1D(x, y)+2];
       // skip white pixels
       if (r > WHITE_THRESH && g > WHITE_THRESH && b > 230) { continue };
-      if (r > 220 && g < 20 && b < 20) { veryColoredPixels[0] += 1 };
-      if (r < 20 && g > 220 && b > 220) { veryColoredPixels[0] += 1 };
+      if (r > HIGH_THRESH && g < LOW_THRESH && b < LOW_THRESH) {
+        veryColoredPixels[0] += 1
+      };
+      if (b > HIGH_THRESH && r < LOW_THRESH && g < LOW_THRESH) {
+        veryColoredPixels[1] += 1
+      };
+      if (b > HIGH_THRESH && r < LOW_THRESH && g < LOW_THRESH) {
+        veryColoredPixels[2] += 1
+      };      
 
       totals[0] += r;
       totals[1] += g;
@@ -106,9 +113,10 @@ function analyzeColor(pixels, rect) {
 
   let data = {
     "average_nonwhite_rgb": [totals[0]/pixelCount, totals[1]/pixelCount, totals[2]/pixelCount],
-    "overreps": overrepresentations[0]
+    "overreps": overrepresentations[0],
+    "very_colored": veryColoredPixels,
   };
-  
+  console.log(data["overreps"]);
   return data;
 }
 
