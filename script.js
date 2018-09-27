@@ -96,7 +96,7 @@ function analyzeColor(pixels, rect) {
       if (r > HIGH_THRESH && g < LOW_THRESH && b < LOW_THRESH) {
         veryColoredPixels[RED] += 1
       };
-      if (b > HIGH_THRESH && r < LOW_THRESH && g < LOW_THRESH) {
+      if (g > HIGH_THRESH && r < LOW_THRESH && b < LOW_THRESH) {
         veryColoredPixels[GREEN] += 1
       };
       if (b > HIGH_THRESH && r < LOW_THRESH && g < LOW_THRESH) {
@@ -135,6 +135,27 @@ function chooseRectForColor(pixels, rects, color) {
   });
 }
 
+function chooseBestRects(pixels, rects) {
+  let ret = [undefined, undefined, undefined];
+  for (let rect of rects) {
+    rect.analysisData = analyzeColor(pixels, rect); 
+  }
+  for (let color of [RED, GREEN, BLUE]) {
+    bestRect = rects[0];
+    bestIndex = 0
+    for(let i = 1; i < rects.length; i++) {
+      if (rects[i].analysisData["overreps"][color] > bestRect.analysisData["overreps"][color]) {
+        bestRect = rects[i];
+        bestIndex = i
+      }
+    }
+    ret[color] = bestRect
+    // remove this rect so it can't be matched to another color
+    rects.splice(bestIndex,1);
+  }
+  return ret
+}
+
 function onTrack(event) {
   
   // necessary to use capture.pixels later.
@@ -149,7 +170,7 @@ function onTrack(event) {
   
   event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));   
   
-  let bestRects = chooseRect
+  let bestRects = chooseBestRects(event.data);
   
   bestRects[RED].color = "red";
   bestRects[BLUE].color = "blue";
