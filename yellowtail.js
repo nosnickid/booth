@@ -7,10 +7,9 @@ var tempP; // Polygon
 var tmpXp;
 var tmpYp;
 
-var colors = ["red", "green", "blue"];
+var colors = [RED, GREEN, BLUE];
 
 function yellowtailSetup() {
-  stroke(255,0,0);
 
 	maxGesturesPerColor = 5;  // Number of gestures
 	minMove = 3;     // Minimum travel for a new point
@@ -45,13 +44,13 @@ function yellowtailDraw() {
   updateGeometry();
 
   for (let color of colors) {
-    if (color === "red") {
+    if (color === RED) {
       fill(255,0,0);
       stroke(255,0,0);
-    } else if (color === "blue") {
+    } else if (color === GREEN) {
       fill(0,255,0);
       stroke(0,255,0);
-    } else if (color === "green") {
+    } else if (color === BLUE) {
       fill(0,0,255);
       stroke(0,0,255);
     }

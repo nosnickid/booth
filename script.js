@@ -3,12 +3,12 @@ var tracker;
 
 const historySize = 50;
 
-trackerHistory = {
-  "red": new CBuffer(historySize),
-  "blue": new CBuffer(historySize),
-  "green": new CBuffer(historySize),
-  "white": new CBuffer(historySize),
-}
+// the slots are R, G, B
+trackerHistory = [
+  new CBuffer(historySize),
+  new CBuffer(historySize),
+  new CBuffer(historySize),
+]
 
 function setup() {
     capture = createCapture({
@@ -119,6 +119,7 @@ function analyzeColor(pixels, rect) {
     "overreps": overrepresentations,
     "very_colored": veryColoredPixels,
   };
+  console.log(data);
   return data;
 }
 
@@ -153,7 +154,7 @@ function chooseBestRects(pixels, rects) {
     // remove this rect so it can't be matched to another color
     rects.splice(bestIndex,1);
   }
-  return ret
+  return ret;
 }
 
 function onTrack(event) {
@@ -170,13 +171,17 @@ function onTrack(event) {
   
   event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));   
   
-  let bestRects = chooseBestRects(event.data);
+  let bestRects = chooseBestRects(pixels, event.data);
   
-  bestRects[RED].color = "red";
-  bestRects[BLUE].color = "blue";
-  bestRects[GREEN].color = "green";  
+  for (let color of [RED, GREEN, BLUE]) {
+    if (bestRects[color] !== undefined) {
+      bestRects[color].color = color;
+    }
+  }
   
   for (let trackingRect of bestRects) {    
+    if (trackingRect === undefined) { continue };
+
     var c = center(trackingRect);
     var rect = {
       x: canvasWidth - c.x,
@@ -187,6 +192,8 @@ function onTrack(event) {
       time: Date.now(),
     };
   
+    console.log(rect, rect.color, trackerHistory, trackerHistory[rect.color]);
+    
     var timeGap;
     var length = trackerHistory[rect.color].length;
     if (length === 0) {
