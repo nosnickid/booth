@@ -7,6 +7,7 @@ trackerHistory = {
   "red": new CBuffer(historySize),
   "blue": new CBuffer(historySize),
   "green": new CBuffer(historySize),
+  "white": new CBuffer(historySize),
 }
 
 function setup() {
@@ -27,7 +28,7 @@ function setup() {
      return r >= 250 && g >= 250 && b >= 250;
     });
   
-    var tracker = new tracking.ColorTracker(Object.keys(trackerHistory));
+    var tracker = new tracking.ColorTracker("white");
 
     capture.elt.id = 'p5video';
     tracking.track('#p5video', tracker, {
@@ -114,11 +115,24 @@ function analyzeColor(pixels, rect) {
   }
 
   let data = {
-    "average_nonwhite_rgb": [totals[0]/pixelCount, totals[1]/pixelCount, totals[2]/pixelCount],
+    "average_nonwhite_rgb": [totals[RED]/pixelCount, totals[GREEN]/pixelCount, totals[BLUE]/pixelCount],
     "overreps": overrepresentations,
     "very_colored": veryColoredPixels,
   };
   return data;
+}
+
+function chooseRectForColor(pixels, rects, color) {
+  return rects.reduce(function(bestSoFar, trackingRect) {
+  let currData = analyzeColor(pixels, trackingRect);
+  // TODO cache this on the trackingRect after computing it if necessary
+  let bestData = analyzeColor(pixels, bestSoFar);
+  if (currData["overreps"][color] > bestData["overreps"][color]) {
+    return trackingRect;
+  } else {
+    return bestSoFar;
+  }
+});
 }
 
 function onTrack(event) {
@@ -135,57 +149,46 @@ function onTrack(event) {
   
   event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));   
   
-  let reddestTrackingRect = event.data.reduce(function(reddestSoFar, trackingRect) {
-    let currData = analyzeColor(capture.pixels, trackingRect);
-    // TODO cache this on the trackingRect after computing it if necessary
-    let bestData = analyzeColor(capture.pixels, reddestSoFar);
-    if (currData["overreps"][RED] > bestData["overreps"][RED]) {
-      return trackingRect;
+  let bestRects = [
+    chooseRectForColor(capture.pixels, event.data, RED),
+    chooseRectForColor(capture.pixels, event.data, GREEN),
+    chooseRectForColor(capture.pixels, event.data, BLUE),
+  ];
+  
+  bestRects[RED].color = "red";
+  bestRects[BLUE].color = "blue";
+  bestRects[GREEN].color = "green";  
+  
+  for (let trackingRect of bestRects) {    
+    var c = center(trackingRect);
+    var rect = {
+      x: canvasWidth - c.x,
+      y: c.y,
+      width: trackingRect.width,
+      height: trackingRect.height,
+      color: trackingRect.color,
+      time: Date.now(),
+    };
+  
+    var timeGap;
+    var length = trackerHistory[rect.color].length;
+    if (length === 0) {
+      timeGap = Infinity;
     } else {
-      return reddestSoFar;
+      timeGap = rect.time - trackerHistory[rect.color].last().time;
     }
-  });
-  
-  let trackingRect = reddestTrackingRect;   
     
-    
-  var c = center(trackingRect);
-  var rect = {
-    x: canvasWidth - c.x,
-    y: c.y,
-    width: trackingRect.width,
-    height: trackingRect.height,
-    color: trackingRect.color,
-    time: Date.now(),
-  };
-  
-  // filter out a bunch of things that probably aren't a lightbulb
-  //if (rect.width * rect.height < 800) { return };
-  //if (rect.width * rect.height > 10000) { return };
-  //if (rect.width > rect.height*2) { return };
-  //if (rect.height > rect.width*2) { return };
-  
-  
-  var timeGap;
-  var length = trackerHistory[rect.color].length;
-  if (length === 0) {
-    timeGap = Infinity;
-  } else {
-    timeGap = rect.time - trackerHistory[rect.color].last().time;
-  }
-    
-  if (timeGap > 500) {
-    trackerHistory[rect.color].empty();
-    newAppearance(rect);
-  }
+    if (timeGap > 500) {
+      trackerHistory[rect.color].empty();
+      newAppearance(rect);
+    }
    
-  var smoothed = getLatestSmoothed(trackerHistory[rect.color], rect);    
-  trackerHistory[rect.color].push(smoothed);
+    var smoothed = getLatestSmoothed(trackerHistory[rect.color], rect);    
+    trackerHistory[rect.color].push(smoothed);
   
-  continueGesture(smoothed);
-   
-    //toDraw.push(new Flower(smoothed));
-  
+    continueGesture(smoothed);
+  }    
+
   capture.updatePixels();
 };
 

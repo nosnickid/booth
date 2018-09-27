@@ -1,26 +1,26 @@
 
-var gestureArray;
+var gestures;
 var nGestures;  // Number of gestures
 var minMove;     // Minimum travel for a new point
-var currentGestureID;
 
 var tempP; // Polygon
 var tmpXp;
 var tmpYp;
 
-function yellowtailSetup() {
+function yellowtailSetup(colors) {
   stroke(255,0,0);
 	gestureArray = [];
 	nGestures = 5;  // Number of gestures
 	minMove = 3;     // Minimum travel for a new point
-	currentGestureID;
 
 	tempP; // Polygon
 	tmpXp = [];
 	tmpYp = [];
 
-	currentGestureID = -1;
-	gestureArray = new Array(nGestures);
+  gestures = {}
+  for (let color of colors) {
+    
+  }
 	
 	for (let i = 0; i < nGestures; i++) {
 	  gestureArray[i] = new Gesture(canvasWidth, canvasHeight);
