@@ -7,9 +7,11 @@ var tempP; // Polygon
 var tmpXp;
 var tmpYp;
 
-function yellowtailSetup(colors) {
+var colors = ["red", "green", "blue"];
+
+function yellowtailSetup() {
   stroke(255,0,0);
-	gestureArray = [];
+
 	maxGesturesPerColor = 5;  // Number of gestures
 	minMove = 3;     // Minimum travel for a new point
 
@@ -41,8 +43,16 @@ function clearGestures() {
 function yellowtailDraw() {
 
   updateGeometry();
-  fill(255,0,0);
+
   for (let color of colors) {
+    if (color === "red") {
+      fill(255, 0 
+    } else if (color === "blue") {
+      
+    } else if (color === "green") {
+      
+    }
+    
     for (let gesture of gestures[color]) {
        renderGesture(gesture, canvasWidth, canvasHeight);
     }
@@ -134,17 +144,18 @@ function renderGesture(gesture, w, h) {
 }
 
 function updateGeometry() {
-    var J;
-    for (let color of colors) {
-    for (let gesture of gestures[color].slice(0,-1)) {
-        if ((J = gestureArray[g]).exists) {
-            if (g != currentGestureID) {
-                advanceGesture(J);
-            } else if (!stuffOnScreen) {
-                advanceGesture(J);
-            }
+  var J;
+  for (let color of colors) {
+    for (let i =0; i < gestures[color].length; i++) {
+      if ((J = gestures[color][i]).exists) {
+        if (i != gestures[color].length) {
+          advanceGesture(J);
+        } else if (!stuffOnScreen) {
+          advanceGesture(J);
         }
+      }
     }
+  }
 }
 
 function advanceGesture(gesture) {
@@ -179,7 +190,7 @@ function advanceGesture(gesture) {
 }
 
 function clearGestures() {
-    for (let i = 0; i < nGestures; i++) {
-        gestureArray[i].clear();
-    }
+  for (let color of colors) {
+    gestures[color] = [];
+  }
 }
