@@ -119,7 +119,7 @@ function analyzeColor(pixels, rect) {
     "overreps": overrepresentations,
     "very_colored": veryColoredPixels,
   };
-  console.log(data);
+  console.log(rect, data);
   return data;
 }
 
@@ -141,18 +141,16 @@ function chooseBestRects(pixels, rects) {
   for (let rect of rects) {
     rect.analysisData = analyzeColor(pixels, rect); 
   }
-  for(let i = 0; i < rects.length; i++) {
+  for(let rect of rects) {
+    let bestColor = undefined;
+    let bestScore = -Infinity;
     for (let color of [RED, GREEN, BLUE]) {
-      bestRect = rects[0];
-      bestIndex = 0
-        if (rects[i].analysisData["overreps"][color] > bestRect.analysisData["overreps"][color]) {
-          bestRect = rects[i];
-          bestIndex = i;
-        }
+      if (rect.analysisData["overreps"][color] > bestScore) {
+        bestScore = rect.analysisData["overreps"][color];
+        bestColor = color;
       }
-      ret[color] = bestRect;
-     // remove this rect so it can't be matched to another color
-      rects.splice(bestIndex,1);
+    }
+    ret[bestColor] = rect;
   }
   return ret;
 }
