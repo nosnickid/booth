@@ -141,18 +141,18 @@ function chooseBestRects(pixels, rects) {
   for (let rect of rects) {
     rect.analysisData = analyzeColor(pixels, rect); 
   }
-  for (let color of [RED, GREEN, BLUE]) {
-    bestRect = rects[0];
-    bestIndex = 0
-    for(let i = 1; i < rects.length; i++) {
-      if (rects[i].analysisData["overreps"][color] > bestRect.analysisData["overreps"][color]) {
-        bestRect = rects[i];
-        bestIndex = i
+  for(let i = 0; i < rects.length; i++) {
+    for (let color of [RED, GREEN, BLUE]) {
+      bestRect = rects[0];
+      bestIndex = 0
+        if (rects[i].analysisData["overreps"][color] > bestRect.analysisData["overreps"][color]) {
+          bestRect = rects[i];
+          bestIndex = i;
+        }
       }
-    }
-    ret[color] = bestRect
-    // remove this rect so it can't be matched to another color
-    rects.splice(bestIndex,1);
+      ret[color] = bestRect;
+     // remove this rect so it can't be matched to another color
+      rects.splice(bestIndex,1);
   }
   return ret;
 }
@@ -191,9 +191,7 @@ function onTrack(event) {
       color: trackingRect.color,
       time: Date.now(),
     };
-  
-    console.log(rect, rect.color, trackerHistory, trackerHistory[rect.color]);
-    
+      
     var timeGap;
     var length = trackerHistory[rect.color].length;
     if (length === 0) {
