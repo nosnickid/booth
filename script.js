@@ -124,15 +124,15 @@ function analyzeColor(pixels, rect) {
 
 function chooseRectForColor(pixels, rects, color) {
   return rects.reduce(function(bestSoFar, trackingRect) {
-  let currData = analyzeColor(pixels, trackingRect);
-  // TODO cache this on the trackingRect after computing it if necessary
-  let bestData = analyzeColor(pixels, bestSoFar);
-  if (currData["overreps"][color] > bestData["overreps"][color]) {
-    return trackingRect;
-  } else {
-    return bestSoFar;
-  }
-});
+    let currData = analyzeColor(pixels, trackingRect);
+    // TODO cache this on the trackingRect after computing it if necessary
+   let bestData = analyzeColor(pixels, bestSoFar);
+    if (currData["overreps"][color] > bestData["overreps"][color]) {
+      return trackingRect;
+    } else {
+      return bestSoFar;
+    }
+  });
 }
 
 function onTrack(event) {
@@ -149,11 +149,7 @@ function onTrack(event) {
   
   event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));   
   
-  let bestRects = [
-    chooseRectForColor(capture.pixels, event.data, RED),
-    chooseRectForColor(capture.pixels, event.data, GREEN),
-    chooseRectForColor(capture.pixels, event.data, BLUE),
-  ];
+  let bestRects = chooseRect
   
   bestRects[RED].color = "red";
   bestRects[BLUE].color = "blue";
@@ -186,7 +182,7 @@ function onTrack(event) {
     var smoothed = getLatestSmoothed(trackerHistory[rect.color], rect);    
     trackerHistory[rect.color].push(smoothed);
   
-    continueGesture(smoothed);
+    continueGesture(rect.color, smoothed);
   }    
 
   capture.updatePixels();
@@ -194,7 +190,7 @@ function onTrack(event) {
 
 
 function newAppearance(rect) {
-  newGesture(rect); 
+  newGesture(rect.color, rect); 
 }
 
 function drawVideoOnCanvas(capture) {

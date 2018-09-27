@@ -46,15 +46,18 @@ function yellowtailDraw() {
 
   for (let color of colors) {
     if (color === "red") {
-      fill(255, 0 
+      fill(255,0,0);
+      stroke(255,0,0);
     } else if (color === "blue") {
-      
+      fill(0,255,0);
+      stroke(0,255,0);
     } else if (color === "green") {
-      
+      fill(0,0,255);
+      stroke(0,0,255);
     }
     
     for (let gesture of gestures[color]) {
-       renderGesture(gesture, canvasWidth, canvasHeight);
+      renderGesture(gesture, canvasWidth, canvasHeight);
     }
   }
 }
@@ -148,7 +151,7 @@ function updateGeometry() {
   for (let color of colors) {
     for (let i =0; i < gestures[color].length; i++) {
       if ((J = gestures[color][i]).exists) {
-        if (i != gestures[color].length) {
+        if (i != gestures[color].length-1) {
           advanceGesture(J);
         } else if (!stuffOnScreen) {
           advanceGesture(J);
