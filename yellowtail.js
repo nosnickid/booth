@@ -60,26 +60,22 @@ function newGesture(color, point) {
     gestures[color].push(G);
 }
 
-function continueGesture(point) {
-    if (currentGestureID >= 0) {
-        var G = gestureArray[currentGestureID];
-        if (G.distToLast(point.x, point.y) > minMove) {
-            G.addPoint(point.x, point.y);
-            G.smooth();
-            G.compile();
-        }
-    }
+function continueGesture(color, point) {
+  if (gestures[color].length == 0) {
+    console.warn("attempt to continue nonexistent gesture for color", color, "at point", point);
+  } else {
+      var G = gestures[color][gestures[color].length-1]
+      if (G.distToLast(point.x, point.y) > minMove) {
+          G.addPoint(point.x, point.y);
+          G.smooth();
+          G.compile();
+      }
+  }
 }
-
 
 function renderGesture(gesture, w, h) {
     
-    if (gesture.exists) {
-      
-      // debug shit
-    //console.log(gesture);
-      //
-      
+    if (gesture.exists) { 
       
         if (gesture.nPolys > 0) {
             var polygons = gesture.polygons;
@@ -139,7 +135,8 @@ function renderGesture(gesture, w, h) {
 
 function updateGeometry() {
     var J;
-    for (let g = 0; g < nGestures; g++) {
+    for (let color of colors) {
+    for (let gesture of gestures[color].slice(0,-1)) {
         if ((J = gestureArray[g]).exists) {
             if (g != currentGestureID) {
                 advanceGesture(J);
