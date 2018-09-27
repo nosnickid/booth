@@ -171,7 +171,7 @@ function onTrack(event) {
   
   event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));   
   
-  let bestRects = chooseBestRects(pixels, event.data);
+  let bestRects = chooseBestRects(capture.pixels, event.data);
   
   for (let color of [RED, GREEN, BLUE]) {
     if (bestRects[color] !== undefined) {
@@ -214,7 +214,7 @@ function onTrack(event) {
   }    
 
   capture.updatePixels();
-};
+}
 
 
 function newAppearance(rect) {
