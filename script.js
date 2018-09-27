@@ -4,7 +4,9 @@ var tracker;
 const historySize = 50;
 
 trackerHistory = {
-  "white": new CBuffer(historySize),
+  "red": new CBuffer(historySize),
+  "blue": new CBuffer(historySize),
+  "green": new CBuffer(historySize),
 }
 
 function setup() {
@@ -85,27 +87,27 @@ function analyzeColor(pixels, rect) {
   let veryColoredPixels = [0,0,0];
   for (let y=rect.y; y <= rect.y+rect.height; y++) {
     for (let x=rect.x; x<= rect.x+rect.width; x++) {      
-      let r = pixels[index2Dto1D(x, y)];
-      let g = pixels[index2Dto1D(x, y)+1];
-      let b = pixels[index2Dto1D(x, y)+2];
+      let r = pixels[index2Dto1D(x, y)+RED];
+      let g = pixels[index2Dto1D(x, y)+GREEN];
+      let b = pixels[index2Dto1D(x, y)+BLUE];
       // skip white pixels
       if (r > WHITE_THRESH && g > WHITE_THRESH && b > 230) { continue };
       if (r > HIGH_THRESH && g < LOW_THRESH && b < LOW_THRESH) {
-        veryColoredPixels[0] += 1
+        veryColoredPixels[RED] += 1
       };
       if (b > HIGH_THRESH && r < LOW_THRESH && g < LOW_THRESH) {
-        veryColoredPixels[1] += 1
+        veryColoredPixels[GREEN] += 1
       };
       if (b > HIGH_THRESH && r < LOW_THRESH && g < LOW_THRESH) {
-        veryColoredPixels[2] += 1
+        veryColoredPixels[BLUE] += 1
       };      
 
-      totals[0] += r;
-      totals[1] += g;
-      totals[2] += b;
-      overrepresentations[0] += (r - g) + (r - b);
-      overrepresentations[1] += (g - r) + (g - b);
-      overrepresentations[2] += (b - r) + (b - g);
+      totals[RED] += r;
+      totals[GREEN] += g;
+      totals[BLUE] += b;
+      overrepresentations[RED] += (r - g) + (r - b);
+      overrepresentations[GREEN] += (g - r) + (g - b);
+      overrepresentations[BLUE] += (b - r) + (b - g);
 
       pixelCount += 1;
     }
@@ -137,7 +139,7 @@ function onTrack(event) {
     let currData = analyzeColor(capture.pixels, trackingRect);
     // TODO cache this on the trackingRect after computing it if necessary
     let bestData = analyzeColor(capture.pixels, reddestSoFar);
-    if (currData["overreps"][0] > bestData["overreps"][0]) {
+    if (currData["overreps"][RED] > bestData["overreps"][RED]) {
       return trackingRect;
     } else {
       return reddestSoFar;
