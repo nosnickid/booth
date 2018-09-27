@@ -106,8 +106,9 @@ function analyzeColor(pixels, rect) {
       totals[RED] += r;
       totals[GREEN] += g;
       totals[BLUE] += b;
-      overrepresentations[RED] += (r - g) + (r - b);
-      overrepresentations[GREEN] += (g - r) + (g - b);
+      totalBrightness = totals[RED] + totals[GREEN] + totals[BLUE];
+      overrepresentations[RED] += ((r - g) + (r - b)) ;
+      overrepresentations[GREEN] += ((g - r) + (g - b);
       overrepresentations[BLUE] += (b - r) + (b - g);
 
       pixelCount += 1;
