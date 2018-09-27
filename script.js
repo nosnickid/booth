@@ -79,8 +79,8 @@ function analyzeColor(pixels, rect) {
   // sum up to the r, g, b value so we can average them later
   
   const WHITE_THRESH = 250
-  const HIGH_THRESH = 220;
-  const LOW_THRESH = 20;
+  const HIGH_THRESH = 200;
+  const LOW_THRESH = 50;
   
   let totals = [0,0,0];
   let pixelCount = 0;
@@ -119,7 +119,7 @@ function analyzeColor(pixels, rect) {
     "overreps": overrepresentations,
     "very_colored": veryColoredPixels,
   };
-  console.log(rect, data);
+  console.log(data["overreps"]);
   return data;
 }
 
