@@ -107,9 +107,9 @@ function analyzeColor(pixels, rect) {
       totals[GREEN] += g;
       totals[BLUE] += b;
       totalBrightness = totals[RED] + totals[GREEN] + totals[BLUE];
-      overrepresentations[RED] += ((r - g) + (r - b)) ;
-      overrepresentations[GREEN] += ((g - r) + (g - b);
-      overrepresentations[BLUE] += (b - r) + (b - g);
+      overrepresentations[RED] += ((r - g) + (r - b)) / totalBrightness;
+      overrepresentations[GREEN] += ((g - r) + (g - b)) / totalBrightness;
+      overrepresentations[BLUE] += ((b - r) + (b - g)) / totalBrightness;
 
       pixelCount += 1;
     }
@@ -120,7 +120,7 @@ function analyzeColor(pixels, rect) {
     "overreps": overrepresentations,
     "very_colored": veryColoredPixels,
   };
-  console.log(rect.x, data["overreps"]);
+  console.log(rect.x, data["overreps"][BLUE] - data["overreps"][GREEN]);
   return data;
 }
 
