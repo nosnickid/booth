@@ -174,13 +174,13 @@ function mapRectsToHistory(histories, trackingRects) {
         // match could be null if we ran out of rects to match to
         history.push(match);
         match.historyId = history.id;
-        matched.push(rect);
+        matched.push(match);
       }
     }
     // now if any rects are left, they're new. we create a history for each 
     // and push the rect onto it
     for (let rect of trackingRects) {
-      if (rect.historyId !== undefined) { continue };
+      if (matched.indexOf(rect) > -1) { continue };
       histories[currHistoryId] = CBuffer(50);
       histories[currHistoryId].push(rect);
       histories[currHistoryId].id = currHistoryId;
@@ -208,8 +208,18 @@ function mapRectsToHistory(histories, trackingRects) {
       if (match !== null) {
         // match could be null if we've matched all the rects
         // and have moved on to histories whose rects are gone
-        
+        match.push(rect);
+        rect.historyId = match.id;
+        matched.push(match);
       }
+    }
+    
+    // now, take any unmatched histories and delete them
+    // if they're too old
+    
+    for (let history of Object.values(histories)) {
+      if (matched.indexOf(history) > -1) { continue };
+      delete histories[history.id];
     }
   }
 }
