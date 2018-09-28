@@ -33,6 +33,11 @@ function delta(p1, p2) {
   }
 }
 
+// euclidean distance between two points
+function distance(p1, p2) {
+  return Math.sqrt(Math.pow(p2.x-p1.x, 2) + Math.pow(p2.y-p1.y, 2));
+}
+
 // calculates the center, assuming that the x and y positions are the corner
 function center(r) {
   return {

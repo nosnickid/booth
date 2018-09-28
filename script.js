@@ -3,12 +3,8 @@ var tracker;
 
 const historySize = 50;
 
-// the slots are R, G, B
-trackerHistory = [
-  new CBuffer(historySize),
-  new CBuffer(historySize),
-  new CBuffer(historySize),
-]
+// mapping from arbitrary object ids to history CBuffers
+trackerHistory = {}
 
 function setup() {
     capture = createCapture({
@@ -156,6 +152,31 @@ function chooseBestRects(pixels, rects) {
   return ret;
 }
 
+function mapRectsToHistory(histories, trackingRects) {
+  if (trackingRects.length === histories.length) {
+    // in this case, our task is relatively straightforward,
+    // we just need to decide which rect goes with which history
+    for (let rect of trackingRects) {
+      let closest = Infinity;
+      for (let history of histories) {
+        let dist = distance(rect, history.last());
+        if (dist < closest) {
+          closest = dist;
+        }
+      }
+    }
+  } else if (trackingRects.length > histories.length) {
+    // here a new rect has appeared. we need to loop through
+    // all the rects and match each up with a history, then create a new
+    // history and add it for the rects that are left unmatched
+  } else if (histories.length > trackingRects.length) {
+    // in this case, a rect has disappeared. we need to loop over all
+    // the histories, match each up with a rect, and then remove any leftover
+    // histories who's last even was more than some time T ago (this effectively
+    // gives rects a grace period to disappear and then reappear for a while)
+  }
+}
+
 function onTrack(event) {
   
   // necessary to use capture.pixels later.
@@ -169,6 +190,8 @@ function onTrack(event) {
   }
   
   event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));   
+  
+  mapRectsToHistory(trackerHistory, trackingRects);
   
   let bestRects = chooseBestRects(capture.pixels, event.data);
   
