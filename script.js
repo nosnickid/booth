@@ -153,6 +153,7 @@ function chooseBestRects(pixels, rects) {
 }
 
 function mapRectsToHistory(histories, trackingRects) {
+  console.log(histories, trackingRects);
   if (trackingRects.length >= Object.keys(histories).length) {
     // there's either a rect for each history, or some extra rects
     // there's definitely a rect for each history, so loop 
@@ -188,6 +189,7 @@ function mapRectsToHistory(histories, trackingRects) {
       currHistoryId++;
     }
   } else if (Object.keys(histories).length > trackingRects.length) {
+    console.log(histories, trackingRects);
     // in this case, a rect has disappeared. we need to loop over all
     // the rects, match each up with a history, and then remove any leftover
     // histories who's last appearance was more than some time T ago (this effectively
@@ -225,9 +227,11 @@ function mapRectsToHistory(histories, trackingRects) {
 }
 
 function onTrack(event) {
-  
+  console.log(event.data);
   // necessary to use capture.pixels later.
   capture.loadPixels()
+  
+  mapRectsToHistory(trackerHistory, event.data);
   
   if (event.data.length > 0) {
     stuffOnScreen = true;
@@ -235,9 +239,7 @@ function onTrack(event) {
     stuffOnScreen = false; 
     return;
   }
-  
-  mapRectsToHistory(trackerHistory, event.data);
-  
+    
   event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));   
   
   let bestRects = chooseBestRects(capture.pixels, event.data);
