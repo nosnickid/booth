@@ -121,6 +121,7 @@ function analyzeColor(pixels, rect) {
     "overreps": overrepresentations,
     "very_colored": veryColoredPixels,
   };
+  console.log(data["overreps"]);
   return data;
 }
 
@@ -157,20 +158,28 @@ function chooseBestRects(pixels, rects) {
 }
 
 function maxOverrep(color, history) {
-  return history.reduce((acc, tr) => Math.max(tr.analysisData.overreps[color], acc));
+  let max = -Infinity;
+  for (let i = 0; i < history.length; i++) {
+    let rect = history.get(i);
+    if (rect.analysisData["overreps"][color] > max) {
+      max = rect.analysisData["overreps"][color];
+    }
+  }
+  return max;
 }
+
 
 function pickColoredRects(histories) {
   ret = [];
   for (let history of Object.values(histories)) {
-    if (maxOverrep(RED, history) > 2) {
+    if (maxOverrep(RED, history) > 3) {
       history.last().color = RED;
       ret.push(history.last());
-    } else if (maxOverRep(GREEN, history) > 1) {
-      history.last().color = GREEN;
-      ret.push(history.last());
-    } else if (maxOverRep(BLUE, history) > 2) {
+    } else if (maxOverrep(BLUE, history) > 3) {
       history.last().color = BLUE;
+      ret.push(history.last());
+    } else if (maxOverrep(GREEN, history) > 1 && maxOverrep(BLUE, history) < 2) {
+      history.last().color = GREEN;
       ret.push(history.last());
     }
   }
