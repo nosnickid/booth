@@ -156,7 +156,7 @@ function chooseBestRects(pixels, rects) {
   return ret;
 }
 
-function mapRectsToHistory(histories, trackingRects) {
+function mapRectsToHistory(now, histories, trackingRects) {
   if (trackingRects.length >= Object.keys(histories).length) {
     // there's either a rect for each history, or some extra rects
     // there's definitely a rect for each history, so loop 
@@ -221,13 +221,10 @@ function mapRectsToHistory(histories, trackingRects) {
     // now, take any unmatched histories and delete them
     // if they're too old
     
-    let now = Date.now()
     for (let history of Object.values(histories)) {
       if (matched.indexOf(history) > -1) { continue };
       let timeGap = now - history.last().time;
-      console.log(now, history.last(), history.last().time);
-      // TODO is 500 the right number?
-      if (timeGap > 500) {
+      if (timeGap > 100) {
         delete histories[history.id];
       }
     }
@@ -241,7 +238,9 @@ function onTrack(event) {
   let now = Date.now()
   event.data.forEach((tr) => { tr.time = now });   
   
-  mapRectsToHistory(trackerHistory, event.data);
+  event.data.forEach((tr) => tr.analysisData = analyzeColor(capture.pixels, tr));
+  
+  mapRectsToHistory(now, trackerHistory, event.data);
   
   if (event.data.length > 0) {
     stuffOnScreen = true;
@@ -249,19 +248,17 @@ function onTrack(event) {
     stuffOnScreen = false; 
     return;
   }
-    
-  event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));   
   
-  let bestRects = chooseBestRects(capture.pixels, event.data);
+  event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));   
+    
+  let bestRects = 
   
   for (let color of [RED, GREEN, BLUE]) {
     if (bestRects[color] !== undefined) {
       bestRects[color].color = color;
     }
   }
-  
-  console.log(bestRects);
-  
+    
   for (let trackingRect of bestRects) {    
     if (trackingRect === undefined) { continue };
 
@@ -275,26 +272,12 @@ function onTrack(event) {
       time: trackingRect.time,
     };
     
-    /*
-    var timeGap;
-    var length = trackerHistory[rect.color].length;
-    if (length === 0) {
-      timeGap = Infinity;
-    } else {
-      timeGap = rect.time - trackerHistory[rect.color].last().time;
-    }
-    
-    if (timeGap > 500) {
-      trackerHistory[rect.color].empty();
-      newAppearance(rect);
-    }
-    */
-    
     if (rect.time - lastTimeSeen[rect.color] > 500) {
       newAppearance(rect);
     } else {
       continueGesture(rect);
     }
+    lastTimeSeen[rect.color] = now;
   }    
   capture.updatePixels();
 }
