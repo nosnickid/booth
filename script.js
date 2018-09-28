@@ -156,6 +156,27 @@ function chooseBestRects(pixels, rects) {
   return ret;
 }
 
+function maxOverrep(color, history) {
+  return history.reduce((acc, tr) => Math.max(tr.analysisData.overreps[color], acc));
+}
+
+function pickColoredRects(histories) {
+  ret = [];
+  for (let history of Object.values(histories)) {
+    if (maxOverrep(RED, history) > 2) {
+      history.last().color = RED;
+      ret.push(history.last());
+    } else if (maxOverRep(GREEN, history) > 1) {
+      history.last().color = GREEN;
+      ret.push(history.last());
+    } else if (maxOverRep(BLUE, history) > 2) {
+      history.last().color = BLUE;
+      ret.push(history.last());
+    }
+  }
+  return ret;
+}
+
 function mapRectsToHistory(now, histories, trackingRects) {
   if (trackingRects.length >= Object.keys(histories).length) {
     // there's either a rect for each history, or some extra rects
@@ -240,6 +261,8 @@ function onTrack(event) {
   
   event.data.forEach((tr) => tr.analysisData = analyzeColor(capture.pixels, tr));
   
+  // map rects to history needs to happen before the stuffOnScreen check
+  // since it triggers the removal of stale histories
   mapRectsToHistory(now, trackerHistory, event.data);
   
   if (event.data.length > 0) {
@@ -251,16 +274,10 @@ function onTrack(event) {
   
   event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));   
     
-  let bestRects = 
+  let coloredRects = pickColoredRects(trackerHistory);
   
-  for (let color of [RED, GREEN, BLUE]) {
-    if (bestRects[color] !== undefined) {
-      bestRects[color].color = color;
-    }
-  }
     
-  for (let trackingRect of bestRects) {    
-    if (trackingRect === undefined) { continue };
+  for (let trackingRect of coloredRects) {    
 
     var c = center(trackingRect);
     var rect = {
