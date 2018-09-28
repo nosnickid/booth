@@ -7,6 +7,10 @@ const historySize = 50;
 trackerHistory = {}
 currHistoryId = 0
 
+// we need to keep track of the last time we saw each color
+// so we know when to start a new Gesture
+lastTimeSeen = [-Infinity, -Infinity, -Infinity] // this is R, G, B
+
 function setup() {
     capture = createCapture({
         audio: false,
@@ -219,9 +223,14 @@ function mapRectsToHistory(histories, trackingRects) {
     // now, take any unmatched histories and delete them
     // if they're too old
     
+    let now = Date.now()
     for (let history of Object.values(histories)) {
       if (matched.indexOf(history) > -1) { continue };
-      delete histories[history.id];
+      let timeGap = now = history.last().time;
+      // TODO is 500 the right number?
+      if (timeGap > 500) {
+        delete histories[history.id];
+      }
     }
   }
 }
