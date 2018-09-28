@@ -3,8 +3,12 @@ var tracker;
 
 const historySize = 50;
 
-// this is a mapping from arbitrary object ids to their histories
-trackerHistory = {}
+// the slots are R, G, B
+trackerHistory = [
+  new CBuffer(historySize),
+  new CBuffer(historySize),
+  new CBuffer(historySize),
+]
 
 function setup() {
     capture = createCapture({
@@ -82,14 +86,13 @@ function analyzeColor(pixels, rect) {
   let pixelCount = 0;
   let overrepresentations = [0,0,0];
   let veryColoredPixels = [0,0,0];
-  let whitePixels = 0
   for (let y=rect.y; y <= rect.y+rect.height; y++) {
     for (let x=rect.x; x<= rect.x+rect.width; x++) {      
       let r = pixels[index2Dto1D(x, y)+RED];
       let g = pixels[index2Dto1D(x, y)+GREEN];
       let b = pixels[index2Dto1D(x, y)+BLUE];
-      
-      if (r > WHITE_THRESH && g > WHITE_THRESH && b > 230) { whitePixels++ };
+      // skip white pixels
+      if (r > WHITE_THRESH && g > WHITE_THRESH && b > 230) { continue };
       if (r > HIGH_THRESH && g < LOW_THRESH && b < LOW_THRESH) {
         veryColoredPixels[RED] += 1
       };
@@ -116,9 +119,8 @@ function analyzeColor(pixels, rect) {
     "average_nonwhite_rgb": [totals[RED]/pixelCount, totals[GREEN]/pixelCount, totals[BLUE]/pixelCount],
     "overreps": overrepresentations,
     "very_colored": veryColoredPixels,
-    "prop_white_pixels": whitePixels/pixelCount,
   };
-  console.log(rect.x, data["overreps"], data["prop_white_pixels"]);
+  console.log(rect.x, data["overreps"][BLUE] - data["overreps"][GREEN]);
   return data;
 }
 
@@ -135,12 +137,12 @@ function chooseRectForColor(pixels, rects, color) {
   });
 }
 
-function findMostColored(pixels, trackingRects) {
+function chooseBestRects(pixels, rects) {
   let ret = [undefined, undefined, undefined];
-  for (let rect of trackingRects) {
+  for (let rect of rects) {
     rect.analysisData = analyzeColor(pixels, rect); 
   }
-  for(let rect of trackingRects) {
+  for(let rect of rects) {
     let bestColor = undefined;
     let bestScore = -Infinity;
     for (let color of [RED, GREEN, BLUE]) {
@@ -168,7 +170,7 @@ function onTrack(event) {
   
   event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));   
   
-  let bestRects = findMostColored(capture.pixels, event.data);
+  let bestRects = chooseBestRects(capture.pixels, event.data);
   
   for (let color of [RED, GREEN, BLUE]) {
     if (bestRects[color] !== undefined) {
