@@ -157,7 +157,6 @@ function chooseBestRects(pixels, rects) {
 }
 
 function mapRectsToHistory(histories, trackingRects) {
-  console.log(histories, trackingRects);
   if (trackingRects.length >= Object.keys(histories).length) {
     // there's either a rect for each history, or some extra rects
     // there's definitely a rect for each history, so loop 
@@ -193,7 +192,6 @@ function mapRectsToHistory(histories, trackingRects) {
       currHistoryId++;
     }
   } else if (Object.keys(histories).length > trackingRects.length) {
-    console.log(histories, trackingRects);
     // in this case, a rect has disappeared. we need to loop over all
     // the rects, match each up with a history, and then remove any leftover
     // histories who's last appearance was more than some time T ago (this effectively
@@ -226,7 +224,8 @@ function mapRectsToHistory(histories, trackingRects) {
     let now = Date.now()
     for (let history of Object.values(histories)) {
       if (matched.indexOf(history) > -1) { continue };
-      let timeGap = now = history.last().time;
+      let timeGap = now - history.last().time;
+      console.log(now, history.last(), history.last().time);
       // TODO is 500 the right number?
       if (timeGap > 500) {
         delete histories[history.id];
@@ -236,9 +235,11 @@ function mapRectsToHistory(histories, trackingRects) {
 }
 
 function onTrack(event) {
-  console.log(event.data);
   // necessary to use capture.pixels later.
   capture.loadPixels()
+
+  let now = Date.now()
+  event.data.forEach((tr) => { tr.time = now });   
   
   mapRectsToHistory(trackerHistory, event.data);
   
@@ -259,6 +260,8 @@ function onTrack(event) {
     }
   }
   
+  console.log(bestRects);
+  
   for (let trackingRect of bestRects) {    
     if (trackingRect === undefined) { continue };
 
@@ -269,7 +272,7 @@ function onTrack(event) {
       width: trackingRect.width,
       height: trackingRect.height,
       color: trackingRect.color,
-      time: Date.now(),
+      time: trackingRect.time,
     };
     
     /*
@@ -286,16 +289,13 @@ function onTrack(event) {
       newAppearance(rect);
     }
     */
-   
-    //var smoothed = getLatestSmoothed(trackerHistory[rect.color], rect);    
-    //trackerHistory[rect.color].push(smoothed);
-  
-
     
-    
-    //continueGesture(rect.color, rect);
+    if (rect.time - lastTimeSeen[rect.color] > 500) {
+      newAppearance(rect);
+    } else {
+      continueGesture(rect);
+    }
   }    
-
   capture.updatePixels();
 }
 

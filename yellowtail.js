@@ -72,13 +72,13 @@ function newGesture(color, point) {
     gestures[color].push(G);
 }
 
-function continueGesture(color, point) {
-  if (gestures[color].length == 0) {
-    console.warn("attempt to continue nonexistent gesture for color", color, "at point", point);
+function continueGesture(rect) {
+  if (gestures[rect.color].length == 0) {
+    console.warn("attempt to continue nonexistent gesture with rect", rect);
   } else {
-      var G = gestures[color][gestures[color].length-1]
-      if (G.distToLast(point.x, point.y) > minMove) {
-          G.addPoint(point.x, point.y);
+      var G = gestures[rect.color][gestures[rect.color].length-1]
+      if (G.distToLast(rect.x, rect.y) > minMove) {
+          G.addPoint(rect.x, rect.y);
           G.smooth();
           G.compile();
       }
