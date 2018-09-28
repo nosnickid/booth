@@ -117,7 +117,6 @@ function analyzeColor(pixels, rect) {
     "overreps": overrepresentations,
     "very_colored": veryColoredPixels,
   };
-  console.log(rect.x, data["overreps"][BLUE] - data["overreps"][GREEN]);
   return data;
 }
 
@@ -154,14 +153,15 @@ function chooseBestRects(pixels, rects) {
 }
 
 function mapRectsToHistory(histories, trackingRects) {
-  console.log(trackingRects, histories);
+  console.log(trackingRects, Object.keys(histories));
   if (trackingRects.length >= Object.keys(histories).length) {
+    console.log("in");
     // first we loop through all the rects and find which ones
     // go with which history
     for (let rect of trackingRects) {
-      let matchedHistoryIDs = [];
-      let closest = Infinity;
-      let match = null;
+      var matchedHistoryIDs = [];
+      var closest = Infinity;
+      var match = null;
       for (let history of Object.values(histories)) {
         if (matchedHistoryIDs.indexOf(history.id) > -1) { continue };
         let dist = distance(rect, history.last());
@@ -170,6 +170,8 @@ function mapRectsToHistory(histories, trackingRects) {
           match = history;
         }
       }
+      
+      console.log(match);
       if (match !== null) {
         // match could be null if there were no histories to match to
         // TODO consider smoothing the rect here 
@@ -177,17 +179,19 @@ function mapRectsToHistory(histories, trackingRects) {
         rect.historyId = match.id;
         matchedHistoryIDs.push(match.id);
       }
+      console.log(rect);
     }
     // now if any rects are left, they're new. we create a history for each 
     // and push the rect onto it
     for (let rect of trackingRects) {
       if (rect.historyId !== undefined) { continue };
+      console.log("doing bad thing");
       histories[currHistoryId] = CBuffer(50);
       histories[currHistoryId].push(rect);
       rect.historyId = currHistoryId;
       currHistoryId++;
     }
-  } else if (histories.length > Object.keys(histories).length) {
+  } else if (Object.keys(histories).length > trackingRects.length) {
     // in this case, a rect has disappeared. we need to loop over all
     // the histories, match each up with a rect, and then remove any leftover
     // histories who's last even was more than some time T ago (this effectively
@@ -197,6 +201,7 @@ function mapRectsToHistory(histories, trackingRects) {
 }
 
 function onTrack(event) {
+  console.log(event.data);
   
   // necessary to use capture.pixels later.
   capture.loadPixels()
