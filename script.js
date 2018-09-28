@@ -3,12 +3,8 @@ var tracker;
 
 const historySize = 50;
 
-// the slots are R, G, B
-trackerHistory = [
-  new CBuffer(historySize),
-  new CBuffer(historySize),
-  new CBuffer(historySize),
-]
+// this is a mapping from arbitrary object ids to their histories
+trackerHistory = {}
 
 function setup() {
     capture = createCapture({
@@ -140,7 +136,7 @@ function chooseRectForColor(pixels, rects, color) {
 }
 
 function findMostColored(pixels, trackingRects) {
-  let mostColored = [undefined, undefined, undefined];
+  let ret = [undefined, undefined, undefined];
   for (let rect of trackingRects) {
     rect.analysisData = analyzeColor(pixels, rect); 
   }
@@ -158,13 +154,6 @@ function findMostColored(pixels, trackingRects) {
   return ret;
 }
 
-function chooseBestRects(pixels, trackingRects) {
-  let ret = [undefined, undefined, undefined];
-  let mostColored = findMostColored(pixels, trackingRects);
-  // RED
-  if (mostColored[RED].analysisData[
-}
-
 function onTrack(event) {
   
   // necessary to use capture.pixels later.
@@ -179,7 +168,7 @@ function onTrack(event) {
   
   event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));   
   
-  let bestRects = chooseBestRects(capture.pixels, event.data);
+  let bestRects = findMostColored(capture.pixels, event.data);
   
   for (let color of [RED, GREEN, BLUE]) {
     if (bestRects[color] !== undefined) {
