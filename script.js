@@ -154,36 +154,33 @@ function chooseBestRects(pixels, rects) {
 
 function mapRectsToHistory(histories, trackingRects) {
   if (trackingRects.length >= Object.keys(histories).length) {
-    // first we loop through all the rects and find which ones
-    // go with which history
-    for (let rect of trackingRects) {
-      console.log(rect);
-      var matchedHistoryIDs = [];
-      var closest = Infinity;
-      var match = null;
-      for (let history of Object.values(histories)) {
-        if (matchedHistoryIDs.indexOf(history.id) > -1) { continue };
+    // there's either a rect for each history, or some extra rects
+    // there's definitely a rect for each history, so loop 
+    // over the histories and find them
+    let matched = [];
+    for (let history of Object.values(histories)) {
+      let closest = Infinity;
+      let match = null;
+      for (let rect of trackingRects) {
+        if (matched.indexOf(rect) > -1) { continue };
         let dist = distance(rect, history.last());
         if (dist < closest) {
           closest = dist;
-          match = history;
+          match = rect;
         }
       }
-      console.log(match);
       
       if (match !== null) {
-        // match could be null if there were no histories to match to
-        // TODO consider smoothing the rect here 
-        match.push(rect);
-        rect.historyId = match.id;
-        matchedHistoryIDs.push(match.id);
+        // match could be null if we ran out of rects to match to
+        history.push(match);
+        match.historyId = history.id;
+        matched.push(rect);
       }
     }
     // now if any rects are left, they're new. we create a history for each 
     // and push the rect onto it
     for (let rect of trackingRects) {
       if (rect.historyId !== undefined) { continue };
-      console.log("doing bad thing");
       histories[currHistoryId] = CBuffer(50);
       histories[currHistoryId].push(rect);
       histories[currHistoryId].id = currHistoryId;
@@ -192,10 +189,28 @@ function mapRectsToHistory(histories, trackingRects) {
     }
   } else if (Object.keys(histories).length > trackingRects.length) {
     // in this case, a rect has disappeared. we need to loop over all
-    // the histories, match each up with a rect, and then remove any leftover
-    // histories who's last even was more than some time T ago (this effectively
+    // the rects, match each up with a history, and then remove any leftover
+    // histories who's last appearance was more than some time T ago (this effectively
     // gives rects a grace period to disappear and then reappear for a while)
-    console.log("haven't implemented getting rid of rects yet");
+    let matched = [];
+    for (let rect of trackingRects) {
+      let closest = Infinity;
+      let match = null;
+      for (let history of Object.values(histories)) {
+         if (matched.indexOf(history) > -1) { continue };
+         let dist = distance(rect, history.last());
+         if (dist < closest) {
+          closest = dist;
+          match = history;
+        }
+      }
+      
+      if (match !== null) {
+        // match could be null if we've matched all the rects
+        // and have moved on to histories whose rects are gone
+        
+      }
+    }
   }
 }
 
