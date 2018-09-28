@@ -154,14 +154,15 @@ function chooseBestRects(pixels, rects) {
 }
 
 function mapRectsToHistory(histories, trackingRects) {
-  if (trackingRects.length >== histories.length) {
+  console.log(trackingRects, histories);
+  if (trackingRects.length >= Object.keys(histories).length) {
     // first we loop through all the rects and find which ones
     // go with which history
     for (let rect of trackingRects) {
       let matchedHistoryIDs = [];
       let closest = Infinity;
       let match = null;
-      for (let history of histories) {
+      for (let history of Object.values(histories)) {
         if (matchedHistoryIDs.indexOf(history.id) > -1) { continue };
         let dist = distance(rect, history.last());
         if (dist < closest) {
@@ -169,10 +170,13 @@ function mapRectsToHistory(histories, trackingRects) {
           match = history;
         }
       }
-      // TODO consider smoothing the rect here 
-      match.push(rect);
-      rect.historyId = match.id;
-      matchedHistoryIDs.push(match.id);
+      if (match !== null) {
+        // match could be null if there were no histories to match to
+        // TODO consider smoothing the rect here 
+        match.push(rect);
+        rect.historyId = match.id;
+        matchedHistoryIDs.push(match.id);
+      }
     }
     // now if any rects are left, they're new. we create a history for each 
     // and push the rect onto it
@@ -183,7 +187,7 @@ function mapRectsToHistory(histories, trackingRects) {
       rect.historyId = currHistoryId;
       currHistoryId++;
     }
-  } else if (histories.length > trackingRects.length) {
+  } else if (histories.length > Object.keys(histories).length) {
     // in this case, a rect has disappeared. we need to loop over all
     // the histories, match each up with a rect, and then remove any leftover
     // histories who's last even was more than some time T ago (this effectively
@@ -204,9 +208,9 @@ function onTrack(event) {
     return;
   }
   
-  event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));   
+  mapRectsToHistory(trackerHistory, event.data);
   
-  mapRectsToHistory(trackerHistory, trackingRects);
+  event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));   
   
   let bestRects = chooseBestRects(capture.pixels, event.data);
   
@@ -228,7 +232,8 @@ function onTrack(event) {
       color: trackingRect.color,
       time: Date.now(),
     };
-      
+    
+    /*
     var timeGap;
     var length = trackerHistory[rect.color].length;
     if (length === 0) {
@@ -241,11 +246,12 @@ function onTrack(event) {
       trackerHistory[rect.color].empty();
       newAppearance(rect);
     }
+    */
    
-    var smoothed = getLatestSmoothed(trackerHistory[rect.color], rect);    
-    trackerHistory[rect.color].push(smoothed);
+    //var smoothed = getLatestSmoothed(trackerHistory[rect.color], rect);    
+    //trackerHistory[rect.color].push(smoothed);
   
-    continueGesture(rect.color, smoothed);
+    continueGesture(rect.color, rect);
   }    
 
   capture.updatePixels();
@@ -271,6 +277,9 @@ function diagnosticRect(trackingRect) {
     draw: (now) => {
       var { x, y, width, height } = trackingRect; 
       push()
+      fill(255,204,0);
+      textSize(128);
+      text(String(trackingRect.historyId), x, y);
       // I'll admit I'm not sure why this has to be mirrored
       translate(canvasWidth, 0)
       scale(-1,1);
