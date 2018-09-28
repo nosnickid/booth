@@ -157,13 +157,18 @@ function mapRectsToHistory(histories, trackingRects) {
     // in this case, our task is relatively straightforward,
     // we just need to decide which rect goes with which history
     for (let rect of trackingRects) {
+      let matchedHistoryIDs = [];
       let closest = Infinity;
+      let closestHistory = null;
       for (let history of histories) {
+        if (history.id 
         let dist = distance(rect, history.last());
         if (dist < closest) {
           closest = dist;
+          closestHistory = history;
         }
       }
+      closestHistory
     }
   } else if (trackingRects.length > histories.length) {
     // here a new rect has appeared. we need to loop through
