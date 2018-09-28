@@ -108,20 +108,24 @@ function analyzeColor(pixels, rect) {
       totals[GREEN] += g;
       totals[BLUE] += b;
       totalBrightness = totals[RED] + totals[GREEN] + totals[BLUE];
-      overrepresentations[RED] += ((r - g) + (r - b)) / totalBrightness;
-      overrepresentations[GREEN] += ((g - r) + (g - b)) / totalBrightness;
-      overrepresentations[BLUE] += ((b - r) + (b - g)) / totalBrightness;
+      overrepresentations[RED] += (r - g) + (r - b);
+      overrepresentations[GREEN] += (g - r) + (g - b);
+      overrepresentations[BLUE] += (b - r) + (b - g);
 
       pixelCount += 1;
     }
   }
-
+  
+  overrepresentations[RED] /= Math.pow(pixelCount,2);
+  overrepresentations[GREEN] /= pixelCount;
+  overrepresentations[BLUE] /= pixelCount;
+  
   let data = {
     "average_nonwhite_rgb": [totals[RED]/pixelCount, totals[GREEN]/pixelCount, totals[BLUE]/pixelCount],
     "overreps": overrepresentations,
     "very_colored": veryColoredPixels,
   };
-  console.log(data["overreps"]);
+  console.log(rect.historyId, data["overreps"]);
   return data;
 }
 
@@ -267,12 +271,12 @@ function onTrack(event) {
 
   let now = Date.now()
   event.data.forEach((tr) => { tr.time = now });   
-  
-  event.data.forEach((tr) => tr.analysisData = analyzeColor(capture.pixels, tr));
-  
+    
   // map rects to history needs to happen before the stuffOnScreen check
   // since it triggers the removal of stale histories
   mapRectsToHistory(now, trackerHistory, event.data);
+  
+  event.data.forEach((tr) => tr.analysisData = analyzeColor(capture.pixels, tr));
   
   if (event.data.length > 0) {
     stuffOnScreen = true;
