@@ -153,12 +153,11 @@ function chooseBestRects(pixels, rects) {
 }
 
 function mapRectsToHistory(histories, trackingRects) {
-  console.log(trackingRects, Object.keys(histories));
   if (trackingRects.length >= Object.keys(histories).length) {
-    console.log("in");
     // first we loop through all the rects and find which ones
     // go with which history
     for (let rect of trackingRects) {
+      console.log(rect);
       var matchedHistoryIDs = [];
       var closest = Infinity;
       var match = null;
@@ -170,8 +169,8 @@ function mapRectsToHistory(histories, trackingRects) {
           match = history;
         }
       }
-      
       console.log(match);
+      
       if (match !== null) {
         // match could be null if there were no histories to match to
         // TODO consider smoothing the rect here 
@@ -179,7 +178,6 @@ function mapRectsToHistory(histories, trackingRects) {
         rect.historyId = match.id;
         matchedHistoryIDs.push(match.id);
       }
-      console.log(rect);
     }
     // now if any rects are left, they're new. we create a history for each 
     // and push the rect onto it
@@ -188,7 +186,8 @@ function mapRectsToHistory(histories, trackingRects) {
       console.log("doing bad thing");
       histories[currHistoryId] = CBuffer(50);
       histories[currHistoryId].push(rect);
-      rect.historyId = currHistoryId;
+      histories[currHistoryId].id = currHistoryId;
+      rect.historyId = currHistoryId
       currHistoryId++;
     }
   } else if (Object.keys(histories).length > trackingRects.length) {
@@ -201,7 +200,6 @@ function mapRectsToHistory(histories, trackingRects) {
 }
 
 function onTrack(event) {
-  console.log(event.data);
   
   // necessary to use capture.pixels later.
   capture.loadPixels()
@@ -256,7 +254,10 @@ function onTrack(event) {
     //var smoothed = getLatestSmoothed(trackerHistory[rect.color], rect);    
     //trackerHistory[rect.color].push(smoothed);
   
-    continueGesture(rect.color, rect);
+
+    
+    
+    //continueGesture(rect.color, rect);
   }    
 
   capture.updatePixels();
@@ -282,12 +283,15 @@ function diagnosticRect(trackingRect) {
     draw: (now) => {
       var { x, y, width, height } = trackingRect; 
       push()
-      fill(255,204,0);
-      textSize(128);
-      text(String(trackingRect.historyId), x, y);
+      
       // I'll admit I'm not sure why this has to be mirrored
       translate(canvasWidth, 0)
       scale(-1,1);
+      
+      fill(255,204,0);
+      textSize(32);
+      text(String(trackingRect.historyId), x, y);
+      
       fill(0,0,0,0);
       stroke(255, 204, 0);
       strokeWeight(2);
