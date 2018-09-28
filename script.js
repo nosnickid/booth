@@ -120,9 +120,9 @@ function analyzeColor(pixels, rect) {
     "average_nonwhite_rgb": [totals[RED]/pixelCount, totals[GREEN]/pixelCount, totals[BLUE]/pixelCount],
     "overreps": overrepresentations,
     "very_colored": veryColoredPixels,
-    "prop_white_pixels": whitePixels/totalPixels,
+    "prop_white_pixels": whitePixels/pixelCount,
   };
-  console.log(rect.x, data["overreps"][GREEN] - data["overreps"][BLUE], data["white_pixels"]);
+  console.log(rect.x, data["overreps"], data["prop_white_pixels"]);
   return data;
 }
 
@@ -139,12 +139,12 @@ function chooseRectForColor(pixels, rects, color) {
   });
 }
 
-function chooseBestRects(pixels, rects) {
-  let ret = [undefined, undefined, undefined];
-  for (let rect of rects) {
+function findMostColored(pixels, trackingRects) {
+  let mostColored = [undefined, undefined, undefined];
+  for (let rect of trackingRects) {
     rect.analysisData = analyzeColor(pixels, rect); 
   }
-  for(let rect of rects) {
+  for(let rect of trackingRects) {
     let bestColor = undefined;
     let bestScore = -Infinity;
     for (let color of [RED, GREEN, BLUE]) {
@@ -156,6 +156,13 @@ function chooseBestRects(pixels, rects) {
     ret[bestColor] = rect;
   }
   return ret;
+}
+
+function chooseBestRects(pixels, trackingRects) {
+  let ret = [undefined, undefined, undefined];
+  let mostColored = findMostColored(pixels, trackingRects);
+  // RED
+  if (mostColored[RED].analysisData[
 }
 
 function onTrack(event) {
