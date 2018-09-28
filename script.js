@@ -117,6 +117,7 @@ function analyzeColor(pixels, rect) {
     "overreps": overrepresentations,
     "very_colored": veryColoredPixels,
   };
+  console.log
   return data;
 }
 
