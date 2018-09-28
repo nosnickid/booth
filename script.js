@@ -5,6 +5,7 @@ const historySize = 50;
 
 // mapping from arbitrary object ids to history CBuffers
 trackerHistory = {}
+currHistoryId = 0
 
 function setup() {
     capture = createCapture({
@@ -153,32 +154,41 @@ function chooseBestRects(pixels, rects) {
 }
 
 function mapRectsToHistory(histories, trackingRects) {
-  if (trackingRects.length === histories.length) {
-    // in this case, our task is relatively straightforward,
-    // we just need to decide which rect goes with which history
+  if (trackingRects.length >== histories.length) {
+    // first we loop through all the rects and find which ones
+    // go with which history
     for (let rect of trackingRects) {
       let matchedHistoryIDs = [];
       let closest = Infinity;
-      let closestHistory = null;
+      let match = null;
       for (let history of histories) {
-        if (history.id 
+        if (matchedHistoryIDs.indexOf(history.id) > -1) { continue };
         let dist = distance(rect, history.last());
         if (dist < closest) {
           closest = dist;
-          closestHistory = history;
+          match = history;
         }
       }
-      closestHistory
+      // TODO consider smoothing the rect here 
+      match.push(rect);
+      rect.historyId = match.id;
+      matchedHistoryIDs.push(match.id);
     }
-  } else if (trackingRects.length > histories.length) {
-    // here a new rect has appeared. we need to loop through
-    // all the rects and match each up with a history, then create a new
-    // history and add it for the rects that are left unmatched
+    // now if any rects are left, they're new. we create a history for each 
+    // and push the rect onto it
+    for (rect of trackingRects) {
+      if (rect.historyId !== undefined) { continue };
+      histories[currHistoryId] = CBuffer(50);
+      histories[currHistoryId].push(rect);
+      rect.historyId = currHistoryId;
+      currHistoryId++;
+    }
   } else if (histories.length > trackingRects.length) {
     // in this case, a rect has disappeared. we need to loop over all
     // the histories, match each up with a rect, and then remove any leftover
     // histories who's last even was more than some time T ago (this effectively
     // gives rects a grace period to disappear and then reappear for a while)
+    console.log("haven't implemented getting rid of rects yet");
   }
 }
 
@@ -261,7 +271,7 @@ function diagnosticRect(trackingRect) {
     draw: (now) => {
       var { x, y, width, height } = trackingRect; 
       push()
-      // I'll admit I'm now sure why this has to be mirrored
+      // I'll admit I'm not sure why this has to be mirrored
       translate(canvasWidth, 0)
       scale(-1,1);
       fill(0,0,0,0);
