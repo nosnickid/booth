@@ -180,7 +180,7 @@ function mapRectsToHistory(histories, trackingRects) {
     }
     // now if any rects are left, they're new. we create a history for each 
     // and push the rect onto it
-    for (rect of trackingRects) {
+    for (let rect of trackingRects) {
       if (rect.historyId !== undefined) { continue };
       histories[currHistoryId] = CBuffer(50);
       histories[currHistoryId].push(rect);
