@@ -11,6 +11,9 @@ currHistoryId = 0
 // so we know when to start a new Gesture
 lastTimeSeen = [-Infinity, -Infinity, -Infinity] // this is R, G, B
 
+// Object storing various misc visual parameters
+vizParams = {mode : yellowtail};
+
 document.onkeydown = processKeyInput;
   
 function processKeyInput(e) {
@@ -21,12 +24,12 @@ function processKeyInput(e) {
         case 38:
             alert('up');
             break;
-        case 39:
-            alert('right');
-            break;
-        case 40:
-            alert('down');
-            break;
+//        case 39:
+//            alert('right');
+//            break;
+//        case 40:
+//            alert('down');
+//            break;
     }
 };
 
