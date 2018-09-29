@@ -39,7 +39,7 @@ function makeRecording(canvas) {
   let stream = canvas.captureStream();
   let recordedChunks = [];
  
-  var options = {mimeType: 'video/webm;codecs=vp9'};
+  let options = {mimeType: 'video/webm;codecs=vp9'};
   let mediaRecorder = new MediaRecorder(stream, options);
   mediaRecorder.ondataavailable = function(event) {
     if (event.data.size > 0) {
@@ -55,8 +55,8 @@ function makeRecording(canvas) {
       type: 'video/webm'
     });
     console.log(blob);
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement('a');
+    let url = URL.createObjectURL(blob);
+    let a = document.createElement('a');
     document.body.appendChild(a);
     a.style = 'display: none';
     a.href = url;
@@ -117,7 +117,7 @@ function getLatestSmoothed(history, curr) {
   
   var avg = new Point(0, 0);
   
-  for(var i = 0; i < iterations; ++i) 
+  for(var i = 0; i < iterations; ++i)
   {
       var rect = history.get(history.length-1-i);
       avg = avg.add(new Point(rect.x,rect.y)); 
