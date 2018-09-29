@@ -148,6 +148,14 @@ function maxOverrep(color, history) {
 }
 
 
+function findBlueLightbulb(histories) {
+  return null;
+}
+
+function findGreenLightbulb(histories) {
+  return null;
+}
+
 function findRedLightbulb(histories) {
   let best = null;
   let lowestAvgSkew = Infinity;
@@ -171,9 +179,12 @@ function findRedLightbulb(histories) {
     }
   }
   if (best !== null) {
-    console.log(best.id);
+    bulb = best.last();
+    bulb.color = RED;
+    return bulb;
+  } else {
+    return null;
   }
-  return best;
 }
 
 function mapRectsToHistory(now, histories, trackingRects) {
@@ -275,10 +286,14 @@ function onTrack(event) {
     
   findRedLightbulb(trackerHistory);
   
-  let coloredRects = [];
+  let coloredRects = [
+    findRedLightbulb(trackerHistory),
+    findGreenLightbulb(trackerHistory),
+    findBlueLightbulb(trackerHistory),
+  ];
     
   for (let trackingRect of coloredRects) {    
-
+    if (trackingRect === null) { continue };
     var c = center(trackingRect);
     var rect = {
       x: canvasWidth - c.x,
@@ -288,13 +303,14 @@ function onTrack(event) {
       color: trackingRect.color,
       time: trackingRect.time,
     };
-    /*
+    
     if (rect.time - lastTimeSeen[rect.color] > 500) {
       newAppearance(rect);
     } else {
       continueGesture(rect);
-    }*/
+    }
     lastTimeSeen[rect.color] = now;
+
   }    
   capture.updatePixels();
 }
