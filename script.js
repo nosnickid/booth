@@ -15,20 +15,21 @@ vizModes = ['yellowtail', 'other'];
 vizModeCurrent = 0;
 
 // Object storing various misc visual parameters
-vizParams = {mode : yellowtail};
+vizParams = {mode : vizModes[vizModeCurrent]};
 
 document.onkeydown = processKeyInput;
   
 function processKeyInput(e) {
     switch (e.keyCode) {
-        case 37:
-            alert('left');
+        case 37: // left
+            vizModeCurrent = (vizModes - 1) % vizModes.Length;
+          alert(vizmodeCurrent);
             break;
-        case 38:
-            alert('up');
+        case 39: // Right
+            vizModeCurrent = (vizModes + 1) % vizModes.Length;
             break;
-//        case 39:
-//            alert('right');
+//        case 38:
+//            alert('up');
 //            break;
 //        case 40:
 //            alert('down');
