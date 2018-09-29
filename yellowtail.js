@@ -23,12 +23,6 @@ function yellowtailSetup() {
     gestures[color] = [];
   }
 	
-//	for (let color of colors) {
-//    for (let i = 0; i < nGestures; i++) {
-//  	  gestures[color][i] = new Gesture(canvasWidth, canvasHeight);
-//  	}
-//  }
-	
 	clearGestures();
 }
 

@@ -29,6 +29,8 @@ function processKeyInput(e) {
             vizModeCurrent = (vizModeCurrent + 1) % vizModes.length;
             // alert(vizModes[vizModeCurrent]);
             break;
+        case 70: // f for fullscreen
+            document.querySelector(".p5Canvas").webkitRequestFullscreen();      
 //        case 38:
 //            alert('up');
 //            break;
@@ -68,7 +70,7 @@ function setup() {
   
     yellowtailSetup();
   
-    cnv.elt.addEventListener("click", (e) => cnv.elt.webkitRequestFullscreen());
+    document.addEventListener("keyPress", (e) => startRecording());
 }
 
 toDraw = [];

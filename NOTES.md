@@ -13,3 +13,7 @@ To do next:
 - test in more light conditions
 - start making signs/decorations?
 - performance optimization?
+
+## 9/29
+
+- fix bug where other colors don't animate while one color is being drawn
