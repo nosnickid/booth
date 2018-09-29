@@ -6,7 +6,7 @@
 To do next:
 - send recordings to server and process into video
 - UI for fullscreen, starting and stopping recording
-- UI 
+- UI for emptying screen of gestures
 - get more appealing cover for lightbulbs, tune detection parameters for it
 - refactor code to make it a bit easier to tweak parameters of bulb detection
 - decorate holders?
