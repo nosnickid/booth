@@ -31,9 +31,7 @@ function processKeyInput(e) {
       // alert(vizModes[vizModeCurrent]);
       break;
     case 70: // f for fullscreen
-      canvas.webkitRequestFullscreen();
-    case 83: // s for "start recording" just to test the setup
-      makeRecording(canvas);          
+      canvas.webkitRequestFullscreen();        
     }
 };
 
@@ -51,7 +49,6 @@ function makeRecording(canvas) {
       console.log("got mediaRecorder event with no data", event);
     }
   }
-  mediaRecorder.start();
   function download() {
     console.log(recordedChunks);
     var blob = new Blob(recordedChunks, {
@@ -67,10 +64,11 @@ function makeRecording(canvas) {
     a.click();
     window.URL.revokeObjectURL(url);
   }
+  mediaRecorder.onstop = download;
+  mediaRecorder.start();
   setTimeout(() => {
     mediaRecorder.stop();
-    download();
-  }, 5000);
+  }, 1000);
 }
 
 
@@ -103,7 +101,7 @@ function setup() {
   
     yellowtailSetup();
   
-    document.addEventListener("keyPress", (e) => startRecording());
+    cnv.elt.addEventListener("click", (e) => makeRecording(cnv.elt));
 }
 
 toDraw = [];
