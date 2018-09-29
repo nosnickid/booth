@@ -18,27 +18,29 @@ vizModeCurrent = 0;
 vizParams = {mode : vizModes[vizModeCurrent]};
 
 document.onkeydown = processKeyInput;
-  
+
 function processKeyInput(e) {
-    switch (e.keyCode) {
-        case 37: // left
-            vizModeCurrent = (vizModeCurrent - 1) % vizModes.length;
-            //,alert(vizModes[vizModeCurrent]);
-            break;
-        case 39: // Right
-            vizModeCurrent = (vizModeCurrent + 1) % vizModes.length;
-            // alert(vizModes[vizModeCurrent]);
-            break;
-        case 70: // f for fullscreen
-            document.querySelector(".p5Canvas").webkitRequestFullscreen();      
-//        case 38:
-//            alert('up');
-//            break;
-//        case 40:
-//            alert('down');
-//            break;
+  let canvas = document.querySelector(".p5Canvas");
+  switch (e.keyCode) {
+    case 37: // left
+      vizModeCurrent = (vizModeCurrent - 1) % vizModes.length;
+      //,alert(vizModes[vizModeCurrent]);
+      break;
+    case 39: // Right
+      vizModeCurrent = (vizModeCurrent + 1) % vizModes.length;
+      // alert(vizModes[vizModeCurrent]);
+      break;
+    case 70: // f for fullscreen
+      canvas.webkitRequestFullscreen();
+    case 83: // s for "start recording" just to test the setup
+      makeRecording(canvas);          
     }
 };
+
+function makeRecording(canvas) {
+  let stream = canvas.captureStream();
+  
+}
 
 
 function setup() {
