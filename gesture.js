@@ -1,11 +1,11 @@
 class Gesture {
 
     constructor(mw, mh) {
-       	this.damp = 5.0;
-    	this.dampInv = 1.0 / this.damp;
-    	this.damp1 = this.damp - 1;
+        this.damp = 5.0;
+      	this.dampInv = 1.0 / this.damp;
+     	this.damp1 = this.damp - 1;
 
-    	this.w = mw;
+      	this.w = mw;
         this.h = mh;
         this.capacity = 600;
 
@@ -27,7 +27,7 @@ class Gesture {
         this.jumpDy = 0;
 
         this.INIT_TH = 14;
-    	this.thickness = this.INIT_TH;
+      	this.thickness = this.INIT_TH;
     }
 
     clear() {
@@ -61,7 +61,7 @@ class Gesture {
     }
 
     getPressureFromVelocity(v) { // float
-        var scale = 18;
+        var scale = 1;
         var minP = 0.02;
         var oldP = (this.nPoints > 0) ? this.path[this.nPoints-1].p : 0;
         return ((minP + max(0, 1.0 - v/scale)) + (this.damp1 * oldP)) * this.dampInv;

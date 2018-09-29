@@ -1,5 +1,5 @@
-canvasWidth = document.documentElement.clientWidth;
-canvasHeight = document.documentElement.clientHeight;
+canvasWidth = 640;
+canvasHeight = 480;
 
 RED = 0;
 GREEN = 1;
