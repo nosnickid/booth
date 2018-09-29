@@ -1,7 +1,7 @@
 var capture;
 var tracker;
 
-const historySize = 50;
+const historySize = 500;
 
 // mapping from arbitrary object ids to history CBuffers
 trackerHistory = {}
@@ -76,7 +76,7 @@ function getLatestSmoothed(history, curr) {
   return newRect;
 }
 
-function analyzeColor(pixels, rect) {
+function analyze(pixels, rect) {
   // sum up to the r, g, b value so we can average them later
   
   const WHITE_THRESH = 250
@@ -131,6 +131,7 @@ function analyzeColor(pixels, rect) {
     "prop_white": whiteCount / pixelCount,
     "scores": scores,
     "green_to_blue_score_ratio": scores[GREEN] / scores[BLUE],
+    "skew": Math.abs(rect.width-rect.height),
   };
   return data;
 }
@@ -148,13 +149,23 @@ function maxOverrep(color, history) {
 
 
 function findRedLightbulb(histories) {
+  let best = null;
+  let lowestAvgSkew = 0;
   for (let history of Object.values(histories)) {
     totalRedScore = 0;
+    totalPropWhite = 0;
+    totalSkew = 0
     for(let i=0; i < history.length; i++) {
       totalRedScore += history.get(i).analysisData["scores"][RED];
+      totalPropWhite += history.get(i).analysisData["prop_white"][RED];
+      totalPropWhite += history.get(i).analysisData["skew"][RED];
     }
     avgRedScore = totalRedScore / history.length;
-    console.log(history.id, avgRedScore);
+    avgPropWhite = totalPropWhite / history.length;
+    avgSkew = totalSkew / history.length;
+    if (avgRedScore > 4 && avgPropWhite > 0.65) {
+      if avgSkew < lowe
+    }
   }
 }
 
@@ -244,7 +255,7 @@ function onTrack(event) {
   // since it triggers the removal of stale histories
   mapRectsToHistory(now, trackerHistory, event.data);
   
-  event.data.forEach((tr) => tr.analysisData = analyzeColor(capture.pixels, tr));
+  event.data.forEach((tr) => tr.analysisData = analyze(capture.pixels, tr));
   
   if (event.data.length > 0) {
     stuffOnScreen = true;
