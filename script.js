@@ -276,7 +276,6 @@ function findGreenLightbulb(histories) {
       }
     }
   }
-  console.log(best);
   if (best !== null) {
     bulb = best.last();
     bulb.color = GREEN;
