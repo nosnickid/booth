@@ -181,7 +181,7 @@ function analyze(pixels, rect) {
   
   let bottom = Math.min(...overrepresentations);
   let nonNegOverreps = overrepresentations.map((i) => i + Math.abs(bottom));
-  let scores = [ 
+  let scores = [
     nonNegOverreps[RED] / ((nonNegOverreps[BLUE] + nonNegOverreps[GREEN])/2),
     nonNegOverreps[GREEN] / ((nonNegOverreps[RED] + nonNegOverreps[BLUE])/2),
     nonNegOverreps[BLUE] / ((nonNegOverreps[RED] + nonNegOverreps[GREEN])/2),
