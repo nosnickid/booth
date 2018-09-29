@@ -183,7 +183,6 @@ function findBlueLightbulb(histories) {
       break;
     }
     
-    console.log(avgBlueScore, avgGreenScore, avgBGRatio);
     if (avgBlueScore > 2.8 && avgGreenScore < 1.4 && avgBGRatio < 0.5 && avgPropWhite > 0.6) {
       if (avgSkew < lowestAvgSkew) {
         lowestAvgSkew = avgSkew;
@@ -229,14 +228,14 @@ function findGreenLightbulb(histories) {
     let pastProportion = nBulbsInHistory / history.length;
 
     if (pastProportion > 0.9) {
-      // if it's been the blue bulb 90% of the time recently,
+      // if it's been the green bulb 90% of the time recently,
       // this history autowins, hence the break
       best = history;
       break;
     }
     
-    console.log(avgBlueScore, avgGreenScore, avgBGRatio);
-    if (avgBlueScore < 2.8 && avgGreenScore > 1.4 && avgBGRatio > 0.5 && avgPropWhite > 0.6) {
+    console.log(history.id, avgBlueScore, avgGreenScore, avgBGRatio, avgPropWhite);
+    if (avgBlueScore < 2.8 && avgGreenScore > 1.4 && avgBGRatio > 0.5 && avgPropWhite > 0.5) {
       if (avgSkew < lowestAvgSkew) {
         lowestAvgSkew = avgSkew;
         best = history;
