@@ -11,6 +11,9 @@ currHistoryId = 0
 // so we know when to start a new Gesture
 lastTimeSeen = [-Infinity, -Infinity, -Infinity] // this is R, G, B
 
+vizModes = ['yellowtail', 'other'];
+vizModeCurrent = 0;
+
 // Object storing various misc visual parameters
 vizParams = {mode : yellowtail};
 
