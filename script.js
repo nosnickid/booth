@@ -81,19 +81,20 @@ function analyzeColor(pixels, rect) {
   
   const WHITE_THRESH = 250
   const HIGH_THRESH = 200;
-  const LOW_THRESH = 100;
+  const LOW_THRESH = 50;
   
   let totals = [0,0,0];
   let pixelCount = 0;
   let overrepresentations = [0,0,0];
   let veryColoredPixels = [0,0,0];
+  let whiteCount = 0;
   for (let y=rect.y; y <= rect.y+rect.height; y++) {
     for (let x=rect.x; x<= rect.x+rect.width; x++) {      
       let r = pixels[index2Dto1D(x, y)+RED];
       let g = pixels[index2Dto1D(x, y)+GREEN];
       let b = pixels[index2Dto1D(x, y)+BLUE];
       // skip white pixels
-      if (r > WHITE_THRESH && g > WHITE_THRESH && b > 230) { continue };
+      if (r > WHITE_THRESH && g > WHITE_THRESH && b > 230) { whiteCount++ };
       if (r > HIGH_THRESH && g < LOW_THRESH && b < LOW_THRESH) {
         veryColoredPixels[RED] += 1
       };
@@ -115,18 +116,20 @@ function analyzeColor(pixels, rect) {
     }
   }
   
-  totalBrightness = totals[RED] + totals[GREEN] + totals[BLUE];
-  
-  overrepresentations[RED] /= totalBrightness;
-  overrepresentations[GREEN] /= totalBrightness;
-  overrepresentations[BLUE] /= totalBrightness;
+  let bottom = Math.min(overrepresentations);
+  let scores = overrepresentations.map((i) => i + Math.abs(bottom));
+  scores[RED] = scores[RED] / ((scores[BLUE] + scores[GREEN])/2);
+  scores[GREEN] = scores[GREEN] / ((scores[RED] + scores[BLUE])/2);
+  scores[BLUE] = scores[BLUE] / ((scores[GREEN] + scores[RED])/2);
   
   let data = {
     "average_nonwhite_rgb": [totals[RED]/pixelCount, totals[GREEN]/pixelCount, totals[BLUE]/pixelCount],
     "overreps": overrepresentations,
     "very_colored": veryColoredPixels,
+    "prop_white": whiteCount / pixelCount,
+    "scores": scores,
   };
-  console.log(rect.historyId, data["very_colored"]);
+  console.log(rect.historyId, data["scores"]);
   return data;
 }
 
