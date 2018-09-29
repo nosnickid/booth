@@ -11,6 +11,26 @@ currHistoryId = 0
 // so we know when to start a new Gesture
 lastTimeSeen = [-Infinity, -Infinity, -Infinity] // this is R, G, B
 
+document.onkeydown = processKeyInput;
+  
+function processKeyInput(e) {
+    switch (e.keyCode) {
+        case 37:
+            alert('left');
+            break;
+        case 38:
+            alert('up');
+            break;
+        case 39:
+            alert('right');
+            break;
+        case 40:
+            alert('down');
+            break;
+    }
+};
+
+
 function setup() {
     capture = createCapture({
         audio: false,
