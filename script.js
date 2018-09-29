@@ -1,7 +1,7 @@
 var capture;
 var tracker;
 
-const historySize = 500;
+const historySize = 100;
 
 // mapping from arbitrary object ids to history CBuffers
 trackerHistory = {}
@@ -133,6 +133,7 @@ function analyze(pixels, rect) {
     "green_to_blue_score_ratio": scores[GREEN] / scores[BLUE],
     "skew": Math.abs(rect.width-rect.height),
   };
+  console.log(rect.historyId, data["scores"], data["green_to_blue_score_ratio"], data["overreps"]);
   return data;
 }
 
@@ -177,7 +178,14 @@ function findRedLightbulb(histories) {
     let avgPropWhite = totalPropWhite / history.length;
     let avgSkew = totalSkew / history.length;
     let pastProportion = nBulbsInHistory / history.length;
-    console.log(history.id, pastProportion);
+
+    if (pastProportion > 0.9) {
+      // if it's been the red bulb 90% of the time recently,
+      // this history autowins, hence the break
+      best = history;
+      break;
+    }
+    
     if (avgRedScore > 4 && avgPropWhite > 0.6) {
       if (avgSkew < lowestAvgSkew) {
         lowestAvgSkew = avgSkew;
