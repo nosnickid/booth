@@ -160,17 +160,24 @@ function findRedLightbulb(histories) {
   let best = null;
   let lowestAvgSkew = Infinity;
   for (let history of Object.values(histories)) {
-    totalRedScore = 0;
-    totalPropWhite = 0;
-    totalSkew = 0;
+    let totalRedScore = 0;
+    let totalPropWhite = 0;
+    let totalSkew = 0;
+    let nBulbsInHistory = 0;
     for(let i = 0; i < history.length; i++) {
-      totalRedScore += history.get(i).analysisData["scores"][RED];
-      totalPropWhite += history.get(i).analysisData["prop_white"];
-      totalSkew += history.get(i).analysisData["skew"];
+      let rect = history.get(i);
+      totalRedScore += rect.analysisData["scores"][RED];
+      totalPropWhite += rect.analysisData["prop_white"];
+      totalSkew += rect.analysisData["skew"];
+      if (rect.color === RED) {
+        nBulbsInHistory++; 
+      }
     }
-    avgRedScore = totalRedScore / history.length;
-    avgPropWhite = totalPropWhite / history.length;
-    avgSkew = totalSkew / history.length;
+    let avgRedScore = totalRedScore / history.length;
+    let avgPropWhite = totalPropWhite / history.length;
+    let avgSkew = totalSkew / history.length;
+    let pastProportion = nBulbsInHistory / history.length;
+    console.log(history.id, pastProportion);
     if (avgRedScore > 4 && avgPropWhite > 0.6) {
       if (avgSkew < lowestAvgSkew) {
         lowestAvgSkew = avgSkew;
