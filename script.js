@@ -132,40 +132,7 @@ function analyzeColor(pixels, rect) {
     "scores": scores,
     "green_to_blue_score_ratio": scores[GREEN] / scores[BLUE],
   };
-  console.log(rect.historyId, data["green_to_blue_score_ratio"]);
   return data;
-}
-
-function chooseRectForColor(pixels, rects, color) {
-  return rects.reduce(function(bestSoFar, trackingRect) {
-    let currData = analyzeColor(pixels, trackingRect);
-    // TODO cache this on the trackingRect after computing it if necessary
-   let bestData = analyzeColor(pixels, bestSoFar);
-    if (currData["overreps"][color] > bestData["overreps"][color]) {
-      return trackingRect;
-    } else {
-      return bestSoFar;
-    }
-  });
-}
-
-function chooseBestRects(pixels, rects) {
-  let ret = [undefined, undefined, undefined];
-  for (let rect of rects) {
-    rect.analysisData = analyzeColor(pixels, rect); 
-  }
-  for(let rect of rects) {
-    let bestColor = undefined;
-    let bestScore = -Infinity;
-    for (let color of [RED, GREEN, BLUE]) {
-      if (rect.analysisData["overreps"][color] > bestScore) {
-        bestScore = rect.analysisData["overreps"][color];
-        bestColor = color;
-      }
-    }
-    ret[bestColor] = rect;
-  }
-  return ret;
 }
 
 function maxOverrep(color, history) {
@@ -180,21 +147,15 @@ function maxOverrep(color, history) {
 }
 
 
-function pickColoredRects(histories) {
-  ret = [];
+function findRedLightbulb(histories) {
   for (let history of Object.values(histories)) {
-    if (maxOverrep(RED, history) > 3) {
-      history.last().color = RED;
-      ret.push(history.last());
-    } else if (maxOverrep(BLUE, history) > 3) {
-      history.last().color = BLUE;
-      ret.push(history.last());
-    } else if (maxOverrep(GREEN, history) > 1 && maxOverrep(BLUE, history) < 2) {
-      history.last().color = GREEN;
-      ret.push(history.last());
+    totalRedScore = 0;
+    for(let i=0; i < history.length; i++) {
+      totalRedScore += history.get(i).analysisData["scores"][RED];
     }
+    avgRedScore = totalRedScore / history.length;
+    console.log(history.id, avgRedScore);
   }
-  return ret;
 }
 
 function mapRectsToHistory(now, histories, trackingRects) {
@@ -294,8 +255,9 @@ function onTrack(event) {
   
   event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));   
     
-  let coloredRects = pickColoredRects(trackerHistory);
+  findRedLightbulb(trackerHistory);
   
+  let coloredRects = [];
     
   for (let trackingRect of coloredRects) {    
 
