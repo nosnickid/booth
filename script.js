@@ -24,6 +24,8 @@ function setup() {
     capture.elt.setAttribute('playsinline', '');
     capture.size(canvasWidth, canvasHeight);
     cnv = createCanvas(canvasWidth, canvasHeight);
+    cnv.elt.style.width="100vw";
+    cnv.elt.style.height="100vh";
   
     tracking.ColorTracker.registerColor('white', function(r, g, b) {
      return r >= 250 && g >= 250 && b >= 250;

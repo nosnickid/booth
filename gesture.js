@@ -61,7 +61,7 @@ class Gesture {
     }
 
     getPressureFromVelocity(v) { // float
-        var scale = 1;
+        var scale = 18;
         var minP = 0.02;
         var oldP = (this.nPoints > 0) ? this.path[this.nPoints-1].p : 0;
         return ((minP + max(0, 1.0 - v/scale)) + (this.damp1 * oldP)) * this.dampInv;
