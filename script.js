@@ -150,7 +150,49 @@ function maxOverrep(color, history) {
 
 
 function findBlueLightbulb(histories) {
-  return null;
+  let best = null;
+  let lowestAvgSkew = Infinity;
+  for (let history of Object.values(histories)) {
+    let totalBlueScore = 0;
+    let totalGreenScore = 0
+    let totalPropWhite = 0;
+    let totalSkew = 0;
+    let totalBGRatio = 0;
+    let nBulbsInHistory = 0;
+    for(let i = 0; i < history.length; i++) {
+      let rect = history.get(i);
+      totalBlueScore += rect.analysisData["scores"][BLUE];
+      totalGreenScore += rect.analysisData["scores"][GREEN];
+      totalPropWhite += rect.analysisData["prop_white"];
+      totalBGRatio += rect.analysisData["green_to_blue_score_ratio"];
+      totalSkew += rect.analysisData["skew"];
+      if (rect.color === BLUE) {
+        nBulbsInHistory++; 
+      }
+    }
+    let avgBlueScore = totalBlueScore / history.length;
+    let avgGreenScore = totalGreenScore / history.length;
+    let avgPropWhite = totalPropWhite / history.length;
+    let avgSkew = totalSkew / history.length;
+    let avgBGRatio = totalBGRatio / history.length;
+    let pastProportion = nBulbsInHistory / history.length;
+
+    if (pastProportion > 0.9) {
+      // if it's been the blue bulb 90% of the time recently,
+      // this history autowins, hence the break
+      best = history;
+      break;
+    }
+    
+    console.log(history.id, avgBlueScore, avgGreenScore, avgBGRatio);
+  }
+  if (best !== null) {
+    bulb = best.last();
+    bulb.color = RED;
+    return bulb;
+  } else {
+    return null;
+  }
 }
 
 function findGreenLightbulb(histories) {
