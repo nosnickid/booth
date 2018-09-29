@@ -1,5 +1,6 @@
-monitorWidth = 1280;
-monitorHeight = 1024;
+// these are the sizes that James' laptop chooses when optimized for the 
+monitorWidth = 1920;
+monitorHeight = 1200;
 
 canvasWidth = monitorWidth/2;
 canvasHeight = monitorHeight/2;
