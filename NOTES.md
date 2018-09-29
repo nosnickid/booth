@@ -1,4 +1,4 @@
-### 9/28
+## 9/28
 
 - More-or-less functional lightbulb tracking working
 - Also tested with projector
@@ -18,3 +18,23 @@ To do next:
 
 - fix bug where other colors don't animate while one color is being drawn
 - try to find some sort of nice holder thing for the lightbulbs?
+
+
+### UI
+
+what does it need to do?
+
+- initial state
+  - you walk up to it and it has some enticing text plus a live video of what you're doing
+  - it also has a message that explains how to start recording (e.g. press space to start)
+- text entry state
+  - text field for entering your name, and text field for entering a message to john and emily 
+  - some text like "press space again to start!"
+  - i think we should just use space for doing pretty much everything, space is a big button that no one's gonna miss
+  - when you hit space, it does like a 3... 2... 1... and then a big flash, like the mac Photo Booth app, then goes to recording state
+- recording state
+  - start recording the video
+  - show a little timer in the corner that countsdown how much time you have left
+  - big "finished recording!" flash when the time runs out
+  - save video with an id ALONG WITH a text file containing the name / message
+  - go back to intial state
