@@ -1,8 +1,8 @@
-viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+monitorWidth = 1920;
+monitorHeight = 1200;
 
-canvasWidth = viewportWidth/2;
-canvasHeight = viewportHeight/2;
+canvasWidth = monitorWidth/2;
+canvasHeight = monitorHeight/2;
 
 RED = 0;
 GREEN = 1;

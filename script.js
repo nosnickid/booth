@@ -39,6 +39,8 @@ function setup() {
     tracker.on('track', onTrack);
   
     yellowtailSetup();
+  
+    cnv.elt.addEventListener("click", (e) => cnv.elt.webkitRequestFullscreen());
 }
 
 toDraw = [];
