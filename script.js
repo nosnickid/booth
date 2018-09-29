@@ -150,23 +150,30 @@ function maxOverrep(color, history) {
 
 function findRedLightbulb(histories) {
   let best = null;
-  let lowestAvgSkew = 0;
+  let lowestAvgSkew = Infinity;
   for (let history of Object.values(histories)) {
     totalRedScore = 0;
     totalPropWhite = 0;
-    totalSkew = 0
-    for(let i=0; i < history.length; i++) {
+    totalSkew = 0;
+    for(let i = 0; i < history.length; i++) {
       totalRedScore += history.get(i).analysisData["scores"][RED];
-      totalPropWhite += history.get(i).analysisData["prop_white"][RED];
-      totalPropWhite += history.get(i).analysisData["skew"][RED];
+      totalPropWhite += history.get(i).analysisData["prop_white"];
+      totalSkew += history.get(i).analysisData["skew"];
     }
     avgRedScore = totalRedScore / history.length;
     avgPropWhite = totalPropWhite / history.length;
     avgSkew = totalSkew / history.length;
-    if (avgRedScore > 4 && avgPropWhite > 0.65) {
-      if avgSkew < lowe
+    if (avgRedScore > 4 && avgPropWhite > 0.6) {
+      if (avgSkew < lowestAvgSkew) {
+        lowestAvgSkew = avgSkew;
+        best = history;
+      }
     }
   }
+  if (best !== null) {
+    console.log(best.id);
+  }
+  return best;
 }
 
 function mapRectsToHistory(now, histories, trackingRects) {
