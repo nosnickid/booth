@@ -116,12 +116,14 @@ function analyzeColor(pixels, rect) {
     }
   }
   
-  let bottom = Math.min(overrepresentations);
-  let scores = overrepresentations.map((i) => i + Math.abs(bottom));
-  scores[RED] = scores[RED] / ((scores[BLUE] + scores[GREEN])/2);
-  scores[GREEN] = scores[GREEN] / ((scores[RED] + scores[BLUE])/2);
-  scores[BLUE] = scores[BLUE] / ((scores[GREEN] + scores[RED])/2);
-  
+  let bottom = Math.min(...overrepresentations);
+  let nonNegOverreps = overrepresentations.map((i) => i + Math.abs(bottom));
+  let scores = [ 
+    nonNegOverreps[RED] / ((nonNegOverreps[BLUE] + nonNegOverreps[GREEN])/2),
+    nonNegOverreps[GREEN] / ((nonNegOverreps[RED] + nonNegOverreps[BLUE])/2),
+    nonNegOverreps[BLUE] / ((nonNegOverreps[RED] + nonNegOverreps[GREEN])/2),
+  ];
+
   let data = {
     "average_nonwhite_rgb": [totals[RED]/pixelCount, totals[GREEN]/pixelCount, totals[BLUE]/pixelCount],
     "overreps": overrepresentations,
@@ -129,7 +131,7 @@ function analyzeColor(pixels, rect) {
     "prop_white": whiteCount / pixelCount,
     "scores": scores,
   };
-  console.log(rect.historyId, data["scores"]);
+  console.log(rect.historyId, data["scores"][GREEN] / data["scores"][BLUE]);
   return data;
 }
 
