@@ -22,11 +22,12 @@ document.onkeydown = processKeyInput;
 function processKeyInput(e) {
     switch (e.keyCode) {
         case 37: // left
-            vizModeCurrent = (vizModes - 1) % vizModes.Length;
-          alert(vizmodeCurrent);
+            vizModeCurrent = (vizModeCurrent - 1) % vizModes.length;
+            alert(vizModes[vizModeCurrent]);
             break;
         case 39: // Right
-            vizModeCurrent = (vizModes + 1) % vizModes.Length;
+            vizModeCurrent = (vizModeCurrent + 1) % vizModes.length;
+            alert(vizModes[vizModeCurrent]);
             break;
 //        case 38:
 //            alert('up');
