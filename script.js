@@ -152,6 +152,7 @@ function findBlueLightbulb(histories) {
   let best = null;
   let lowestAvgSkew = Infinity;
   for (let history of Object.values(histories)) {
+    if (history.length < 5) { continue };
     let totalBlueScore = 0;
     let totalGreenScore = 0
     let totalPropWhite = 0;
@@ -203,6 +204,7 @@ function findGreenLightbulb(histories) {
   let best = null;
   let lowestAvgSkew = Infinity;
   for (let history of Object.values(histories)) {
+    if (history.length < 5) { continue };
     let totalBlueScore = 0;
     let totalGreenScore = 0
     let totalPropWhite = 0;
@@ -216,7 +218,7 @@ function findGreenLightbulb(histories) {
       totalPropWhite += rect.analysisData["prop_white"];
       totalBGRatio += rect.analysisData["green_to_blue_score_ratio"];
       totalSkew += rect.analysisData["skew"];
-      if (rect.color === BLUE) {
+      if (rect.color === GREEN) {
         nBulbsInHistory++; 
       }
     }
@@ -242,6 +244,7 @@ function findGreenLightbulb(histories) {
       }
     }
   }
+  console.log(best);
   if (best !== null) {
     bulb = best.last();
     bulb.color = GREEN;
@@ -255,6 +258,7 @@ function findRedLightbulb(histories) {
   let best = null;
   let lowestAvgSkew = Infinity;
   for (let history of Object.values(histories)) {
+    if (history.length < 5) { continue };    
     let totalRedScore = 0;
     let totalPropWhite = 0;
     let totalSkew = 0;
