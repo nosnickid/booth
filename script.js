@@ -81,7 +81,7 @@ function analyzeColor(pixels, rect) {
   
   const WHITE_THRESH = 250
   const HIGH_THRESH = 200;
-  const LOW_THRESH = 50;
+  const LOW_THRESH = 100;
   
   let totals = [0,0,0];
   let pixelCount = 0;
@@ -107,7 +107,6 @@ function analyzeColor(pixels, rect) {
       totals[RED] += r;
       totals[GREEN] += g;
       totals[BLUE] += b;
-      totalBrightness = totals[RED] + totals[GREEN] + totals[BLUE];
       overrepresentations[RED] += (r - g) + (r - b);
       overrepresentations[GREEN] += (g - r) + (g - b);
       overrepresentations[BLUE] += (b - r) + (b - g);
@@ -116,16 +115,18 @@ function analyzeColor(pixels, rect) {
     }
   }
   
-  overrepresentations[RED] /= Math.pow(pixelCount,2);
-  overrepresentations[GREEN] /= pixelCount;
-  overrepresentations[BLUE] /= pixelCount;
+  totalBrightness = totals[RED] + totals[GREEN] + totals[BLUE];
+  
+  overrepresentations[RED] /= totalBrightness;
+  overrepresentations[GREEN] /= totalBrightness;
+  overrepresentations[BLUE] /= totalBrightness;
   
   let data = {
     "average_nonwhite_rgb": [totals[RED]/pixelCount, totals[GREEN]/pixelCount, totals[BLUE]/pixelCount],
     "overreps": overrepresentations,
     "very_colored": veryColoredPixels,
   };
-  console.log(rect.historyId, data["overreps"]);
+  console.log(rect.historyId, data["very_colored"]);
   return data;
 }
 
