@@ -29,9 +29,7 @@ function processKeyInput(e) {
     case 39: // Right
       vizModeCurrent = (vizModeCurrent + 1) % vizModes.length;
       // alert(vizModes[vizModeCurrent]);
-      break;
-    case 70: // f for fullscreen
-      canvas.webkitRequestFullscreen();        
+      break;     
     }
 };
 
@@ -86,6 +84,10 @@ function setup() {
     capture.size(canvasWidth, canvasHeight);
     cnv = createCanvas(canvasWidth, canvasHeight);
   
+    cnv.elt.style.width = String(monitorWidth)+"px";
+    cnv.elt.style.height = String(monitorHeight)+"px";
+
+
     tracking.ColorTracker.registerColor('white', function(r, g, b) {
      return r >= 250 && g >= 250 && b >= 250;
     });
