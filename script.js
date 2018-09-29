@@ -133,7 +133,6 @@ function analyze(pixels, rect) {
     "green_to_blue_score_ratio": scores[GREEN] / scores[BLUE],
     "skew": Math.abs(rect.width-rect.height),
   };
-  console.log(rect.historyId, data["scores"], data["green_to_blue_score_ratio"], data["overreps"]);
   return data;
 }
 
@@ -184,11 +183,17 @@ function findBlueLightbulb(histories) {
       break;
     }
     
-    console.log(history.id, avgBlueScore, avgGreenScore, avgBGRatio);
+    console.log(avgBlueScore, avgGreenScore, avgBGRatio);
+    if (avgBlueScore > 2.8 && avgGreenScore < 1.4 && avgBGRatio < 0.5 && avgPropWhite > 0.6) {
+      if (avgSkew < lowestAvgSkew) {
+        lowestAvgSkew = avgSkew;
+        best = history;
+      }
+    }
   }
   if (best !== null) {
     bulb = best.last();
-    bulb.color = RED;
+    bulb.color = BLUE;
     return bulb;
   } else {
     return null;
@@ -196,7 +201,55 @@ function findBlueLightbulb(histories) {
 }
 
 function findGreenLightbulb(histories) {
-  return null;
+  let best = null;
+  let lowestAvgSkew = Infinity;
+  for (let history of Object.values(histories)) {
+    let totalBlueScore = 0;
+    let totalGreenScore = 0
+    let totalPropWhite = 0;
+    let totalSkew = 0;
+    let totalBGRatio = 0;
+    let nBulbsInHistory = 0;
+    for(let i = 0; i < history.length; i++) {
+      let rect = history.get(i);
+      totalBlueScore += rect.analysisData["scores"][BLUE];
+      totalGreenScore += rect.analysisData["scores"][GREEN];
+      totalPropWhite += rect.analysisData["prop_white"];
+      totalBGRatio += rect.analysisData["green_to_blue_score_ratio"];
+      totalSkew += rect.analysisData["skew"];
+      if (rect.color === BLUE) {
+        nBulbsInHistory++; 
+      }
+    }
+    let avgBlueScore = totalBlueScore / history.length;
+    let avgGreenScore = totalGreenScore / history.length;
+    let avgPropWhite = totalPropWhite / history.length;
+    let avgSkew = totalSkew / history.length;
+    let avgBGRatio = totalBGRatio / history.length;
+    let pastProportion = nBulbsInHistory / history.length;
+
+    if (pastProportion > 0.9) {
+      // if it's been the blue bulb 90% of the time recently,
+      // this history autowins, hence the break
+      best = history;
+      break;
+    }
+    
+    console.log(avgBlueScore, avgGreenScore, avgBGRatio);
+    if (avgBlueScore < 2.8 && avgGreenScore > 1.4 && avgBGRatio > 0.5 && avgPropWhite > 0.6) {
+      if (avgSkew < lowestAvgSkew) {
+        lowestAvgSkew = avgSkew;
+        best = history;
+      }
+    }
+  }
+  if (best !== null) {
+    bulb = best.last();
+    bulb.color = GREEN;
+    return bulb;
+  } else {
+    return null;
+  }
 }
 
 function findRedLightbulb(histories) {
