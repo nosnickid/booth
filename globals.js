@@ -1,5 +1,5 @@
-monitorWidth = 1920;
-monitorHeight = 1200;
+monitorWidth = 1280;
+monitorHeight = 1024;
 
 canvasWidth = monitorWidth/2;
 canvasHeight = monitorHeight/2;
