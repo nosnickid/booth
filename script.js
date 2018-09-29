@@ -39,7 +39,38 @@ function processKeyInput(e) {
 
 function makeRecording(canvas) {
   let stream = canvas.captureStream();
-  
+  let recordedChunks = [];
+ 
+  var options = {mimeType: 'video/webm;codecs=vp9'};
+  let mediaRecorder = new MediaRecorder(stream, options);
+  mediaRecorder.ondataavailable = function(event) {
+    if (event.data.size > 0) {
+      console.log(event);
+      recordedChunks.push(event.data);
+    } else {
+      console.log("got mediaRecorder event with no data", event);
+    }
+  }
+  mediaRecorder.start();
+  function download() {
+    console.log(recordedChunks);
+    var blob = new Blob(recordedChunks, {
+      type: 'video/webm'
+    });
+    console.log(blob);
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    document.body.appendChild(a);
+    a.style = 'display: none';
+    a.href = url;
+    a.download = 'test.webm';
+    a.click();
+    window.URL.revokeObjectURL(url);
+  }
+  setTimeout(() => {
+    mediaRecorder.stop();
+    download();
+  }, 5000);
 }
 
 
