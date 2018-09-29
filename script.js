@@ -130,8 +130,9 @@ function analyzeColor(pixels, rect) {
     "very_colored": veryColoredPixels,
     "prop_white": whiteCount / pixelCount,
     "scores": scores,
+    "green_to_blue_score_ratio": scores[GREEN] / scores[BLUE],
   };
-  console.log(rect.historyId, data["scores"][GREEN] / data["scores"][BLUE]);
+  console.log(rect.historyId, data["green_to_blue_score_ratio"]);
   return data;
 }
 
@@ -307,12 +308,12 @@ function onTrack(event) {
       color: trackingRect.color,
       time: trackingRect.time,
     };
-    
+    /*
     if (rect.time - lastTimeSeen[rect.color] > 500) {
       newAppearance(rect);
     } else {
       continueGesture(rect);
-    }
+    }*/
     lastTimeSeen[rect.color] = now;
   }    
   capture.updatePixels();
