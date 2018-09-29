@@ -1,7 +1,7 @@
 var capture;
 var tracker;
 
-const historySize = 100;
+const historySize = 500;
 
 // mapping from arbitrary object ids to history CBuffers
 trackerHistory = {}

@@ -11,7 +11,7 @@ var colors = [RED, GREEN, BLUE];
 
 function yellowtailSetup() {
 
-	maxGesturesPerColor = 5;  // Number of gestures
+	maxGesturesPerColor = 1;  // Number of gestures
 	minMove = 3;     // Minimum travel for a new point
 
 	tempP; // Polygon
@@ -62,7 +62,7 @@ function yellowtailDraw() {
 }
 
 function newGesture(color, point) {
-    if (gestures[color].length > maxGesturesPerColor) {
+    if (gestures[color].length >= maxGesturesPerColor) {
       gestures[color].shift(); 
     }
     var G = new Gesture(canvasWidth, canvasHeight);
