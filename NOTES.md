@@ -17,3 +17,4 @@ To do next:
 ## 9/29
 
 - fix bug where other colors don't animate while one color is being drawn
+- try to find some sort of nice holder thing for the lightbulbs?
