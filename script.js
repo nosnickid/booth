@@ -536,13 +536,19 @@ function diagnosticRect(trackingRect) {
       
       fill(255,204,0);
       textSize(32);
-      text(String(trackingRect.historyId), x, y);
       
       fill(0,0,0,0);
       stroke(255, 204, 0);
-      strokeWeight(2);
+      strokeWeight(4);
       rect(x,y, width, height);
       pop()
+      
+      let boost = 5
+      
+      text(String("R: " + trackingRect.analysisData["scores"][RED].toFixed(2)), canvasWidth-x-width, y-32-boost);
+      text(String("G: " + trackingRect.analysisData["scores"][GREEN].toFixed(2)), canvasWidth-x-width, y-16-boost);
+      text(String("B: " + trackingRect.analysisData["scores"][BLUE].toFixed(2)), canvasWidth-x-width, y-boost);
+      
     },
     keep: (now) => false,
   }
