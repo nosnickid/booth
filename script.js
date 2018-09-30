@@ -126,7 +126,7 @@ toDraw = [];
 
 function smoothRect(history, curr) {
   
-  var iterations = 10;
+  var iterations = 3;
   
   if (history.length < iterations) {
     return curr;
