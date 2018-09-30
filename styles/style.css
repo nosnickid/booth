@@ -1,4 +1,5 @@
-/* CSS files add styling rules to your content */
+@import url("fonts.css");
+@import("shine.css");
 
 /* NOTE font urls have to be manually fixed to use a relative path in asserts/ 
 when running offline */
@@ -32,7 +33,6 @@ canvas {
 }
 
 .initial {
-  color: yellow;
   font-size: 6em;
   font-family: 'Satisfy', cursive;
   font-weight: 700;
