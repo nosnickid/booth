@@ -35,10 +35,10 @@ class UI {
   }
   
   drawTextEntry() {
-    
+    // TODO
   }
   
   destroyTextEntry() {
-    
+    // TODO
   }
 }
