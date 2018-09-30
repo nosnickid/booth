@@ -1,17 +1,5 @@
 /* CSS files add styling rules to your content */
 
-/* fonts */
-
-
-@font-face {
-  font-family: 'Comfortaa';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Comfortaa Regular'), local('Comfortaa-Regular'),
-       url('../fonts/comfortaa-v12-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
-       url('../fonts/comfortaa-v12-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-}
-
 body {
   font-family: "Benton Sans", "Helvetica Neue", helvetica, arial, sans-serif;
   margin: 2em;
@@ -44,5 +32,4 @@ canvas {
 .initial {
   color: white;
   font-size: 68px;
-  font-family: 'comfortaa-regular';
 }
