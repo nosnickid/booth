@@ -29,24 +29,35 @@ class UI {
   }
 
   drawInitial() {
-    let title = createDOMElement(`<div class="initial title glow">
-       Leave a video message for John and Emily!<br/>(use the lightbulbs to draw in the air)
-    </div>`);
-    let start = createDOMElement(`<div class="initial start glow">
-       Press ENTER to start
-    </div>`);    
+    let title = createDOMElement(
+      `<div class="initial title glow">
+         Leave a video message for John and Emily!<br/>(use the lightbulbs to draw in the air)
+      </div>`
+    );
+    let start = createDOMElement(
+      `<div class="initial start glow">
+        Press ENTER to start
+      </div>`
+    );    
     document.body.appendChild(title);
     document.body.appendChild(start);
   }
   
   destroyInitial() {
-    for (let elem of document.querySelectorAll(".initial")) {
-      ;
-    }
+    document.querySelectorAll(".initial").forEach(destroyElement);
   }
   
   drawTextEntry() {
-    // TODO
+    let form = createDOMElement(
+      `<form autocomplete="off">
+        <label for="name">Name:</label>
+        <input type="text" id="form-name" name="name"/>
+        <br/>
+        <label for="message">Note to John and Emily:</label>
+        <input type="text" id="form-message" name="messageff"/>
+      </form>`
+    );
+    document.body.appendChild(form);
   }
   
   destroyTextEntry() {
