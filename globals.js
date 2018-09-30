@@ -17,7 +17,7 @@ GREEN = 1;
 BLUE = 2
 
 vizModes = ['yellowtail', 'other'];
-vizModeCurrent = 0;
+vizModeCurrent = 1;
 
 // Object storing various misc visual parameters
 vizParams = {mode : vizModes[vizModeCurrent]};
