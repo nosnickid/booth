@@ -116,21 +116,28 @@ function renderGesture(gesture, w, h) {
   }
 }
 
+// TODO handle the end of the stroke (which might be too short for step size)
+
 function renderGestureSpline(gesture, w, h) {
     var points = gesture.path;
-    var stepSize = viz
-    for (let i = 0; i < gesture.nPoints - 3; i += 3) {
+    
+  // vizParams
+    var stepSize = 4;
+    var splineNum = 5;
+    var splineSeparation = 20;
+    
+    for (let i = 0; i < gesture.nPoints - 3 * stepSize; i += 3 * stepSize) {
       var p0 = points[i];
-      var p1 = points[i + 1];
-      var p2 = points[i + 2];
-      var p3 = points[i + 3];
+      var p1 = points[i + 1 * stepSize];
+      var p2 = points[i + 2 * stepSize];
+      var p3 = points[i + 3 * stepSize];
       
       var vector = subtract(p3, p0);
       var crossSectionVector = perpendicular(vector);
       
-      for (let j = -2; j < 2; ++j) {
-        var offset1 = normalize(crossSectionVector, p1.p * j * 10);
-        var offset2 = normalize(crossSectionVector, p2.p * j * 10);
+      for (let j = 0; j < ; ++j) {
+        var offset1 = normalize(crossSectionVector, p1.p * j * splineSeparation);
+        var offset2 = normalize(crossSectionVector, p2.p * j * splineSeparation);
         
         bezier(p0.x, p0.y, 
                p1.x + offset1.x, p1.y + offset1.y, 
