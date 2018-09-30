@@ -3,8 +3,8 @@
 monitorWidth = 1920;
 monitorHeight = 1200;
 
-canvasWidth = monitorWidth/2;
-canvasHeight = monitorHeight/2;
+canvasWidth = monitorWidth/4;
+canvasHeight = monitorHeight/4;
 
 RED = 0;
 GREEN = 1;

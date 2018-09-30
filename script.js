@@ -95,15 +95,14 @@ function setup() {
     });
   
     var tracker = new tracking.ColorTracker("white");
-
+  
     capture.elt.id = 'p5video';
-  /*  
-  tracking.track('#p5video', tracker, {
+
+    tracking.track('#p5video', tracker, {
         camera: true
     });
   
     tracker.on('track', onTrack);
-    */
   
     yellowtailSetup();
   
