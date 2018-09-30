@@ -95,153 +95,156 @@ class Gesture {
     compile() {
         // compute the polygons from the path of Vec3f's
         if (this.exists) {
-          if (vizModeCurrent
-          
+          switch (vizModes[vizModeCurrent]) {
+            case "yellowtail":
+              this.compileYellowtail();
+            default:
+              this.compileYellowtail();
+          }
         }
     }
       
     compileYellowtail() {
-            this.clearPolys();
+      this.clearPolys();
 
-            var p0, p1, p2;
-            var radius0, radius1;
-            var ax, bx, cx, dx;
-            var ay, by, cy, dy;
-            var axi, bxi, cxi, dxi, axip, axid;
-            var ayi, byi, cyi, dyi, ayip, ayid;
-            var p1x, p1y;
-            var dx01, dy01, hp01, si01, co01;
-            var dx02, dy02, hp02, si02, co02;
-            var dx13, dy13, hp13, si13, co13;
-            var taper = 1.0;
+      var p0, p1, p2;
+      var radius0, radius1;
+      var ax, bx, cx, dx;
+      var ay, by, cy, dy;
+      var axi, bxi, cxi, dxi, axip, axid;
+      var ayi, byi, cyi, dyi, ayip, ayid;
+      var p1x, p1y;
+      var dx01, dy01, hp01, si01, co01;
+      var dx02, dy02, hp02, si02, co02;
+      var dx13, dy13, hp13, si13, co13;
+      var taper = 1.0;
 
-            var nPathPoints = this.nPoints - 1;
-            var lastPolyIndex = nPathPoints - 1;
-            var npm1finv = 1.0 / max(1, nPathPoints - 1);
+      var nPathPoints = this.nPoints - 1;
+      var lastPolyIndex = nPathPoints - 1;
+      var npm1finv = 1.0 / max(1, nPathPoints - 1);
 
-            // handle the first point
-            p0 = this.path[0];
-            p1 = this.path[1];
-            radius0 = p0.p * this.thickness;
-            dx01 = p1.x - p0.x;
-            dy01 = p1.y - p0.y;
-            hp01 = sqrt(dx01*dx01 + dy01*dy01);
-            
-            if (hp01 == 0) {
-                hp02 = 0.0001;
-            }
+      // handle the first point
+      p0 = this.path[0];
+      p1 = this.path[1];
+      radius0 = p0.p * this.thickness;
+      dx01 = p1.x - p0.x;
+      dy01 = p1.y - p0.y;
+      hp01 = sqrt(dx01*dx01 + dy01*dy01);
 
-            co01 = radius0 * dx01 / hp01;
-            si01 = radius0 * dy01 / hp01;
-            ax = p0.x - si01; 
-            ay = p0.y + co01;
-            bx = p0.x + si01; 
-            by = p0.y - co01;
+      if (hp01 == 0) {
+          hp02 = 0.0001;
+      }
 
-            var xpts = [];
-            var ypts = [];
+      co01 = radius0 * dx01 / hp01;
+      si01 = radius0 * dy01 / hp01;
+      ax = p0.x - si01; 
+      ay = p0.y + co01;
+      bx = p0.x + si01; 
+      by = p0.y - co01;
 
-            var LC = 20;
-            var RC = this.w-LC;
-            var TC = 20;
-            var BC = this.h-TC;
-            var mint = 0.618;
-            var tapow = 0.4;
+      var xpts = [];
+      var ypts = [];
 
-            // handle the middle points
-            var i = 1;
-            var apoly; // Polygon
+      var LC = 20;
+      var RC = this.w-LC;
+      var TC = 20;
+      var BC = this.h-TC;
+      var mint = 0.618;
+      var tapow = 0.4;
 
-            for (let i = 1; i < nPathPoints; i++) {
-                taper = pow((lastPolyIndex - i) * npm1finv, tapow);
+      // handle the middle points
+      var i = 1;
+      var apoly; // Polygon
 
-                p0 = this.path[i-1];
-                p1 = this.path[i];
-                p2 = this.path[i+1];
-                p1x = p1.x;
-                p1y = p1.y;
-                radius1 = Math.max(mint, taper * p1.p * this.thickness);
+      for (let i = 1; i < nPathPoints; i++) {
+          taper = pow((lastPolyIndex - i) * npm1finv, tapow);
 
-                // assumes all segments are roughly the same length...
-                dx02 = p2.x - p0.x;
-                dy02 = p2.y - p0.y;
-                hp02 = Math.sqrt(dx02 * dx02 + dy02 * dy02);
-                
-                if (hp02 != 0) {
-                    hp02 = radius1/hp02;
-                }
-                
-                co02 = dx02 * hp02;
-                si02 = dy02 * hp02;
+          p0 = this.path[i-1];
+          p1 = this.path[i];
+          p2 = this.path[i+1];
+          p1x = p1.x;
+          p1y = p1.y;
+          radius1 = Math.max(mint, taper * p1.p * this.thickness);
 
-                // translate the integer coordinates to the viewing rectangle
-                axi = axip = floor(ax);
-                ayi = ayip = floor(ay);
-                axi=(axi < 0) ? (this.w - (( -axi) % this.w)) : axi % this.w;
-                axid = axi-axip;
-                ayi=(ayi < 0) ? (this.h - (( -ayi) % this.h)) : ayi % this.h;
-                ayid = ayi-ayip;
+          // assumes all segments are roughly the same length...
+          dx02 = p2.x - p0.x;
+          dy02 = p2.y - p0.y;
+          hp02 = Math.sqrt(dx02 * dx02 + dy02 * dy02);
 
-                // set the vertices of the polygon
+          if (hp02 != 0) {
+              hp02 = radius1/hp02;
+          }
 
-                // ~ ~ ~ ~ ~ ~ ~ ~
-                apoly = this.polygons[this.nPolys++];
-                // ~ ~ ~ ~ ~ ~ ~ ~
+          co02 = dx02 * hp02;
+          si02 = dy02 * hp02;
 
-                xpts = apoly.xpoints;
-                ypts = apoly.ypoints;
-                xpts[0] = axi = axid + axip;
-                xpts[1] = bxi = axid + floor(bx);
-                xpts[2] = cxi = axid + floor((cx = p1x + si02));
-                xpts[3] = dxi = axid + floor((dx = p1x - si02));
-                ypts[0] = ayi = ayid + ayip;
-                ypts[1] = byi = ayid + floor(by);
-                ypts[2] = cyi = ayid + floor(cy = p1y - co02);
-                ypts[3] = dyi = ayid + floor(dy = p1y + co02);
+          // translate the integer coordinates to the viewing rectangle
+          axi = axip = floor(ax);
+          ayi = ayip = floor(ay);
+          axi=(axi < 0) ? (this.w - (( -axi) % this.w)) : axi % this.w;
+          axid = axi-axip;
+          ayi=(ayi < 0) ? (this.h - (( -ayi) % this.h)) : ayi % this.h;
+          ayid = ayi-ayip;
 
-                // keep a record of where we cross the edge of the screen
-                this.crosses[i] = 0;
-                if ((axi<=LC)||(bxi<=LC)||(cxi<=LC)||(dxi<=LC)) { 
-                    this.crosses[i]|=1; 
-                }
-                if ((axi>=RC)||(bxi>=RC)||(cxi>=RC)||(dxi>=RC)) { 
-                    this.crosses[i]|=2; 
-                }
-                if ((ayi<=TC)||(byi<=TC)||(cyi<=TC)||(dyi<=TC)) { 
-                    this.crosses[i]|=4; 
-                }
-                if ((ayi>=BC)||(byi>=BC)||(cyi>=BC)||(dyi>=BC)) { 
-                    this.crosses[i]|=8; 
-                }
+          // set the vertices of the polygon
 
-                //swap data for next time
-                ax = dx; 
-                ay = dy;
-                bx = cx; 
-                by = cy;
-        	}
+          // ~ ~ ~ ~ ~ ~ ~ ~
+          apoly = this.polygons[this.nPolys++];
+          // ~ ~ ~ ~ ~ ~ ~ ~
 
-            // handle the last point
-            p2 = this.path[nPathPoints];
+          xpts = apoly.xpoints;
+          ypts = apoly.ypoints;
+          xpts[0] = axi = axid + axip;
+          xpts[1] = bxi = axid + floor(bx);
+          xpts[2] = cxi = axid + floor((cx = p1x + si02));
+          xpts[3] = dxi = axid + floor((dx = p1x - si02));
+          ypts[0] = ayi = ayid + ayip;
+          ypts[1] = byi = ayid + floor(by);
+          ypts[2] = cyi = ayid + floor(cy = p1y - co02);
+          ypts[3] = dyi = ayid + floor(dy = p1y + co02);
 
-            // ~ ~ ~ ~ ~ ~ ~ ~
-            apoly = this.polygons[this.nPolys++];
-            // ~ ~ ~ ~ ~ ~ ~ ~
-            
-            xpts = apoly.xpoints;
-            ypts = apoly.ypoints;
+          // keep a record of where we cross the edge of the screen
+          this.crosses[i] = 0;
+          if ((axi<=LC)||(bxi<=LC)||(cxi<=LC)||(dxi<=LC)) { 
+              this.crosses[i]|=1; 
+          }
+          if ((axi>=RC)||(bxi>=RC)||(cxi>=RC)||(dxi>=RC)) { 
+              this.crosses[i]|=2; 
+          }
+          if ((ayi<=TC)||(byi<=TC)||(cyi<=TC)||(dyi<=TC)) { 
+              this.crosses[i]|=4; 
+          }
+          if ((ayi>=BC)||(byi>=BC)||(cyi>=BC)||(dyi>=BC)) { 
+              this.crosses[i]|=8; 
+          }
 
-            xpts[0] = floor(ax);
-            xpts[1] = floor(bx);
-            xpts[2] = floor((p2.x));
-            xpts[3] = floor((p2.x));
+          //swap data for next time
+          ax = dx; 
+          ay = dy;
+          bx = cx; 
+          by = cy;
+      }
 
-            ypts[0] = floor(ay);
-            ypts[1] = floor(by);
-            ypts[2] = floor((p2.y));
-            ypts[3] = floor((p2.y));
-    	}
-	}
+      // handle the last point
+      p2 = this.path[nPathPoints];
+
+      // ~ ~ ~ ~ ~ ~ ~ ~
+      apoly = this.polygons[this.nPolys++];
+      // ~ ~ ~ ~ ~ ~ ~ ~
+
+      xpts = apoly.xpoints;
+      ypts = apoly.ypoints;
+
+      xpts[0] = floor(ax);
+      xpts[1] = floor(bx);
+      xpts[2] = floor((p2.x));
+      xpts[3] = floor((p2.x));
+
+      ypts[0] = floor(ay);
+      ypts[1] = floor(by);
+      ypts[2] = floor((p2.y));
+      ypts[3] = floor((p2.y));
+  }
 
 	smooth() {
         // average neighboring points
