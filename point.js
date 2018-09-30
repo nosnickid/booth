@@ -50,6 +50,9 @@ Point.prototype.offset = function(dx, dy){
 Point.prototype.subtract = function(v){
 	return new Point(this.x - v.x, this.y - v.y);
 };
+Point.prototype.perp = function(v) {
+  return new Point(this.y, this.x);
+}
 Point.prototype.toString = function(){
 	return "(x=" + this.x + ", y=" + this.y + ")";
 };
