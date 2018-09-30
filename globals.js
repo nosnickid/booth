@@ -15,3 +15,9 @@ downsampleFactor = 2;
 RED = 0;
 GREEN = 1;
 BLUE = 2
+
+vizModes = ['yellowtail', 'other'];
+vizModeCurrent = 0;
+
+// Object storing various misc visual parameters
+vizParams = {mode : vizModes[vizModeCurrent]};
