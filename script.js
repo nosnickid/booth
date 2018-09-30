@@ -99,8 +99,8 @@ function setup() {
   
     cnv = createCanvas(canvasWidth, canvasHeight);
   
-    //cnv.elt.style.width = String(monitorWidth)+"px";
-    //cnv.elt.style.height = String(monitorHeight)+"px";
+    cnv.elt.style.width = String(monitorWidth)+"px";
+    cnv.elt.style.height = String(monitorHeight)+"px";
 
     tracking.ColorTracker.registerColor('white', function(r, g, b) {
      return r >= 250 && g >= 250 && b >= 250;
@@ -126,7 +126,7 @@ toDraw = [];
 
 function smoothRect(history, curr) {
   
-  var iterations = 30;
+  var iterations = 10;
   
   if (history.length < iterations) {
     return curr;
@@ -143,14 +143,13 @@ function smoothRect(history, curr) {
   avg = avg.multiply(1.0 / iterations);
   
   var smoothedPos = avg.interpolate(new Point(curr.x, curr.y), .5);
-  
+  console.log(curr, smoothedPos);
   curr.x = smoothedPos.x;
   curr.y = smoothedPos.y;
 }
 
 function analyze(pixels, rect) {
   // sum up to the r, g, b value so we can average them later
-  console.log(pixels);
   const WHITE_THRESH = 250
   const HIGH_THRESH = 200;
   const LOW_THRESH = 50;
@@ -205,7 +204,6 @@ function analyze(pixels, rect) {
     "green_to_blue_score_ratio": scores[GREEN] / scores[BLUE],
     "skew": Math.abs(rect.width-rect.height),
   };
-  console.log(data);
   return data;
 }
 
@@ -309,7 +307,7 @@ function findGreenLightbulb(histories) {
       break;
     }
     
-    console.log(history.id, avgBlueScore, avgGreenScore, avgBGRatio, avgPropWhite);
+    //console.log(history.id, avgBlueScore, avgGreenScore, avgBGRatio, avgPropWhite);
     if (avgBlueScore < 2.8 && avgGreenScore > 1.4 && avgBGRatio > 0.5 && avgPropWhite > 0.5) {
       if (avgSkew < lowestAvgSkew) {
         lowestAvgSkew = avgSkew;
@@ -456,12 +454,19 @@ function onTrack(event) {
 
   let now = Date.now()
   event.data.forEach((tr) => { tr.time = now });
-   
+  
+  event.data.forEach((tr) => tr.analysisData = analyze(trackingCapture.pixels, tr));
+
+  event.data.forEach((tr) => {
+    tr.x *= downsampleFactor;
+    tr.y *= downsampleFactor;
+    tr.width *= downsampleFactor;
+    tr.height *= downsampleFactor; 
+  });
+  
   // map rects to history needs to happen before the stuffOnScreen check
   // since it triggers the removal of stale histories
   mapRectsToHistory(now, trackerHistory, event.data);
-  
-  event.data.forEach((tr) => tr.analysisData = analyze(trackingCapture.pixels, tr));
   
   if (event.data.length > 0) {
     stuffOnScreen = true;
@@ -469,13 +474,6 @@ function onTrack(event) {
     stuffOnScreen = false; 
     return;
   }
-  
-  event.data.forEach((tr) => {
-    tr.x *= downsampleFactor;
-    tr.y *= downsampleFactor;
-    tr.width *= downsampleFactor;
-    tr.height *= downsampleFactor; 
-  });
   
   event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));   
       
