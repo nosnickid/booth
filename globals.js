@@ -3,8 +3,14 @@
 monitorWidth = 1920;
 monitorHeight = 1200;
 
-canvasWidth = monitorWidth/4;
-canvasHeight = monitorHeight/4;
+canvasWidth = monitorWidth/2;
+canvasHeight = monitorHeight/2;
+
+// we use a video feed this many times smaller than the one we display to
+// do the blob detection, and then scale the blobs up, for performance reasons.
+// the tracking.js color detection algorithm is the most computationally expensive part of
+// this whole program. 
+downsampleFactor = 2;
 
 RED = 0;
 GREEN = 1;

@@ -1,4 +1,5 @@
-var capture;
+var displayCapture;
+var trackingCapture;
 var tracker;
 
 // mapping from arbitrary object ids to history CBuffers
@@ -74,17 +75,27 @@ function makeRecording(canvas) {
 
 
 function setup() {
-    capture = createCapture({
+    displayCapture = createCapture({
         audio: false,
         video: {
             width: canvasWidth,
             height: canvasHeight
         }
-    }, function() {
-        console.log('capture ready.')
     });
-    capture.elt.setAttribute('playsinline', '');
-    capture.size(canvasWidth, canvasHeight);
+    displayCapture.elt.setAttribute('playsinline', '');
+    displayCapture.size(canvasWidth, canvasHeight);
+
+    trackingCapture = createCapture({
+      audio: false,
+      video: {
+          width: canvasWidth,
+          height: canvasHeight
+      }
+    });
+    trackingCapture.elt.setAttribute('playsinline', '');
+    trackingCapture.size(canvasWidth, canvasHeight);
+  
+  
     cnv = createCanvas(canvasWidth, canvasHeight);
   
     cnv.elt.style.width = String(monitorWidth)+"px";
@@ -96,9 +107,9 @@ function setup() {
   
     var tracker = new tracking.ColorTracker("white");
   
-    capture.elt.id = 'p5video';
+    capture.elt.id = 'displayVideo';
 
-    tracking.track('#p5video', tracker, {
+    tracking.track('#displayVideo', tracker, {
         camera: true
     });
   
@@ -108,7 +119,7 @@ function setup() {
   
     cnv.elt.addEventListener("click", (e) => makeRecording(cnv.elt));
   
-    drawInitialStateUI();
+    //drawInitialStateUI();
 }
 
 toDraw = [];
