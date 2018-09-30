@@ -13,14 +13,13 @@ h1 {
   color: #373fff;
 }
 
-
 .demo-container {
   margin: 0 auto;
   position: relative;
 }
 
 video {
-  visibility: hidden;
+  display: none;
 }
 
 canvas {
