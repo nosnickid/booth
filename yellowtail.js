@@ -95,16 +95,13 @@ function renderGesture(gesture, w, h) {
 
 function renderGestureSpline(gesture, w, h) {
     var points = gesture.path;
-    console.log(points);
-    for (let i = 0; i < gesture.nPoints; i += 4) {
+    for (let i = 0; i < gesture.nPoints - 3; i += 3) {
       var p0 = points[i];
       var p1 = points[i + 1];
       var p2 = points[i + 2];
       var p3 = points[i + 3];
-      
-      console.log(p0.x + " " + p1.x + " " + p2.x + " " + p3.x);
-      
-      curve(p0.x, p0.y, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
+          
+      bezier(p0.x, p0.y, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
     }
 }
 
