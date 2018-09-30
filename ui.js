@@ -4,8 +4,8 @@
 function drawInitialStateUI() {
   let title = document.createElement('div');
   let start = document.createElement('div');
-  title.innerHTML = "Leave a magical message for John and Emily!";
-  start.innerHTML = "Press SPACE to start";
+  title.innerHTML = "Leave a video message for John and Emily<br/>(use the lightbulbs to draw in the air)";
+  start.innerHTML = "Press ENTER to start";
   title.className ="initial title glow";
   start.className = "initial start glow"
   document.body.appendChild(title);

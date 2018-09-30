@@ -34,12 +34,12 @@ canvas {
 
 .initial {
   color: white;
-  font-size: 6em;
+  font-size: 90px;
   font-family: 'Satisfy', cursive;
   font-weight: 700;
   text-align: center;
 }
 
 .initial.start {
-  padding-top: 4em;
+  padding-top: 700px;
 }
