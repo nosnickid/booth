@@ -92,7 +92,15 @@ function renderGesture(gesture, w, h) {
 }
 
 function renderGestureSpline(gesture, w, h) {
-    gesture.path;
+    var points = gesture.path;
+    for (let i = 0; i < points.length; i += 4) {
+      var p0 = points[i];
+      var p1 = points[i + 1];
+      var p2 = points[i + 2];
+      var p3 = points[i + 3];
+      
+      curve(p0.x, p0.y, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
+    }
 }
 
 function renderGestureYellowtail(gesture, w, h) {
