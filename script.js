@@ -90,7 +90,7 @@ function setup() {
       audio: false,
       video: {
           width: canvasWidth/downsampleFactor,
-          height: canvasHeight/downsampleFactor
+          height: canvasHeight/downsampleFactor,
       }
     });
     trackingCapture.elt.setAttribute('playsinline', '');
@@ -108,7 +108,7 @@ function setup() {
   
     var tracker = new tracking.ColorTracker("white");
   
-    tracking.track('#displayVideo', tracker, {
+    tracking.track('#trackingVideo', tracker, {
         camera: true
     });
   
@@ -455,26 +455,20 @@ function mapRectsToHistory(now, histories, trackingRects) {
 }
 
 function onTrack(event) {
-  
+
   // necessary to use capture.pixels later.
   displayCapture.loadPixels()
 
   let now = Date.now()
   event.data.forEach((tr) => { tr.time = now });
-  
+ 
   // fix downSampling
-  event.data.forEach((tr) => {
-    tr.x *= 2;
-    tr.y *= 2;
-    tr.width *= 2;
-    tr.height *= 2;
-  });
   
   // map rects to history needs to happen before the stuffOnScreen check
   // since it triggers the removal of stale histories
   mapRectsToHistory(now, trackerHistory, event.data);
   
-  event.data.forEach((tr) => tr.analysisData = analyze(displayCapture.pixels, tr));
+  event.data.forEach((tr) => tr.analysisData = analyze(trackingCapture.pixels, tr));
   
   if (event.data.length > 0) {
     stuffOnScreen = true;
@@ -512,8 +506,7 @@ function onTrack(event) {
     }
     lastTimeSeen[rect.color] = now;
 
-  }    
-  displayCapture.updatePixels();
+  }  
 }
 
 
