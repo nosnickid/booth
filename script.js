@@ -118,7 +118,7 @@ function setup() {
   
     cnv.elt.addEventListener("click", (e) => makeRecording(cnv.elt));
   
-    //drawInitialStateUI();
+    drawInitialStateUI();
 }
 
 toDraw = [];
