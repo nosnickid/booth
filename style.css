@@ -1,5 +1,12 @@
 /* CSS files add styling rules to your content */
 
+/* fonts */
+
+@font-face {
+  font-family: 'comfortaa-regular';
+  src: url('assets/Comfortaa-Regular.ttf');
+}
+
 body {
   font-family: "Benton Sans", "Helvetica Neue", helvetica, arial, sans-serif;
   margin: 2em;
@@ -32,4 +39,5 @@ canvas {
 .initial {
   color: white;
   font-size: 68px;
+  font-family: 'comfortaa-regular';
 }
