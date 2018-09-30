@@ -99,8 +99,8 @@ function setup() {
   
     cnv = createCanvas(canvasWidth, canvasHeight);
   
-    //cnv.elt.style.width = String(monitorWidth)+"px";
-    //cnv.elt.style.height = String(monitorHeight)+"px";
+    cnv.elt.style.width = String(monitorWidth)+"px";
+    cnv.elt.style.height = String(monitorHeight)+"px";
 
     tracking.ColorTracker.registerColor('white', function(r, g, b) {
      return r >= 250 && g >= 250 && b >= 250;
