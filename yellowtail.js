@@ -79,11 +79,16 @@ function continueGesture(rect) {
   }
 }
 
-function renderGesture(gesture, w, h) {
-    
-    if (gesture.exists) { 
-      
+function renderGesture(gesture, w, h) {  
+  if (gesture.exists) { 
+    switch (vizModes[vizModeCurrent]) {
+      case 'yellowtail':
+        renderGestureYellowtail(gesture, w, h);
+      default:
+         alert("lol no");
+        //renderGestureYellowtail(gesture, w, h);
     }
+  }
 }
 
 function renderGestureYellowtail(gesture, w, h) {
