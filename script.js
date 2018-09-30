@@ -533,21 +533,36 @@ function diagnosticRect(trackingRect) {
       // I'll admit I'm not sure why this has to be mirrored
       translate(canvasWidth, 0)
       scale(-1,1);
-      
-      fill(255,204,0);
-      textSize(32);
-      
+            
       fill(0,0,0,0);
-      stroke(255, 204, 0);
+      stroke(255,204,0);
+      
       strokeWeight(4);
       rect(x,y, width, height);
       pop()
+
+      // draw text
+      
+      fill(255,204,0);
+      stroke(255,204,0);
+
+      let fontSize = 25
+      textSize(fontSize);
       
       let boost = 5
       
-      text(String("R: " + trackingRect.analysisData["scores"][RED].toFixed(2)), canvasWidth-x-width, y-32-boost);
-      text(String("G: " + trackingRect.analysisData["scores"][GREEN].toFixed(2)), canvasWidth-x-width, y-16-boost);
-      text(String("B: " + trackingRect.analysisData["scores"][BLUE].toFixed(2)), canvasWidth-x-width, y-boost);
+      let toType = [
+        "R: " + trackingRect.analysisData["scores"][RED].toFixed(2),
+        "G: " + trackingRect.analysisData["scores"][GREEN].toFixed(2),
+        "B: " + trackingRect.analysisData["scores"][BLUE].toFixed(2),
+        "B/G: " + (trackingRect.analysisData["scores"][GREEN]/trackingRect.analysisData["scores"][BLUE]).toFixed(2),
+        "W: " + trackingRect.analysisData["prop_white"].toFixed(2),
+        "S: " + trackingRect.analysisData["skew"].toFixed(2),                
+      ];
+      
+      for (let i = 0; i < toType.length; i++) {
+        text(toType[i], canvasWidth-x-width, y-(fontSize*(toType.length-i))-boost);
+      }
       
     },
     keep: (now) => false,
