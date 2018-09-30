@@ -112,6 +112,7 @@ function setup() {
     });
   
     var tracker = new tracking.ColorTracker("white");
+    tracker.setMinDimension(10);
   
     tracking.track('#trackingVideo', tracker, {
         camera: true
@@ -555,7 +556,7 @@ function diagnosticRect(trackingRect) {
         "R: " + trackingRect.analysisData["scores"][RED].toFixed(2),
         "G: " + trackingRect.analysisData["scores"][GREEN].toFixed(2),
         "B: " + trackingRect.analysisData["scores"][BLUE].toFixed(2),
-        "B/G: " + (trackingRect.analysisData["scores"][GREEN]/trackingRect.analysisData["scores"][BLUE]).toFixed(2),
+        "G/B: " + (trackingRect.analysisData["scores"][GREEN]/trackingRect.analysisData["scores"][BLUE]).toFixed(2),
         "W: " + trackingRect.analysisData["prop_white"].toFixed(2),
         "S: " + trackingRect.analysisData["skew"].toFixed(2),                
       ];
