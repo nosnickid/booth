@@ -144,14 +144,8 @@ function getLatestSmoothed(history, curr) {
   
   var smoothedPos = avg.interpolate(new Point(curr.x, curr.y), .5);
   
-  var newRect = {
-    x: smoothedPos.x,
-    y: smoothedPos.y,
-    height: curr.height,
-    width: curr.width,
-    color: curr.color,
-    time: curr.time
-  };
+  curr.x = smoothedPos.x;
+  curr.y = smoothedPos.y;
   
   return newRect;
 }
