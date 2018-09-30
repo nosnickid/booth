@@ -99,8 +99,8 @@ function setup() {
   
     cnv = createCanvas(canvasWidth, canvasHeight);
   
-    cnv.elt.style.width = String(monitorWidth)+"px";
-    cnv.elt.style.height = String(monitorHeight)+"px";
+    //cnv.elt.style.width = String(monitorWidth)+"px";
+    //cnv.elt.style.height = String(monitorHeight)+"px";
 
     tracking.ColorTracker.registerColor('white', function(r, g, b) {
      return r >= 250 && g >= 250 && b >= 250;
@@ -124,9 +124,9 @@ function setup() {
 toDraw = [];
 
 
-function getLatestSmoothed(history, curr) {
+function smoothRect(history, curr) {
   
-  var iterations = 2;
+  var iterations = 30;
   
   if (history.length < iterations) {
     return curr;
@@ -146,8 +146,6 @@ function getLatestSmoothed(history, curr) {
   
   curr.x = smoothedPos.x;
   curr.y = smoothedPos.y;
-  
-  return newRect;
 }
 
 function analyze(pixels, rect) {
@@ -394,6 +392,7 @@ function mapRectsToHistory(now, histories, trackingRects) {
       
       if (match !== null) {
         // match could be null if we ran out of rects to match to
+        smoothRect(history, match);
         history.push(match);
         match.historyId = history.id;
         matched.push(match);
@@ -430,6 +429,7 @@ function mapRectsToHistory(now, histories, trackingRects) {
       if (match !== null) {
         // match could be null if we've matched all the rects
         // and have moved on to histories whose rects are gone
+        smoothRect(match, rect);
         match.push(rect);
         rect.historyId = match.id;
         matched.push(match);
