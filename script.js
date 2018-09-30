@@ -27,11 +27,11 @@ function processKeyInput(e) {
   switch (e.keyCode) {
     case 37: // left
       vizModeCurrent = (vizModeCurrent - 1) % vizModes.length;
-      //,alert(vizModes[vizModeCurrent]);
+      clearVisuals();
       break;
     case 39: // Right
       vizModeCurrent = (vizModeCurrent + 1) % vizModes.length;
-      // alert(vizModes[vizModeCurrent]);
+      clearVisuals();
       break;
     case 32: // Space
       clearVisuals();

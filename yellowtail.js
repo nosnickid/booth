@@ -83,7 +83,11 @@ function renderGesture(gesture, w, h) {
     
     if (gesture.exists) { 
       
-        if (gesture.nPolys > 0) {
+    }
+}
+
+function renderGestureYellowtail(gesture, w, h) {
+          if (gesture.nPolys > 0) {
             var polygons = gesture.polygons;
             var crosses = gesture.crosses;
 
@@ -136,7 +140,6 @@ function renderGesture(gesture, w, h) {
             }
             endShape();
         }
-    }
 }
 
 function updateGeometry() {
