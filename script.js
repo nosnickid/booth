@@ -27,7 +27,10 @@ function processKeyInput(e) {
     case 39: // Right
       vizModeCurrent = (vizModeCurrent + 1) % vizModes.length;
       // alert(vizModes[vizModeCurrent]);
-      break;     
+      break;
+    case 32: // Space
+      yellowtailSetup();
+      break;   
     }
 };
 
