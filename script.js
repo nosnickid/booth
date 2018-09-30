@@ -1,8 +1,6 @@
 var capture;
 var tracker;
 
-const historySize = 500;
-
 // mapping from arbitrary object ids to history CBuffers
 trackerHistory = {}
 currHistoryId = 0
@@ -41,18 +39,15 @@ function makeRecording(canvas) {
   let mediaRecorder = new MediaRecorder(stream, options);
   mediaRecorder.ondataavailable = function(event) {
     if (event.data.size > 0) {
-      console.log(event);
       recordedChunks.push(event.data);
     } else {
       console.log("got mediaRecorder event with no data", event);
     }
   }
   function download() {
-    console.log(recordedChunks);
     var blob = new Blob(recordedChunks, {
       type: 'video/webm'
     });
-    console.log(blob);
     let url = URL.createObjectURL(blob);
     let a = document.createElement('a');
     document.body.appendChild(a);

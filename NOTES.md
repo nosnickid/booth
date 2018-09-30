@@ -42,18 +42,18 @@ what does it need to do?
   
 ### textual instructions to print out and put on table
 
-- use arrow keys to switch between effects
-- if anything seems broken, find Rachel Hwang or James Porter
+- "use arrow keys to switch between effects"
+- "if anything seems broken, find Rachel Hwang or James Porter"
 - what to do if lightbulb isn't drawing anything
   - hold away from self/clothes/other lightbulbs, against a dark background
   - move more slowly
   - wait a few seconds before moving after turning on
   
-### to buy
+### other things to buy/make/borrow
 
 - extra extension cords, ideally black, with one plug on the end
 - small lamps with shades that produce diffuse, even colored light
 - plain white socks
 - black electrical tape
-- ribbon
-- labels
+- ribbon?
+- small labels for on/off switches on lightbulbs
