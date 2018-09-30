@@ -99,8 +99,8 @@ function setup() {
   
     cnv = createCanvas(canvasWidth, canvasHeight);
   
-    cnv.elt.style.width = String(monitorWidth)+"px";
-    cnv.elt.style.height = String(monitorHeight)+"px";
+    //cnv.elt.style.width = String(monitorWidth)+"px";
+    //cnv.elt.style.height = String(monitorHeight)+"px";
 
     tracking.ColorTracker.registerColor('white', function(r, g, b) {
      return r >= 250 && g >= 250 && b >= 250;
@@ -213,6 +213,7 @@ function analyze(pixels, rect) {
     "green_to_blue_score_ratio": scores[GREEN] / scores[BLUE],
     "skew": Math.abs(rect.width-rect.height),
   };
+  console.log(data);
   return data;
 }
 
@@ -474,6 +475,14 @@ function onTrack(event) {
     stuffOnScreen = false; 
     return;
   }
+  
+  event.data.forEach((tr) => {
+    tr.x *= downsampleFactor;
+    tr.y *= downsampleFactor;
+    tr.width *= downsampleFactor;
+    tr.height *= downsampleFactor;
+    
+  });
   
   event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));   
     
