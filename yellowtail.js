@@ -36,49 +36,44 @@ function clearGestures() {
 function yellowtailDraw() {
 
   updateGeometry();
-
-    var mode = vizModeCurrent;
-    switch (mode) {
-      case 0:
-        yellowtailModeColor();
-        break;
-      default:
-        splineModeColor();
-        break;
-    }
     
     for (let color of colors) {
       for (let gesture of gestures[color]) {
+        var mode = vizModeCurrent;
+        switch (mode) {
+          case 0:
+            yellowtailModeColor(color);
+            break;
+          default:
+            splineModeColor(color);
+            break;
+        }
         renderGesture(gesture, canvasWidth, canvasHeight);
       }
     }
   }
 
-function yellowtailModeColor() {
-  for (let color of colors) {
-    if (color === RED) {
-      fill(255,0,0);
-      stroke(255,0,0);
-    } else if (color === GREEN) {
-      fill(0,255,0);
-      stroke(0,255,0);
-    } else if (color === BLUE) {
-      fill(0,0,255);
-      stroke(0,0,255);
-    }
+function yellowtailModeColor(color) {
+  if (color === RED) {
+    fill(255,0,0);
+    stroke(255,0,0);
+  } else if (color === GREEN) {
+    fill(0,255,0);
+    stroke(0,255,0);
+  } else if (color === BLUE) {
+    fill(0,0,255);
+    stroke(0,0,255);
   }
 }
 
-function splineModeColor() {
-  for (let color of colors) {
-    noFill();
-    if (color === RED) {
-      stroke(255,0,0,200);
-    } else if (color === GREEN) {
-      stroke(0,255,0,200);
-    } else if (color === BLUE) {
-      stroke(0,0,255,200);
-    }
+function splineModeColor(color) {
+  noFill();
+  if (color === RED) {
+    stroke(255,0,0,200);
+  } else if (color === GREEN) {
+    stroke(0,255,0,200);
+  } else if (color === BLUE) {
+    stroke(0,0,255,200);
   }
 }
 
