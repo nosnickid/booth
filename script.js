@@ -456,9 +456,9 @@ function mapRectsToHistory(now, histories, trackingRects) {
 }
 
 function onTrack(event) {
-  
+
   // necessary to use capture.pixels later.
-  trackingCapture.loadPixels()
+  trackingCapture.loadPixels();
 
   let now = Date.now()
   event.data.forEach((tr) => { tr.time = now });
