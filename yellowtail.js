@@ -81,14 +81,18 @@ function continueGesture(rect) {
 
 function renderGesture(gesture, w, h) {  
   if (gesture.exists) { 
-    switch (vizModes[vizModeCurrent]) {
-      case 'yellowtail':
+    var mode = vizModeCurrent;
+    switch (mode) {
+      case 0:
         renderGestureYellowtail(gesture, w, h);
       default:
-         alert("lol no");
-        //renderGestureYellowtail(gesture, w, h);
+        break;
     }
   }
+}
+
+function renderGestureSpline(gesture, w, h) {
+    gesture.path;
 }
 
 function renderGestureYellowtail(gesture, w, h) {

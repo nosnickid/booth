@@ -95,11 +95,12 @@ class Gesture {
     compile() {
         // compute the polygons from the path of Vec3f's
         if (this.exists) {
-          switch (vizModes[vizModeCurrent]) {
-            case "yellowtail":
+          var mode = vizModeCurrent;
+          switch (mode) {
+            case 0:
               this.compileYellowtail();
             default:
-              this.compileYellowtail();
+              break;
           }
         }
     }
