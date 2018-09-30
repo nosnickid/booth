@@ -1,13 +1,6 @@
 @import url("fonts.css");
 @import url("glow.css");
 
-/* NOTE font urls have to be manually fixed to use a relative path in asserts/ 
-when running offline */
-
-body {
-  margin: 2em;
-  cursor: pointer;
-}
 
 h1 {
   font-style: italic;
