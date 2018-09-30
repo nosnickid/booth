@@ -132,9 +132,9 @@ function renderGestureSpline(gesture, w, h) {
       var vector = subtract(p3, p0);
       var crossSectionVector = perpendicular(vector);
       
-      for (let j = 0; j < 4; ++j) {
-        var offset1 = normalize(crossSectionVector, p1.p * j);
-        var offset2 = normalize(crossSectionVector, p2.p * j);
+      for (let j = -2; j < 2; ++j) {
+        var offset1 = normalize(crossSectionVector, p1.p * j * 10);
+        var offset2 = normalize(crossSectionVector, p2.p * j * 10);
         
         bezier(p0.x, p0.y, 
                p1.x + offset1.x, p1.y + offset1.y, 

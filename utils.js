@@ -57,10 +57,10 @@ function distance(p1, p2) {
 }
 
 function normalize(p, scale) {
-  var length = length(p);  
+  var l = length(p);  
   return {
-      x: (p.x / length) * scale,
-      y: (p.y / length) * scale,
+      x: (p.x / l) * scale,
+      y: (p.y / l) * scale,
   }
 }
 
