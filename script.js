@@ -97,11 +97,13 @@ function setup() {
     var tracker = new tracking.ColorTracker("white");
 
     capture.elt.id = 'p5video';
-    tracking.track('#p5video', tracker, {
+  /*  
+  tracking.track('#p5video', tracker, {
         camera: true
     });
   
     tracker.on('track', onTrack);
+    */
   
     yellowtailSetup();
   
@@ -444,12 +446,13 @@ function mapRectsToHistory(now, histories, trackingRects) {
 }
 
 function onTrack(event) {
+  
   // necessary to use capture.pixels later.
   capture.loadPixels()
 
   let now = Date.now()
   event.data.forEach((tr) => { tr.time = now });   
-    
+  
   // map rects to history needs to happen before the stuffOnScreen check
   // since it triggers the removal of stale histories
   mapRectsToHistory(now, trackerHistory, event.data);
