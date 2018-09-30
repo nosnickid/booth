@@ -5,6 +5,24 @@ function add(p1, p2) {
   }
 }
 
+function subtract(p1, p2) {
+  return {
+    x: p1.x - p2.x,
+    y: p1.y - p2.y,
+  }
+}
+
+function perpendicular(p) {
+  return {
+    x: p.y,
+    y: p.x,
+  }
+}
+
+function length(p){
+	return Math.sqrt(p.x * p.x + p.y * p.y);
+};
+  
 function scale(p1, s) {
   return {
     x: p1.x * s,
@@ -37,6 +55,15 @@ function delta(p1, p2) {
 function distance(p1, p2) {
   return Math.sqrt(Math.pow(p2.x-p1.x, 2) + Math.pow(p2.y-p1.y, 2));
 }
+
+function normalize(p, scale) {
+  var length = length(p);  
+  return {
+      x: (p.x / length) * scale,
+      y: (p.y / length) * scale,
+  }
+}
+
 
 // calculates the center, assuming that the x and y positions are the corner
 function center(r) {
