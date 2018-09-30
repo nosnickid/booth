@@ -84,17 +84,18 @@ function setup() {
     });
     displayCapture.elt.setAttribute('playsinline', '');
     displayCapture.size(canvasWidth, canvasHeight);
+    displayCapture.elt.id = 'displayVideo';  
 
     trackingCapture = createCapture({
       audio: false,
       video: {
-          width: canvasWidth,
-          height: canvasHeight
+          width: canvasWidth/downsampleFactor,
+          height: canvasHeight/downsampleFactor
       }
     });
     trackingCapture.elt.setAttribute('playsinline', '');
-    trackingCapture.size(canvasWidth, canvasHeight);
-  
+    trackingCapture.size(canvasWidth/downsampleFactor, canvasHeight/downsampleFactor);
+    trackingCapture.elt.id = 'trackingVideo';
   
     cnv = createCanvas(canvasWidth, canvasHeight);
   
@@ -107,8 +108,6 @@ function setup() {
   
     var tracker = new tracking.ColorTracker("white");
   
-    capture.elt.id = 'displayVideo';
-
     tracking.track('#displayVideo', tracker, {
         camera: true
     });
@@ -458,16 +457,24 @@ function mapRectsToHistory(now, histories, trackingRects) {
 function onTrack(event) {
   
   // necessary to use capture.pixels later.
-  capture.loadPixels()
+  displayCapture.loadPixels()
 
   let now = Date.now()
-  event.data.forEach((tr) => { tr.time = now });   
+  event.data.forEach((tr) => { tr.time = now });
+  
+  // fix downSampling
+  event.data.forEach((tr) => {
+    tr.x *= 2;
+    tr.y *= 2;
+    tr.width *= 2;
+    tr.height *= 2;
+  });
   
   // map rects to history needs to happen before the stuffOnScreen check
   // since it triggers the removal of stale histories
   mapRectsToHistory(now, trackerHistory, event.data);
   
-  event.data.forEach((tr) => tr.analysisData = analyze(capture.pixels, tr));
+  event.data.forEach((tr) => tr.analysisData = analyze(displayCapture.pixels, tr));
   
   if (event.data.length > 0) {
     stuffOnScreen = true;
@@ -506,7 +513,7 @@ function onTrack(event) {
     lastTimeSeen[rect.color] = now;
 
   }    
-  capture.updatePixels();
+  displayCapture.updatePixels();
 }
 
 
@@ -551,7 +558,7 @@ function diagnosticRect(trackingRect) {
 function draw() {
   var now = Date.now()
   clear();
-  drawVideoOnCanvas(capture);
+  drawVideoOnCanvas(displayCapture);
   yellowtailDraw();
   nextToDraw = [];
   toDraw.forEach((thing) => {
