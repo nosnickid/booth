@@ -11,7 +11,7 @@ var colors = [RED, GREEN, BLUE];
 
 function yellowtailSetup() {
 
-	maxGesturesPerColor = 1;  // Number of gestures
+	maxGesturesPerColor = 10;  // Number of gestures
 	minMove = 3;     // Minimum travel for a new point
 
 	tempP; // Polygon
@@ -146,6 +146,11 @@ function updateGeometry() {
       if ((J = gestures[color][i]).exists) {
         if (i != gestures[color].length-1) {
           advanceGesture(J);
+        // TODO we should keep track of stuffOnScreen in a more granular way
+        // (i.e. on a per-color basis) and only stop animating the gestures for
+        // which colors are on screen. in fact we could do one better and only 
+        // animate the currently-being-draw gesture (so the last one) of the colors
+        // for which there are blobs on screen.
         } else if (!stuffOnScreen) {
           advanceGesture(J);
         }

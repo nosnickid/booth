@@ -95,6 +95,12 @@ class Gesture {
     compile() {
         // compute the polygons from the path of Vec3f's
         if (this.exists) {
+          if (vizModeCurrent
+          
+        }
+    }
+      
+    compileYellowtail() {
             this.clearPolys();
 
             var p0, p1, p2;
@@ -234,7 +240,6 @@ class Gesture {
             ypts[1] = floor(by);
             ypts[2] = floor((p2.y));
             ypts[3] = floor((p2.y));
-
     	}
 	}
 

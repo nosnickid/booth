@@ -51,9 +51,18 @@ what does it need to do?
   
 ### other things to buy/make/borrow
 
+- KEYBOARD FROM WORK ABSOLUTELY CRITICAL
 - extra extension cords, ideally black, with one plug on the end
 - small lamps with shades that produce diffuse, even colored light
 - plain white socks
 - black electrical tape
 - ribbon?
 - small labels for on/off switches on lightbulbs
+
+### note for blog post
+
+- joy of making something where the "production environment" is your laptop, so "works on my machine" is totally good enough, e.g. downloading the webfont locally
+- pains of glitch:
+  - downloading tarballs is version control strategy
+  - webfont disaster, assets don't download locally
+  - working on different parts of the code at the same time sucks

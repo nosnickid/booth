@@ -75,6 +75,12 @@ function makeRecording(canvas) {
 
 
 function setup() {
+    // TODO, the way this works now, there's
+    // now guarentee they pick up the same
+    // webcam. this is solvable by just
+    // closing the lid of the laptop if you have an
+    // external webcam, but it would be good to figure
+    // out a more robust solution.
     displayCapture = createCapture({
         audio: false,
         video: {
