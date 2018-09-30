@@ -158,7 +158,7 @@ function getLatestSmoothed(history, curr) {
 
 function analyze(pixels, rect) {
   // sum up to the r, g, b value so we can average them later
-  
+  console.log(pixels);
   const WHITE_THRESH = 250
   const HIGH_THRESH = 200;
   const LOW_THRESH = 50;
@@ -456,7 +456,7 @@ function mapRectsToHistory(now, histories, trackingRects) {
 }
 
 function onTrack(event) {
-
+  
   // necessary to use capture.pixels later.
   trackingCapture.loadPixels()
 
@@ -480,14 +480,11 @@ function onTrack(event) {
     tr.x *= downsampleFactor;
     tr.y *= downsampleFactor;
     tr.width *= downsampleFactor;
-    tr.height *= downsampleFactor;
-    
+    tr.height *= downsampleFactor; 
   });
   
   event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));   
-    
-  findRedLightbulb(trackerHistory);
-  
+      
   let coloredRects = [
     findRedLightbulb(trackerHistory),
     findGreenLightbulb(trackerHistory),
@@ -512,8 +509,7 @@ function onTrack(event) {
       continueGesture(rect);
     }
     lastTimeSeen[rect.color] = now;
-
-  }  
+  }
 }
 
 
