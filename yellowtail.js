@@ -37,6 +37,22 @@ function yellowtailDraw() {
 
   updateGeometry();
 
+    var mode = vizModeCurrent;
+    switch (mode) {
+      case 0:
+        yellowtailModeColor();
+        break;
+      default:
+        splineModeColor();
+        break;
+    }
+    
+    for (let gesture of gestures[color]) {
+      renderGesture(gesture, canvasWidth, canvasHeight);
+    }
+  }
+
+function yellowtailModeColor() {
   for (let color of colors) {
     if (color === RED) {
       fill(255,0,0);
@@ -48,12 +64,22 @@ function yellowtailDraw() {
       fill(0,0,255);
       stroke(0,0,255);
     }
-    
-    for (let gesture of gestures[color]) {
-      renderGesture(gesture, canvasWidth, canvasHeight);
+  }
+}
+
+function splineModeColor() {
+  for (let color of colors) {
+    fill(0);
+    if (color === RED) {
+      stroke(255,0,0,200);
+    } else if (color === GREEN) {
+      stroke(0,255,0,200);
+    } else if (color === BLUE) {
+      stroke(0,0,255,200);
     }
   }
 }
+
 
 function newGesture(color, point) {
     if (gestures[color].length >= maxGesturesPerColor) {
@@ -101,7 +127,14 @@ function renderGestureSpline(gesture, w, h) {
       var p2 = points[i + 2];
       var p3 = points[i + 3];
           
-      bezier(p0.x, p0.y, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
+      for (let j = 0; j < 4; ++j) {
+        var offset1 = j * 10;
+        var offset2 = j * 10;
+        bezier(p0.x, p0.y, 
+               p1.x + offset1, p1.y + offset1, 
+               p2.x + offset2, p2.y + offset2, 
+               p3.x, p3.y);
+      }
     }
 }
 
