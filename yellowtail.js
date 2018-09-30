@@ -118,6 +118,7 @@ function renderGesture(gesture, w, h) {
 
 function renderGestureSpline(gesture, w, h) {
     var points = gesture.path;
+    var stepSize = viz
     for (let i = 0; i < gesture.nPoints - 3; i += 3) {
       var p0 = points[i];
       var p1 = points[i + 1];
