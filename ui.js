@@ -6,8 +6,8 @@ function drawInitialStateUI() {
   let start = document.createElement('p');
   title.innerHTML = "Leave a magical message for John and Emily";
   start.innerHTML = "Press SPACE to start";
-  title.class="initial title"
-  start.class = "initial start"
+  title.className ="initial title";
+  start.className = "initial start"
   document.body.appendChild(title);
   document.body.appendChild(start);
 }
