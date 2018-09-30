@@ -33,13 +33,13 @@ canvas {
 }
 
 .initial {
-  color: white;
-  font-size: 4.5em;
-  font-family: 'Comfortaa', cursive;
+  color: yellow;
+  font-size: 6em;
+  font-family: 'Satisfy', cursive;
+  font-weight: 700;
   text-align: center;
 }
 
-.initial.title {
-  position: absolute;
-  top: 0;
+.initial.start {
+  padding-top: 4em;
 }
