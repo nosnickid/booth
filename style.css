@@ -3,12 +3,15 @@
 /* NOTE font urls have to be manually fixed to use a relative path in asserts/ 
 when running offline */
 
+
+
+
 @font-face {
   font-family: 'Comfortaa';
   font-style: normal;
   font-weight: 400;
   src: local('Comfortaa Regular'), local('Comfortaa-Regular'),
-       url('https://cdn.glitch.com/32439cc5-0c42-49af-9048-626266541fe1%2Fcomfortaa-v12-latin-regular.woff2?1538268824566') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url(https://cdn.glitch.com/32439cc5-0c42-49af-9048-626266541fe1%2Fcomfortaa-v12-latin-regular.woff2?1538268824566) format('woff2'), 
 }
 
 @font-face {
@@ -16,11 +19,13 @@ when running offline */
   font-style: normal;
   font-weight: 400;
   src: local('Satisfy Regular'), local('Satisfy-Regular'),
-       url('https://cdn.glitch.com/32439cc5-0c42-49af-9048-626266541fe1%2Fsatisfy-v8-latin-regular.woff2?1538268958610') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url(https://cdn.glitch.com/32439cc5-0c42-49af-9048-626266541fe1%2Fsatisfy-v8-latin-regular.woff2?1538268958610) format('woff2'),
 }
 
+
+
+
 body {
-  font-family: "Benton Sans", "Helvetica Neue", helvetica, arial, sans-serif;
   margin: 2em;
 }
 
@@ -51,6 +56,5 @@ canvas {
 .initial {
   color: white;
   font-size: 68px;
-  font-family: 'Comfortaa';
-  font-weight: '400';
+  font-family: 'Comfortaa', cursive;
 }
