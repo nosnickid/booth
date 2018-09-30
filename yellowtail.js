@@ -47,8 +47,10 @@ function yellowtailDraw() {
         break;
     }
     
-    for (let gesture of gestures[color]) {
-      renderGesture(gesture, canvasWidth, canvasHeight);
+    for (let color of colors) {
+      for (let gesture of gestures[color]) {
+        renderGesture(gesture, canvasWidth, canvasHeight);
+      }
     }
   }
 
@@ -69,7 +71,7 @@ function yellowtailModeColor() {
 
 function splineModeColor() {
   for (let color of colors) {
-    fill(0);
+    noFill();
     if (color === RED) {
       stroke(255,0,0,200);
     } else if (color === GREEN) {
@@ -128,6 +130,7 @@ function renderGestureSpline(gesture, w, h) {
       var p3 = points[i + 3];
           
       for (let j = 0; j < 4; ++j) {
+        
         var offset1 = j * 10;
         var offset2 = j * 10;
         bezier(p0.x, p0.y, 
