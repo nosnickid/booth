@@ -457,13 +457,11 @@ function mapRectsToHistory(now, histories, trackingRects) {
 function onTrack(event) {
 
   // necessary to use capture.pixels later.
-  displayCapture.loadPixels()
+  trackingCapture.loadPixels()
 
   let now = Date.now()
   event.data.forEach((tr) => { tr.time = now });
- 
-  // fix downSampling
-  
+   
   // map rects to history needs to happen before the stuffOnScreen check
   // since it triggers the removal of stale histories
   mapRectsToHistory(now, trackerHistory, event.data);
