@@ -12,6 +12,8 @@ lastTimeSeen = [-Infinity, -Infinity, -Infinity] // this is R, G, B
 
 document.onkeydown = processKeyInput;
 
+ui = new UI()
+
 function clearVisuals() {
   yellowtailSetup(); 
 }
@@ -29,7 +31,10 @@ function processKeyInput(e) {
       break;
     case 32: // Space
       clearVisuals();
-      break;   
+      break;
+    case 13: // Enter
+      ui.handleEnter(e);
+      break;
     }
 };
 
@@ -118,7 +123,7 @@ function setup() {
   
     cnv.elt.addEventListener("click", (e) => makeRecording(cnv.elt));
   
-    drawInitialStateUI();
+    ui.drawInitial();
 }
 
 toDraw = [];

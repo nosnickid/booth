@@ -66,3 +66,7 @@ what does it need to do?
   - downloading tarballs is version control strategy
   - webfont disaster, assets don't download locally
   - working on different parts of the code at the same time sucks
+  
+  ## 9/30
+  
+back to work on getting UI made and hooked up
