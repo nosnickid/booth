@@ -38,3 +38,22 @@ what does it need to do?
   - big "finished recording!" flash when the time runs out
   - save video with an id ALONG WITH a text file containing the name / message
   - go back to intial state
+  
+  
+### textual instructions to print out and put on table
+
+- use arrow keys to switch between effects
+- if anything seems broken, find Rachel Hwang or James Porter
+- what to do if lightbulb isn't drawing anything
+  - hold away from self/clothes/other lightbulbs, against a dark background
+  - move more slowly
+  - wait a few seconds before moving after turning on
+  
+### to buy
+
+- extra extension cords, ideally black, with one plug on the end
+- small lamps with shades that produce diffuse, even colored light
+- plain white socks
+- black electrical tape
+- ribbon
+- labels

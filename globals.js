@@ -1,4 +1,5 @@
 // these are the sizes that James' laptop chooses when optimized for the 
+// Dell monitor we'll be using.
 monitorWidth = 1920;
 monitorHeight = 1200;
 
