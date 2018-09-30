@@ -34,6 +34,12 @@ canvas {
 
 .initial {
   color: white;
-  font-size: 68px;
+  font-size: 4.5em;
   font-family: 'Comfortaa', cursive;
+  text-align: center;
+}
+
+.initial.title {
+  position: absolute;
+  top: 0;
 }

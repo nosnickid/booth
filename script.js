@@ -17,6 +17,10 @@ vizParams = {mode : vizModes[vizModeCurrent]};
 
 document.onkeydown = processKeyInput;
 
+function clearVisuals() {
+  yellowtailSetup(); 
+}
+
 function processKeyInput(e) {
   let canvas = document.querySelector(".p5Canvas");
   switch (e.keyCode) {
@@ -29,7 +33,7 @@ function processKeyInput(e) {
       // alert(vizModes[vizModeCurrent]);
       break;
     case 32: // Space
-      yellowtailSetup();
+      clearVisuals();
       break;   
     }
 };
