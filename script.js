@@ -56,6 +56,7 @@ function makeRecording(canvas) {
     a.download = 'test.webm';
     a.click();
     window.URL.revokeObjectURL(url);
+    // TODO delete the a element
   }
   mediaRecorder.onstop = download;
   mediaRecorder.start();
@@ -82,7 +83,6 @@ function setup() {
     cnv.elt.style.width = String(monitorWidth)+"px";
     cnv.elt.style.height = String(monitorHeight)+"px";
 
-
     tracking.ColorTracker.registerColor('white', function(r, g, b) {
      return r >= 250 && g >= 250 && b >= 250;
     });
@@ -99,6 +99,8 @@ function setup() {
     yellowtailSetup();
   
     cnv.elt.addEventListener("click", (e) => makeRecording(cnv.elt));
+  
+    drawInitialStateUI();
 }
 
 toDraw = [];
