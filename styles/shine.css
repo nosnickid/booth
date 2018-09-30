@@ -1,25 +1,27 @@
 .shine {  /* shiny effect! */
-	background: #222 -webkit-gradient(linear, left top, right top, from(#222), to(#222), color-stop(0.5, #fff)) 0 0 no-repeat;
-	-webkit-background-size: 150px;
-	color: yellow;
-	-webkit-background-clip: text;
-	-webkit-animation-name: shine;
-	-webkit-animation-duration: 5s;
-	-webkit-animation-iteration-count: infinite;
-	text-shadow: 0 0px 0px rgba(255, 255, 255, 0.5);
+  -webkit-mask-image: linear-gradient(-75deg, rgba(0,0,0,.6) 30%, #000 50%, rgba(0,0,0,.6) 70%);
+  -webkit-mask-size: 200%;
+  animation: shine 2s linear infinite;
 }
 
-@-webkit-keyframes shine {
-	0%, 10% {
-		background-position: -1000px;
-	}
-	20% {
-		background-position: top left;
-	}
-	90% {
-		background-position: top right;
-	}
-	100% {
-		background-position: 1000px;
-	}
+@keyframes shine {
+  from { -webkit-mask-position: 150%; }
+  to { -webkit-mask-position: -50%; }
 }
+
+   .glow {
+        -webkit-animation-duration: 2s;
+        -webkit-animation-name: glow;
+        -webkit-animation-direction: alternate;
+        -webkit-animation-iteration-count: infinite;
+        animation-duration: 2s;
+        animation-name: glow;
+        animation-direction: linear;
+        animation-iteration-count: infinite;
+    
+    }
+    
+    @-webkit-keyframes glow {
+        from { text-shadow: 0 0 0px white; }
+        to { text-shadow: 0 0 20px white; }
+    }
