@@ -116,7 +116,6 @@ function renderGesture(gesture, w, h) {
   }
 }
 
-// TODO handle the end of the stroke (which might be too short for step size)
 // TODO slow down the animation
 
 function renderGestureSpline(gesture, w, h) {
@@ -124,8 +123,8 @@ function renderGestureSpline(gesture, w, h) {
     
   // vizParams
     var stepSize = 4;
-    var splineNum = 5;
-    var splineSpace = 20;
+    var splineNum = 10;
+    var splineSpace = 10;
     var splineInitialBend = 2;
   
     var drawSegment = function(v0, v1, v2, v3, parity) {
@@ -179,7 +178,7 @@ function renderGestureSpline(gesture, w, h) {
     var p3 = points[i + 3 * lastSegmentStepSize];
     
     console.log(remainderLength);
-    //drawSegment(p0, p1, p2, p3, parityCounter);
+    drawSegment(p0, p1, p2, p3, parityCounter);
   }
 }
 

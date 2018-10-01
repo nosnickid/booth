@@ -14,7 +14,7 @@ function subtract(p1, p2) {
 
 function perpendicular(p) {
   return {
-    x: p.y,
+    x: -p.y,
     y: p.x,
   }
 }
