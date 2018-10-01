@@ -50,14 +50,14 @@ class UI {
   drawTextEntry() {
     let form = createDOMElement(
       `<form autocomplete="off">
-        <label>
+        <label class="textEntry">
           Name:
-           <input type="text" id="form-name" name="name"/>
+           <input class="textEntry" type="text" id="form-name" name="name"/>
         </label>
         <br/>
-        <label>
+        <label class="textEntry">
           Note to John and Emily:
-          <input type="text" id="form-message" name="message"/>
+          <input class = "textEntry" type="text" id="form-message" name="message"/>
         </label>
       </form>`
     );
