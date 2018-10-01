@@ -63,7 +63,7 @@ function yellowtailDraw() {
             splineModeColor(color);
             break;
         }
-        renderGesture(gesture, canvasWidth, canvasHeight);
+        renderGesture(gesture, canvasWidth, canvasHeight, color);
       }
     }
   }

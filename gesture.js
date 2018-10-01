@@ -1,6 +1,7 @@
 class Gesture {
 
     constructor(mw, mh) {
+        this.color = RED;
         this.damp = 5.0;
       	this.dampInv = 1.0 / this.damp;
      	  this.damp1 = this.damp - 1;
