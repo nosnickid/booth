@@ -159,7 +159,7 @@ function renderGestureSpline(gesture, w, h) {
       
       i += 3 * stepSize;
       parityCounter++;
-    }
+  }
   
     // Do the extra bit (points < one full segment length
     i -= 3 * stepSize;
