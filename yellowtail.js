@@ -179,7 +179,6 @@ function renderGestureSpline(gesture, w, h) {
     var p2 = points[i + 2 * lastSegmentStepSize];
     var p3 = points[i + 3 * lastSegmentStepSize];
     
-    console.log(remainderLength);
     drawSegment(p0, p1, p2, p3, parityCounter);
   }
 }
