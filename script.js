@@ -481,7 +481,7 @@ function onTrack(event) {
     return;
   }
   
-  event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));   
+  //event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));   
       
   let coloredRects = [
     findRedLightbulb(trackerHistory),

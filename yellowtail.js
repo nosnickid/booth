@@ -139,7 +139,7 @@ function renderGestureSpline(gesture, w, h) {
   // vizParams
     var stepSize = 4;
     var splineNum = 10;
-    var splineSpace = 10;
+    var splineSpace = 5;
     var splineInitialBend = 2;
   
     var drawSegment = function(v0, v1, v2, v3, parity) {
