@@ -37,12 +37,12 @@ canvas {
   padding-top: 750px;
 }
 
-input.textEntry {
+input.text-entry {
   font-size: 80px;
   font-family: 'Comfortaa';
 }
 
-label.textEntry {
+label.text-entry {
   font-size: 80px;
   font-family: 'Satisfy';
   font-color: white;

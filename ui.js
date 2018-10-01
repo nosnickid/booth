@@ -25,7 +25,13 @@ class UI {
       this.state = "textEntry";
       this.destroyInitial();
       this.drawTextEntry();
+      document.querySelector("#form-name").focus()
+    } else if (this.state = "textEntry") {
+      if (document.querySelector("#form-name") == document.activeElement) {
+        document.querySelector("#form-message").focus();
+      }
     }
+    
   }
 
   drawInitial() {
@@ -50,14 +56,14 @@ class UI {
   drawTextEntry() {
     let form = createDOMElement(
       `<form autocomplete="off">
-        <label class="textEntry">
+        <label class="text-entry">
           Name:
-           <input class="textEntry" type="text" id="form-name" name="name"/>
+           <input class="text-entry" type="text" id="form-name" name="name"/>
         </label>
         <br/>
-        <label class="textEntry">
+        <label class="text-entry">
           Note to John and Emily:
-          <input class = "textEntry" type="text" id="form-message" name="message"/>
+          <input class = "text-entry" type="text" id="form-message" name="message"/>
         </label>
       </form>`
     );
