@@ -35,7 +35,9 @@ function clearGestures() {
 
 function yellowtailDraw() {
   
-  
+  var now = Date.now();
+  deltaTime = now - lastTimeStamp;
+  lastTimeStamp = now;
 
   updateGeometry();
     

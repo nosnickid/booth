@@ -22,6 +22,8 @@ vizModeCurrent = 1;
 lastTimeStamp = 0;
 deltaTime = 0;
 
+ANIMATION_SPEED = 1.0; 
+
 // Object storing various misc visual parameters
 vizParams = {mode : vizModes[vizModeCurrent]};
 
