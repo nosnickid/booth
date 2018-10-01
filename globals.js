@@ -21,10 +21,11 @@ vizModeCurrent = 1;
 
 lastTimeStamp = 0;
 deltaTime = 0;
-timeElpased = 0;
+timeElapsed = 0;
 
-ANIMATION_SPEED = 1.0; 
+ANIMATION_SPEED = 5.00; 
 
 // Object storing various misc visual parameters
 vizParams = {mode : vizModes[vizModeCurrent]};
 
+0
