@@ -127,10 +127,72 @@ function renderGestureSpline(gesture, w, h) {
     var splineNum = 5;
     var splineSpace = 20;
     var splineInitialBend = 2;
+  
+    var drawSegment = function(v0, v1, v2, v3, parity) {
+      var vector = subtract(v3, v0);
+      var crossSectionVector = perpendicular(vector);
+      
+      // Draw the multiple offset splines for the current segment
+      for (let j = 0; j < splineNum; ++j) {
+        
+        var offsetStart = j + splineInitialBend;
+        if (parityCounter % 2 == 0) {
+          offsetStart *= -1;
+        }
+        
+        var offset1 = normalize(crossSectionVector, v1.p * offsetStart * splineSpace);
+        var offset2 = normalize(crossSectionVector, v2.p * offsetStart * splineSpace);
+        
+        bezier(v0.x, v0.y, 
+               v1.x + offset1.x, v1.y + offset1.y, 
+               v2.x + offset2.x, v2.y + offset2.y, 
+               v3.x, v3.y);
+      }
+    };
     
-    var parityCounter = 0;
     var i = 0;
+      var parityCounter = 0;
     while (i < gesture.nPoints - (3 * stepSize)) {
+      var p0 = points[i];
+      var p1 = points[i + 1 * stepSize];
+      var p2 = points[i + 2 * stepSize];
+      var p3 = points[i + 3 * stepSize];
+      
+      drawSegment(p0, p1, p2, p3);
+      
+//       var vector = subtract(p3, p0);
+//       var crossSectionVector = perpendicular(vector);
+      
+//       // Draw the multiple offset splines for the current segment
+//       for (let j = 0; j < splineNum; ++j) {
+        
+//         var offsetStart = j + splineInitialBend;
+//         if (parityCounter % 2 == 0) {
+//           offsetStart *= -1;
+//         }
+        
+//         var offset1 = normalize(crossSectionVector, p1.p * offsetStart * splineSpace);
+//         var offset2 = normalize(crossSectionVector, p2.p * offsetStart * splineSpace);
+        
+//         bezier(p0.x, p0.y, 
+//                p1.x + offset1.x, p1.y + offset1.y, 
+//                p2.x + offset2.x, p2.y + offset2.y, 
+//                p3.x, p3.y);
+//       }
+      
+      i += 3 * stepSize;
+      parityCounter++;
+  }
+  
+    // Do the extra bit (points < one full segment length
+    i -= 3 * stepSize;
+    var remainderLength = gesture.nPoints - i;
+    var lastSegmentStepSize = 1;
+    // if (remainderLength > 3) {
+    //   while ((lastSegmentStepSize * 3) < remainderLength) {
+    //     lastSegmentStepSize++;
+    //   }
+  
       var p0 = points[i];
       var p1 = points[i + 1 * stepSize];
       var p2 = points[i + 2 * stepSize];
@@ -138,7 +200,6 @@ function renderGestureSpline(gesture, w, h) {
       
       var vector = subtract(p3, p0);
       var crossSectionVector = perpendicular(vector);
-      
       
       // Draw the multiple offset splines for the current segment
       for (let j = 0; j < splineNum; ++j) {
@@ -156,19 +217,7 @@ function renderGestureSpline(gesture, w, h) {
                p2.x + offset2.x, p2.y + offset2.y, 
                p3.x, p3.y);
       }
-      
-      i += 3 * stepSize;
-      parityCounter++;
-  }
-  
-    // Do the extra bit (points < one full segment length
-    i -= 3 * stepSize;
-    var remainderLength = gesture.nPoints - i;
-    var lastSegmentStepSize = 1;
-    // if (remainderLength > 3) {
-    //   while ((lastSegmentStepSize * 3) < remainderLength) {
-    //     lastSegmentStepSize++;
-    //   }
+    //   
     // }
 }
 
