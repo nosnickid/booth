@@ -162,7 +162,11 @@ function renderGestureSpline(gesture, w, h) {
     }
   
     // Do the extra bit (points < one full segment length
-    i -= 3 * stepSize
+    i -= 3 * stepSize;
+    var remainderLength = gesture.nPoints - i;
+    var lastSegmentStepSize = 1;
+    //while (remainderLength) {
+    //}
 }
 
 function renderGestureYellowtail(gesture, w, h) {
