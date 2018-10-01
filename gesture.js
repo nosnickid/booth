@@ -77,7 +77,6 @@ class Gesture {
         for (let i = 0; i < this.nPoints; i++) {
             pressure = sqrt((1.0 - cos(t)) * 0.5);
             this.path[i].p = pressure;
-            this.path[i].pOld = pressure;
             this.path[i].time = 0;
             t += u;
         }

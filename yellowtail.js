@@ -35,10 +35,18 @@ function clearGestures() {
 
 function yellowtailDraw() {
   
+  if (timeElapsed >= 1.0) {
+    timeElapsed = 0;
+  }
+
   var now = Date.now();
   deltaTime = now - lastTimeStamp;
   lastTimeStamp = now;
-
+  timeElapsed += (deltaTime / ANIMATION_SPEED);
+  
+  if (timeElapsed > 1.0) {
+    timeElapsed = 1.0)
+  
   updateGeometry();
     
     for (let color of colors) {
@@ -282,6 +290,8 @@ function advanceGesture(gesture) {
           */
           
             for (let i = nPts-1; i > 0; i--) {
+                path[i].time += deltaTime;
+                path[i].p = lerp(path[i].p, path[i - 1].p, path[i].time / );
                 path[i].p = path[i - 1].p;
             }
             
