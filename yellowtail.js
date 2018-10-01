@@ -48,7 +48,6 @@ function yellowtailDraw() {
   if (timeElapsed > 1.0) {
     timeElapsed = 1.0;
   }
-  console.log(timeElapsed);
   
   updateGeometry();
     
@@ -117,23 +116,21 @@ function continueGesture(rect) {
   }
 }
 
-function renderGesture(gesture, w, h) {  
+function renderGesture(gesture, w, h, color) {
   if (gesture.exists) { 
     var mode = vizModeCurrent;
     switch (mode) {
       case 0:
-        renderGestureYellowtail(gesture, w, h);
+        renderGestureYellowtail(gesture, w, h, color);
         break;
       default:
-        renderGestureSpline(gesture, w, h);
+        renderGestureSpline(gesture, w, h, color);
         break;
     }
   }
 }
 
-// TODO slow down the animation
-
-function renderGestureSpline(gesture, w, h) {
+function renderGestureSpline(gesture, w, h, color) {
     var points = gesture.path;
     
   // vizParams
@@ -196,7 +193,7 @@ function renderGestureSpline(gesture, w, h) {
   }
 }
 
-function renderGestureYellowtail(gesture, w, h) {
+function renderGestureYellowtail(gesture, w, h, color) {
           if (gesture.nPolys > 0) {
             var polygons = gesture.polygons;
             var crosses = gesture.crosses;
