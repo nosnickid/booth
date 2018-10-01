@@ -208,7 +208,7 @@ function analyze(pixels, rect) {
     "prop_white": whiteCount / pixelCount,
     "scores": scores,
     "green_to_blue_score_ratio": scores[GREEN] / scores[BLUE],
-    "skew": Math.abs(rect.width-rect.height),
+    "skew": Math.max(rect.width,rect.height)/Math.min(rect.width,rect.height),
   };
   return data;
 }
