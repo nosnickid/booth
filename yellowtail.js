@@ -34,6 +34,8 @@ function clearGestures() {
 
 
 function yellowtailDraw() {
+  
+  
 
   updateGeometry();
     
