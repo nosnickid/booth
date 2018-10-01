@@ -18,6 +18,12 @@ function clearVisuals() {
   yellowtailSetup(); 
 }
 
+function cracklePop() {
+  for (let i = 0; i < 100; ++i) {
+    var isDivisibleBy3 = ( % 3 == 0)
+  }
+}
+
 function processKeyInput(e) {
   let canvas = document.querySelector(".p5Canvas");
   switch (e.keyCode) {
