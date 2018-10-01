@@ -131,7 +131,6 @@ function renderGestureSpline(gesture, w, h) {
     var parityCounter = 0;
     var i = 0;
     while (i < gesture.nPoints - (3 * stepSize)) {
-    for (let i = 0; i < gesture.nPoints - 3 * stepSize; i += 3 * stepSize) {
       var p0 = points[i];
       var p1 = points[i + 1 * stepSize];
       var p2 = points[i + 2 * stepSize];
@@ -161,6 +160,9 @@ function renderGestureSpline(gesture, w, h) {
       i += 3 * stepSize;
       parityCounter++;
     }
+  
+    // Do the extra bit (points < one full segment length
+    i -= 3 * stepSize
 }
 
 function renderGestureYellowtail(gesture, w, h) {
