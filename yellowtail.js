@@ -40,7 +40,7 @@ function yellowtailDraw() {
     timeElapsed = 0;
   }
 
-  var now = Date.now();
+  var now = Date.now() / 1000.0;
   deltaTime = now - lastTimeStamp;
   lastTimeStamp = now;
   timeElapsed += (deltaTime / ANIMATION_SPEED);
@@ -49,8 +49,6 @@ function yellowtailDraw() {
     timeElapsed = 1.0;
   }
   console.log(timeElapsed);
-  
-  
   
   updateGeometry();
     
