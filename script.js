@@ -18,23 +18,6 @@ function clearVisuals() {
   yellowtailSetup(); 
 }
 
-function cracklePop() {
-  for (let i = 1; i < 101; ++i) {
-    var isDivisibleBy3 = (i%3 == 0);
-    var isDivisibleBy5 = (i%5 == 0);
-    
-    if (isDivisibleBy3 && isDivisibleBy5) {
-      console.log("CracklePop");
-    } else if (isDivisibleBy3) {
-      console.log("Crackle");
-    } else if (isDivisibleBy5) {
-      console.log("Pop");
-    } else {
-      console.log(i);
-    }
-  }
-}
-
 function processKeyInput(e) {
   let canvas = document.querySelector(".p5Canvas");
   switch (e.keyCode) {
@@ -47,7 +30,6 @@ function processKeyInput(e) {
       clearVisuals();
       break;
     case 32: // Space
-      cracklePop();
       clearVisuals();
       break;
     case 13: // Enter
