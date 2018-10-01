@@ -27,5 +27,3 @@ ANIMATION_SPEED = 5.00000000000;
 
 // Object storing various misc visual parameters
 vizParams = {mode : vizModes[vizModeCurrent]};
-
-0
