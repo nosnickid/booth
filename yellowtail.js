@@ -59,7 +59,7 @@ function yellowtailDraw() {
             yellowtailModeColor(color);
             break;
           default:
-            splineModeColor(color);
+            splineModeColor(color, 1);
             break;
         }
         renderGesture(gesture, canvasWidth, canvasHeight, color);
@@ -80,14 +80,14 @@ function yellowtailModeColor(color) {
   }
 }
 
-function splineModeColor(color) {
+function splineModeColor(color, alpha) {
   noFill();
   if (color === RED) {
-    stroke(255,0,0,200);
+    stroke(255,0,0,200 * alpha);
   } else if (color === GREEN) {
-    stroke(0,255,0,200);
+    stroke(0,255,0,200 * alpha);
   } else if (color === BLUE) {
-    stroke(0,0,255,200);
+    stroke(0,0,255,200*alpha);
   }
 }
 
@@ -134,8 +134,8 @@ function renderGestureSpline(gesture, w, h, color) {
     var points = gesture.path;
     
   // vizParams
-    var stepSize = 4;
-    var splineNum = 10;
+    var stepSize = 5;
+    var splineNum = 10.0
     var splineSpace = 5;
     var splineInitialBend = 2;
   
@@ -145,6 +145,8 @@ function renderGestureSpline(gesture, w, h, color) {
       
       // Draw the multiple offset splines for the current segment
       for (let j = 0; j < splineNum; ++j) {
+        
+        splineModeColor(gesture.color, j / splineNum);
         
         var offsetStart = j + splineInitialBend;
         if (parity % 2 == 0) {
