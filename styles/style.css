@@ -76,7 +76,7 @@ input[type=text]:focus{
 }
 
 .countdown span {
-  font-family: 'Segment7Standard';
+  font-family: 'Segment7';
   font-size: 200px;
   color: white;
   margin-right: 150px;
@@ -86,4 +86,10 @@ input[type=text]:focus{
 .countdown span.active {
   opacity: 1;
   text-shadow: 0 0 60px rgb(239, 62, 74);
+}
+
+#timer {
+  font-family: 'Segment7';
+  font-size: 100px;
+  color: white;
 }

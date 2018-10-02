@@ -100,6 +100,14 @@ class UI {
     this.drawRecording();
   }
   
+  async animateTimer() {
+    // start recording
+    for (let i=29; i > 0; i--) {
+      await sleep(1000);
+      document.querySelector("#timer").innerHTML = String(i);
+    }
+  }
+  
   async animateCountdown() {    
     await sleep(200);
     document.querySelector("#cd-3").classList.add("active");
@@ -130,6 +138,8 @@ class UI {
   }
   
   drawRecording() {
-    let timer = createDOMElement(`<div class="">30</div>`)
+    let timer = createDOMElement(`<div class="shadow" id="timer">30</div>`);
+    document.body.appendChild(timer);
+    this.animateTimer();
   }
 }
