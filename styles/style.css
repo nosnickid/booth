@@ -69,3 +69,7 @@ input[type=text]:focus{
   margin: 5px 1px 3px 0px;
   border: 5px solid rgba(230, 230, 230, 1);
 }
+
+.countdown {
+  font-family: 'Comfortaa'
+}

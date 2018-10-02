@@ -85,6 +85,9 @@ class UI {
   }
   
   drawCountdown() {
-    // TODO
+    let countdown = createDOMElement(
+      `<div class="countdown shadow">3      2       1</div>`
+    );
+    document.body.appendChild(countdown);
   }
 }
