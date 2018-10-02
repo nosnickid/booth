@@ -90,21 +90,46 @@ class UI {
     document.querySelectorAll(".text-entry").forEach(destroyElement);
   }
   
-  async animateCountdown() {
-    
-    await sleep(2000);
-    console.log('Two seconds later');
+  destroyCountdown() {
+    document.querySelectorAll(".countdown").forEach(destroyElement);
+  }
+  
+  startRecording() {
+    this.state = "recording"
+    this.destroyCountdown();
+    this.drawRecording();
+  }
+  
+  async animateCountdown() {    
+    await sleep(200);
+    document.querySelector("#cd-3").classList.add("active");
+    await sleep(800);
+    document.querySelector("#cd-3").classList.remove("active");
+    document.querySelector("#cd-2").classList.add("active");
+    await sleep(800);
+    document.querySelector("#cd-2").classList.remove("active");
+    document.querySelector("#cd-1").classList.add("active");
+    await sleep(800);
+    document.querySelector("#cd-1").classList.remove("active");    
+    document.querySelector("#cd-go").classList.add("active");
+    await sleep(500);
+    this.startRecording();
   }  
   
   drawCountdown() {
     let countdown = createDOMElement(
       `<div class="countdown">
-         <span class="shadow">3</span>
-         <span class="shadow">2</span>
-         <span class="shadow">1</span>
-         <span class="shadow">GO!</span>
+         <span class="shadow" id="cd-3">3</span>
+         <span class="shadow" id="cd-2">2</span>
+         <span class="shadow" id="cd-1">1</span>
+         <span class="shadow" id="cd-go">GO!</span>
       </div>`      
     );
     document.body.appendChild(countdown);
+    this.animateCountdown();
+  }
+  
+  drawRecording() {
+    let timer = createDOMElement(`<div class="">30</div>`)
   }
 }
