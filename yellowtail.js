@@ -134,7 +134,7 @@ function renderGestureSpline(gesture, w, h, color) {
     var points = gesture.path;
     
   // vizParams
-    var stepSize = 5;
+    var stepSize = 3;
     var splineNum = 10.0
     var splineSpace = 5;
     var splineInitialBend = 2;
