@@ -25,6 +25,15 @@ canvas {
     z-index: -1;
 }
 
+.shadow {
+    /* TODO better color maybe */
+    text-shadow:
+    -1px -1px 0 black,
+    1px -1px 0 black,
+    -1px 1px 0 black,
+    1px 1px 0 black,  
+}
+
 .initial {
   color: white;
   font-size: 90px;
@@ -40,10 +49,15 @@ canvas {
 input.text-entry {
   font-size: 80px;
   font-family: 'Comfortaa';
+  margin-left: 100px;
+}
+
+label#form-name {
+  color: blue;
 }
 
 label.text-entry {
   font-size: 80px;
   font-family: 'Satisfy';
-  font-color: white;
+  color: white;
 }

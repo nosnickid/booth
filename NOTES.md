@@ -67,6 +67,19 @@ what does it need to do?
   - webfont disaster, assets don't download locally
   - working on different parts of the code at the same time sucks
   
-  ## 9/30
+## 9/30
   
-back to work on getting UI made and hooked up
+-  back to work on getting UI made and hooked up
+
+- got distracted doing a bunch of lightbulb stuff, taking them apart
+
+- decided that putting felt over the lightbulbs will work just fine in a pinch
+
+## 10/1
+
+- painted inside of the red and green lightbulb covers at work
+
+- again working on UI
+
+
+

@@ -25,10 +25,10 @@ class UI {
       this.state = "textEntry";
       this.destroyInitial();
       this.drawTextEntry();
-      document.querySelector("#form-name").focus()
+      document.querySelector("#name-input").focus()
     } else if (this.state = "textEntry") {
-      if (document.querySelector("#form-name") == document.activeElement) {
-        document.querySelector("#form-message").focus();
+      if (document.querySelector("#name-input") == document.activeElement) {
+        document.querySelector("#message-input").focus();
       }
     }
     
@@ -36,12 +36,12 @@ class UI {
 
   drawInitial() {
     let title = createDOMElement(
-      `<div class="initial title glow">
+      `<div class="initial title glow text-shadow">
          Leave a video message for John and Emily!<br/>(use the lightbulbs to draw in the air)
       </div>`
     );
     let start = createDOMElement(
-      `<div class="initial start glow">
+      `<div class="initial start glow text-shadow">
         Press ENTER to start
       </div>`
     );    
@@ -58,12 +58,12 @@ class UI {
       `<form autocomplete="off">
         <label class="text-entry">
           Name:
-           <input class="text-entry" type="text" id="form-name" name="name"/>
+           <input class="text-entry" type="text" id="name-input" name="name"/>
         </label>
         <br/>
         <label class="text-entry">
           Note to John and Emily:
-          <input class = "text-entry" type="text" id="form-message" name="message"/>
+          <input class = "text-entry" type="text" id="message-input" name="message"/>
         </label>
       </form>`
     );
