@@ -99,7 +99,7 @@ class UI {
     this.state = "recording";
     this.destroyCountdown();
     this.drawRecording();
-    this.recorder = new Recorder(document.querySelector(".p5Canvas"));
+    this.recorder = new Recorder(document.querySelector(".p5Canvas"), this.onFinishRecording.bind(this));
     this.recorder.startRecording();
     this.runTimer();  // this is the thing that stops the recording
   }
@@ -109,17 +109,20 @@ class UI {
             note: ${this.formData["note"]}`;
   }
   
+  onFinishRecording() {
+    let videoId = uuid();
+    download(this.recorder.blob(), `${videoId}.webm`);
+    download(renderedFormData(), `${videoId}.txt`);
+    this.recorder.clearRecording();
+  }
+  
   async runTimer() {
     for (let i=3; i > 0; i--) {
       await sleep(1000);
       document.querySelector("#timer").innerHTML = String(i);
     }
-    this.recorder.stopRecording();
-    let filenamePrefix = this.formData.name + "-"
-    let videoId = uuid();
-    download(this.recorder.blob(), `${videoId}.webm`);
-    download(renderedFormData(), `${videoId}.txt`);    
-    this.recorder.clearRecording();
+    await sleep(1000);  // wait the last second    
+    this.recorder.finishRecording();
   }
   
   async runCountdown() {    
