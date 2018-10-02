@@ -70,7 +70,7 @@ class UI {
   
   drawTextEntry() {
     let form = createDOMElement(
-      `<form autocomplete="off">
+      `<form class="text-entry" autocomplete="off">
         <label class="text-entry shadow bigtext" id="name-label">
           Name:<br/>
            <input class="text-entry" type="text" id="name-input" name="name"/>
@@ -92,11 +92,11 @@ class UI {
   
   drawCountdown() {
     let countdown = createDOMElement(
-      `<div>
-         <p class="countdown shadow">3</p>
-         <p class="countdown shadow">2</p>
-         <p class="countdown shadow">1</p>
-         <p class="countdown shadow">GO!</p>
+      `<div class="countdown">
+         <span class="shadow active">3</span>
+         <span class="shadow">2</span>
+         <span class="shadow">1</span>
+         <span class="shadow">GO!</span>
       </div>`
       
     );

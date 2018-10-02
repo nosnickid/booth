@@ -71,7 +71,19 @@ input[type=text]:focus{
 }
 
 .countdown {
+  text-align: center;
+  margin-top: 400px;
+}
+
+.countdown span {
   font-family: 'Segment7Standard';
-  font-size: 90px;
+  font-size: 200px;
   color: white;
+  margin-right: 150px;
+  opacity: 0.5;
+}
+
+.countdown span.active {
+  opacity: 1;
+  color: 
 }
