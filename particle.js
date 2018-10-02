@@ -28,6 +28,12 @@ class Particle {
     return now - this.created;
   }
   
+  update() {
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
+    this.lifespan -= 2;
+  };
+  
   drawCircleShape() {
     stroke(200, this.lifespan);
     strokeWeight(0);
