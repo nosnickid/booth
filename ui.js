@@ -26,6 +26,7 @@ class UI {
   
   handleEnter(e) {
     if (this.state === "initial") {
+      // TODO while in initial state, clear effects every 30 seconds
       this.state = "textEntry";
       this.destroyInitial();
       this.drawTextEntry();
@@ -133,7 +134,7 @@ note: ${this.formData["note"]}`;
   }
   
   async runTimer() {
-    for (let i=3; i > 0; i--) {
+    for (let i=29; i > 0; i--) {
       await sleep(1000);
       document.querySelector("#timer").innerHTML = String(i);
     }
@@ -159,6 +160,7 @@ note: ${this.formData["note"]}`;
   }  
   
   drawCountdown() {
+    // TODO clear effects when countdown starts and don't draw during it
     let countdown = createDOMElement(
       `<div class="countdown">
          <span class="shadow" id="cd-3">3</span>
