@@ -28,23 +28,17 @@ class Particle {
     return now - this.created;
   }
   
-  drawFlowerShape(rect) {
-    translate(rect.x, rect.y);
-    for (var i = 0; i < 10; i ++) {
-      ellipse(0, 30, rect.height/3, rect.height)
-      rotate(PI/5);
-    }
-    translate(-rect.x, -rect.y);
-  }
-  
-  drawCircleShape(rect) {
-    ellipse(rect.x, rect.y, rect.height, rect.height);
+  drawCircleShape() {
+    stroke(200, this.lifespan);
+    strokeWeight(0);
+    fill(127, this.lifespan);
+    ellipse(this.position.x, this.position.y, 12, 12);
   }
           
   draw(now) {
     var fade = (this.lifetime - this.ellapsed(now)) / SUSTAIN
     fill(255, 0, 255, 255 * fade);   
-    this.drawFlowerShape(this.rect);
+    this.drawCircleShape();
   }
   
   keep(now) {
