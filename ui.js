@@ -26,12 +26,21 @@ class UI {
       this.destroyInitial();
       this.drawTextEntry();
       document.querySelector("#name-input").focus()
-    } else if (this.state = "textEntry") {
-      if (document.querySelector("#name-input") == document.activeElement) {
+    } else if (this.state === "textEntry") {
+      if (document.querySelector("#note-input") == document.activeElement) {
+        this.state = "countdown"
+        this.destroyTextEntry();
+        this.drawCountdown();
+      } else if (document.querySelector("#name-input") == document.activeElement) {
         document.querySelector("#note-input").focus();
+      } else {
+        document.querySelector("#name-input").focus();        
       }
+    } else if (this.state === "countdown") {
+      // do nothing, just wait for countdown to finish
+    } else if (this.state === "recording") {
+      // TODO
     }
-    
   }
 
   drawInitial() {
@@ -65,13 +74,17 @@ class UI {
           Note to John and Emily:<br/>
           <input class="text-entry" type="text" id="note-input" name="note"/>
         </label>
-        <div class="bigtext shadow" style="margin-top: 200px"">Press ENTER to continue</div>
+        <div class="bigtext shadow text-entry" style="margin-top: 200px"">Press ENTER to continue</div>
       </form>`
     );
     document.body.appendChild(form);
   }
   
   destroyTextEntry() {
+    document.querySelectorAll(".text-entry").forEach(destroyElement);
+  }
+  
+  drawCountdown() {
     // TODO
   }
 }
