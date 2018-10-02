@@ -36,12 +36,12 @@ class UI {
 
   drawInitial() {
     let title = createDOMElement(
-      `<div class="initial title shadow">
+      `<div class="initial bigtext shadow">
          Leave a video message for John and Emily!<br/>(use the lightbulbs to draw in the air)
       </div>`
     );
     let start = createDOMElement(
-      `<div class="initial start shadow">
+      `<div class="initial bigtext shadow" style="margin-top: 750px">
         Press ENTER to start
       </div>`
     );    
@@ -56,15 +56,16 @@ class UI {
   drawTextEntry() {
     let form = createDOMElement(
       `<form autocomplete="off">
-        <label class="text-entry shadow" id="name-label">
+        <label class="text-entry shadow bigtext" id="name-label">
           Name:<br/>
            <input class="text-entry" type="text" id="name-input" name="name"/>
         </label>
         <br/>
-        <label class="text-entry shadow" id="note-label">
+        <label class="text-entry shadow bigtext" id="note-label">
           Note to John and Emily:<br/>
-          <input class = "text-entry" type="text" id="note-input" name="note"/>
+          <input class="text-entry" type="text" id="note-input" name="note"/>
         </label>
+        <div class="bigtext shadow" style="margin-top: 200px"">Press ENTER to continue</div>
       </form>`
     );
     document.body.appendChild(form);

@@ -33,7 +33,7 @@ canvas {
     1px 1px 0 black;
 }
 
-.initial {
+.bigtext {
   color: white;
   font-size: 90px;
   font-family: 'Satisfy', cursive;
@@ -41,30 +41,13 @@ canvas {
   text-align: center;
 }
 
-.initial.start {
-  padding-top: 750px;
-}
-
 input.text-entry {
-  font-size: 80px;
+  font-size: 90px;
   font-family: 'Comfortaa';
+  background-color: rgba(255, 255, 255, 0.75);
 }
 
 form {
   text-align: center;
-}
-
-#name-label {
   margin-top: 200px;
-  margin-bottom: 500px;
-}
-
-#note-label {
-  margin-top: 300px;
-}
-
-label.text-entry {
-  font-size: 80px;
-  font-family: 'Satisfy';
-  color: white;
 }
