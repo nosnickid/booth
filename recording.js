@@ -1,8 +1,41 @@
 class Recorder {
   constructor(canvas) {
     this.canvas = canvas;
+    this.stream.CaptureStream();
+    this.chunks = []
+    this.options = {mimeType: 'video/webm;codecs=vp9'};
+    this.mediaRecorder = new MediaRecorder(this.stream, this.options);
+    this.mediaRecorder.ondataavailable = function(event) {
+      if (event.data.size > 0) {
+        this.chunks.push(event.data);
+      } else {
+        console.log("got mediaRecorder event with no data", event);
+      }
+    }
   }
+
+  download() {
+    let blob = new Blob(this.chunks, {
+      type: 'video/webm'
+    });
+    let url = URL.createObjectURL(blob);
+    let a = document.createElement('a');
+    a.style = 'display: none';
+    document.body.appendChild(a);
+    a.href = url;
+    a.download = '.webm';
+    a.click();
+    window.URL.revokeObjectURL(url);
+    // TODO delete the a element
+  }  
   
+  startRecording() {
+    this.mediaRecorder.start();
+  }
+
+  finishRecording() {
+    this.mediaRecorder.stop();
+  }
   
 }
 
