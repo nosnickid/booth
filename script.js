@@ -445,7 +445,7 @@ function onTrack(event) {
     return;
   }
   
-  event.data.forEach((tr) => toDraw.push(new Particle(tr)));
+  //event.data.forEach((tr) => toDraw.push(new Particle(tr)));
   //event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));   
       
   let coloredRects = [
