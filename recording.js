@@ -14,7 +14,7 @@ class Recorder {
     }
   }
 
-  download() {
+  download(filename) {
     let blob = new Blob(this.chunks, {
       type: 'video/webm'
     });
@@ -23,11 +23,15 @@ class Recorder {
     a.style = 'display: none';
     document.body.appendChild(a);
     a.href = url;
-    a.download = '.webm';
+    a.download = filename;
     a.click();
     window.URL.revokeObjectURL(url);
-    // TODO delete the a element
-  }  
+    a.parentNode.removeChild(a);
+  }
+  
+  clearRecording() {
+    this.chunks = [];
+  }
   
   startRecording() {
     this.mediaRecorder.start();
@@ -36,7 +40,6 @@ class Recorder {
   finishRecording() {
     this.mediaRecorder.stop();
   }
-  
 }
 
 

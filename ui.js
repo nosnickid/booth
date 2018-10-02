@@ -37,6 +37,7 @@ class UI {
         this.state = "countdown"
         this.destroyTextEntry();
         this.drawCountdown();
+        this.runCountdown();        
       } else if (document.querySelector("#name-input") == document.activeElement) {
         document.querySelector("#note-input").focus();
       } else {
@@ -59,7 +60,7 @@ class UI {
       `<div class="initial bigtext shadow" style="margin-top: 750px">
         Press ENTER to start
       </div>`
-    );    
+    );
     document.body.appendChild(title);
     document.body.appendChild(start);
   }
@@ -95,20 +96,27 @@ class UI {
   }
   
   startRecording() {
-    this.state = "recording"
+    this.state = "recording";
     this.destroyCountdown();
     this.drawRecording();
+    this.recorder = this.makeRecorder();
+    this.recorder.startRecording();
+    this.runTimer();  // this is the thing that stops the recording
   }
   
-  async animateTimer() {
+  async runTimer() {
     // start recording
     for (let i=29; i > 0; i--) {
       await sleep(1000);
       document.querySelector("#timer").innerHTML = String(i);
     }
+    this.recorder.stopRecording();
+    let filenamePrefix = this.formData.name + "-"
+    this.recorder.download(`${filenamePrefix}-${uuid()}.webm`);
+    this.recorder.clearRecording();
   }
   
-  async animateCountdown() {    
+  async runCountdown() {    
     await sleep(200);
     document.querySelector("#cd-3").classList.add("active");
     await sleep(800);
@@ -134,12 +142,10 @@ class UI {
       </div>`      
     );
     document.body.appendChild(countdown);
-    this.animateCountdown();
   }
   
   drawRecording() {
     let timer = createDOMElement(`<div class="shadow" id="timer">30</div>`);
     document.body.appendChild(timer);
-    this.animateTimer();
   }
 }
