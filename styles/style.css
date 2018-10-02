@@ -27,11 +27,10 @@ canvas {
 
 .shadow {
     /* TODO better color maybe */
-    text-shadow:
-    -1px -1px 0 black,
+    text-shadow: -1px -1px 0 black,
     1px -1px 0 black,
     -1px 1px 0 black,
-    1px 1px 0 black,  
+    1px 1px 0 black;
 }
 
 .initial {
@@ -49,11 +48,19 @@ canvas {
 input.text-entry {
   font-size: 80px;
   font-family: 'Comfortaa';
-  margin-left: 100px;
 }
 
-label#form-name {
-  color: blue;
+form {
+  text-align: center;
+}
+
+#name-label {
+  margin-top: 200px;
+  margin-bottom: 500px;
+}
+
+#note-label {
+  margin-top: 300px;
 }
 
 label.text-entry {
