@@ -95,6 +95,15 @@ class UI {
     document.querySelectorAll(".countdown").forEach(destroyElement);
   }
   
+  destroyTimer() {
+    document.querySelectorAll("#timer").forEach(destroyElement);
+  }  
+  
+  drawFinal() {
+    let finalText = createDOMElement(`<div class="bigtext">Thank you!<br/>Your message will be sent to John and Emily</div>`);
+    document.body.appendChild(finalText);
+  }
+  
   startRecording() {
     this.state = "recording";
     this.destroyCountdown();
@@ -106,14 +115,21 @@ class UI {
   
   renderedFormData() {
     return `name: ${this.formData["name"]}
-            note: ${this.formData["note"]}`;
+note: ${this.formData["note"]}`;
   }
   
   onFinishRecording() {
     let videoId = uuid();
     download(this.recorder.blob(), `${videoId}.webm`);
-    download(renderedFormData(), `${videoId}.txt`);
+    download(new Blob([this.renderedFormData()]), `${videoId}.txt`);
     this.recorder.clearRecording();
+  }
+  
+  async goToFinal() {
+    this.destroyTimer();
+    this.drawFinal();
+    await sleep(5000);
+    window.location.reload();
   }
   
   async runTimer() {
@@ -123,6 +139,7 @@ class UI {
     }
     await sleep(1000);  // wait the last second    
     this.recorder.finishRecording();
+    this.goToFinal();
   }
   
   async runCountdown() {    

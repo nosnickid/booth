@@ -13,14 +13,14 @@
 
 const SUSTAIN = 1000;
 
-class Particle
+class Particle {
 
   constructor(rect) {
     this.rect = rect;
     this.created = Date.now();
     this.acceleration = createVector(0, 0.05);
     this.velocity = createVector(random(-1, 1), random(-1, 0));
-    this.position = position.copy();
+    this.position = createVector(rect.x, rect.y);
     this.lifespan = 255;
   }
   
@@ -42,13 +42,13 @@ class Particle
   }
           
   draw(now) {
-    var fade = (SUSTAIN - this.ellapsed(now)) / SUSTAIN
+    var fade = (this.lifetime - this.ellapsed(now)) / SUSTAIN
     fill(255, 0, 255, 255 * fade);   
     this.drawFlowerShape(this.rect);
   }
   
   keep(now) {
-    return false // this.ellapsed(now) < SUSTAIN;
+    return this.ellapsed(now) < this.lifetime;
   }
 }
 

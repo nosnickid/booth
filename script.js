@@ -87,9 +87,7 @@ function setup() {
     tracker.on('track', onTrack);
   
     yellowtailSetup();
-  
-    cnv.elt.addEventListener("click", (e) => makeRecording(cnv.elt));
-    
+      
     ui.drawInitial();
 }
 
