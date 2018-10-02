@@ -99,20 +99,26 @@ class UI {
     this.state = "recording";
     this.destroyCountdown();
     this.drawRecording();
-    this.recorder = this.makeRecorder();
+    this.recorder = new Recorder(document.querySelector(".p5Canvas"));
     this.recorder.startRecording();
     this.runTimer();  // this is the thing that stops the recording
   }
   
+  renderedFormData() {
+    return `name: ${this.formData["name"]}
+            note: ${this.formData["note"]}`;
+  }
+  
   async runTimer() {
-    // start recording
-    for (let i=29; i > 0; i--) {
+    for (let i=3; i > 0; i--) {
       await sleep(1000);
       document.querySelector("#timer").innerHTML = String(i);
     }
     this.recorder.stopRecording();
     let filenamePrefix = this.formData.name + "-"
-    this.recorder.download(`${filenamePrefix}-${uuid()}.webm`);
+    let videoId = uuid();
+    download(this.recorder.blob(), `${videoId}.webm`);
+    download(renderedFormData(), `${videoId}.txt`);    
     this.recorder.clearRecording();
   }
   

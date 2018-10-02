@@ -1,7 +1,7 @@
 class Recorder {
   constructor(canvas) {
     this.canvas = canvas;
-    this.stream.CaptureStream();
+    this.stream = captureStream();
     this.chunks = []
     this.options = {mimeType: 'video/webm;codecs=vp9'};
     this.mediaRecorder = new MediaRecorder(this.stream, this.options);
@@ -13,20 +13,11 @@ class Recorder {
       }
     }
   }
-
-  download(filename) {
-    let blob = new Blob(this.chunks, {
+  
+  blob() {
+    return new Blob(this.chunks, {
       type: 'video/webm'
-    });
-    let url = URL.createObjectURL(blob);
-    let a = document.createElement('a');
-    a.style = 'display: none';
-    document.body.appendChild(a);
-    a.href = url;
-    a.download = filename;
-    a.click();
-    window.URL.revokeObjectURL(url);
-    a.parentNode.removeChild(a);
+    });    
   }
   
   clearRecording() {

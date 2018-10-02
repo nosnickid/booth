@@ -95,3 +95,15 @@ function uuid() {
     return v.toString(16);
   });
 }
+
+function download(data, filename) {
+  let url = URL.createObjectURL(data);
+  let a = document.createElement('a');
+  a.style = 'display: none';
+  document.body.appendChild(a);
+  a.href = url;
+  a.download = filename;
+  a.click();
+  window.URL.revokeObjectURL(url);
+  a.parentNode.removeChild(a);
+}
