@@ -18,6 +18,10 @@ class UI {
 
   constructor () {
     this.state = "initial";
+    this.formData = {
+      "name": null,
+      "note": null,
+    }
   }
   
   handleEnter(e) {
@@ -28,6 +32,8 @@ class UI {
       document.querySelector("#name-input").focus()
     } else if (this.state === "textEntry") {
       if (document.querySelector("#note-input") == document.activeElement) {
+        this.formData["name"] = document.querySelector("#name-input").value;
+        this.formData["note"] = document.querySelector("#note-input").value;
         this.state = "countdown"
         this.destroyTextEntry();
         this.drawCountdown();
@@ -86,7 +92,13 @@ class UI {
   
   drawCountdown() {
     let countdown = createDOMElement(
-      `<div class="countdown shadow">3      2       1</div>`
+      `<div>
+         <p class="countdown shadow">3</p>
+         <p class="countdown shadow">2</p>
+         <p class="countdown shadow">1</p>
+         <p class="countdown shadow">GO!</p>
+      </div>`
+      
     );
     document.body.appendChild(countdown);
   }

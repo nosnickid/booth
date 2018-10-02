@@ -71,5 +71,7 @@ input[type=text]:focus{
 }
 
 .countdown {
-  font-family: 'Comfortaa'
+  font-family: 'Segment7Standard';
+  font-size: 90px;
+  color: white;
 }
