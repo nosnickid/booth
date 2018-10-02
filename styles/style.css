@@ -85,5 +85,5 @@ input[type=text]:focus{
 
 .countdown span.active {
   opacity: 1;
-  color: 
+  text-shadow: 0 0 60px rgb(239, 62, 74);
 }

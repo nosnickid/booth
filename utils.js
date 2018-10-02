@@ -84,3 +84,7 @@ function colorDistance(target, actual) {
 function index2Dto1D(x, y) {
  return ((y * canvasWidth/downsampleFactor) + x) * 4;
 }
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}

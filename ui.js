@@ -90,15 +90,20 @@ class UI {
     document.querySelectorAll(".text-entry").forEach(destroyElement);
   }
   
+  async animateCountdown() {
+    
+    await sleep(2000);
+    console.log('Two seconds later');
+  }  
+  
   drawCountdown() {
     let countdown = createDOMElement(
       `<div class="countdown">
-         <span class="shadow active">3</span>
+         <span class="shadow">3</span>
          <span class="shadow">2</span>
          <span class="shadow">1</span>
          <span class="shadow">GO!</span>
-      </div>`
-      
+      </div>`      
     );
     document.body.appendChild(countdown);
   }
