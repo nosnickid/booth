@@ -26,7 +26,6 @@ class UI {
   
   handleEnter(e) {
     if (this.state === "initial") {
-      // TODO while in initial state, clear effects every 30 seconds
       this.state = "textEntry";
       this.destroyInitial();
       this.drawTextEntry();
@@ -64,13 +63,14 @@ class UI {
     );
     document.body.appendChild(title);
     document.body.appendChild(start);
+    this.startClearCycle();
   }
   
   destroyInitial() {
     document.querySelectorAll(".initial").forEach(destroyElement);
   }
   
-  async clearCycle() {
+  async startClearCycle() {
     // this is just so things don't turn into a mess while
     // we're waiting for someone to start
     while (true) {

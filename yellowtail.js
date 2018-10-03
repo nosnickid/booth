@@ -105,7 +105,9 @@ function newGesture(color, point) {
 
 function continueGesture(rect) {
   if (gestures[rect.color].length == 0) {
-    console.warn("attempt to continue nonexistent gesture with rect", rect);
+    // i think this might be a bad idea? whatever yolo
+    console.warn("attempt to continue nonexistent gesture with rect, implcitly creating new gesture.", rect);
+    newGesture(rect.color, rect);
   } else {
       var G = gestures[rect.color][gestures[rect.color].length-1]
       if (G.distToLast(rect.x, rect.y) > minMove) {
