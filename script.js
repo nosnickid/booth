@@ -418,7 +418,10 @@ function mapRectsToHistory(now, histories, trackingRects) {
 }
 
 function onTrack(event) {
-  if 
+  if (ui.state === "countdown") {
+    // we don't want to be drawing while the countdown is going
+    return
+  }
   
   
   // necessary to use capture.pixels later.
