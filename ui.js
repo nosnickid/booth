@@ -70,6 +70,17 @@ class UI {
     document.querySelectorAll(".initial").forEach(destroyElement);
   }
   
+  async clearCycle() {
+    // this is just so things don't turn into a mess while
+    // we're waiting for someone to start
+    while (true) {
+      await sleep(30000);
+      if (this.state === "initial") {
+        clearVisuals();
+      }
+    }
+  }
+  
   drawTextEntry() {
     let form = createDOMElement(
       `<form class="text-entry" autocomplete="off">
