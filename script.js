@@ -418,7 +418,9 @@ function mapRectsToHistory(now, histories, trackingRects) {
 }
 
 function onTrack(event) {
-
+  if 
+  
+  
   // necessary to use capture.pixels later.
   trackingCapture.loadPixels();
 

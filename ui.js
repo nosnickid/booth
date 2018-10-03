@@ -154,7 +154,8 @@ note: ${this.formData["note"]}`;
     this.goToFinal();
   }
   
-  async runCountdown() {    
+  async runCountdown() {
+    clearVisuals();
     await sleep(200);
     document.querySelector("#cd-3").classList.add("active");
     await sleep(800);
@@ -171,7 +172,6 @@ note: ${this.formData["note"]}`;
   }  
   
   drawCountdown() {
-    // TODO clear effects when countdown starts and don't draw during it
     let countdown = createDOMElement(
       `<div class="countdown">
          <span class="shadow" id="cd-3">3</span>
