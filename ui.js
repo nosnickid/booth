@@ -112,7 +112,7 @@ class UI {
   }  
   
   drawFinal() {
-    let finalText = createDOMElement(`<div class="bigtext">Thank you!<br/>Your message will be sent to John and Emily</div>`);
+    let finalText = createDOMElement(`<div class="bigtext">Thank you!<br/>Your video will be sent to John and Emily</div>`);
     document.body.appendChild(finalText);
   }
   
@@ -139,6 +139,8 @@ note: ${this.formData["note"]}`;
   
   async goToFinal() {
     this.destroyTimer();
+    clearVisuals();
+    this.state = "final";
     this.drawFinal();
     await sleep(5000);
     window.location.reload();

@@ -113,7 +113,7 @@ function smoothRect(history, curr) {
   avg = avg.multiply(1.0 / iterations);
   
   var smoothedPos = avg.interpolate(new Point(curr.x, curr.y), .5);
-  console.log(curr, smoothedPos);
+
   curr.x = smoothedPos.x;
   curr.y = smoothedPos.y;
 }

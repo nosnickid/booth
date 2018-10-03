@@ -105,6 +105,10 @@ function newGesture(color, point) {
 
 function continueGesture(rect) {
   if (gestures[rect.color].length == 0) {
+    // this situation occurs if we call clearVisuals while someone is drawing,
+    // in which case we try to add points to a gesture that no longer exists
+    // to fix this, we implicitly create a new gesture
+    // 
     // i think this might be a bad idea? whatever yolo
     console.warn("attempt to continue nonexistent gesture with rect, implcitly creating new gesture.", rect);
     newGesture(rect.color, rect);
