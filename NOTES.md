@@ -81,5 +81,20 @@ what does it need to do?
 
 - again working on UI
 
+## 10/2 
 
+- fairly chill work on polishing some UI stuff
 
+- tried painting lightbulbs at work
+
+revisiting todo list:
+
+- ~~send recordings to server and process into video~~
+- ~~UI for fullscreen, starting and stopping recording~~
+- ~~UI for emptying screen of gestures~~
+- ~~get more appealing cover for lightbulbs, tune detection parameters for it~~
+- refactor code to make it a bit easier to tweak parameters of bulb detection
+- decorate holders?
+- ~~test in more light conditions~~
+- start making signs/decorations?
+- ~~performance optimization?~~

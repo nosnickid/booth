@@ -112,7 +112,7 @@ class UI {
   }  
   
   drawFinal() {
-    let finalText = createDOMElement(`<div class="bigtext">Thank you!<br/>Your video will be sent to John and Emily</div>`);
+    let finalText = createDOMElement(`<div class="bigtext shadow final">Thank you!<br/>Your video will be sent to John and Emily</div>`);
     document.body.appendChild(finalText);
   }
   
