@@ -548,10 +548,11 @@ function onTrack(event) {
     }
   }
   
+  let coloredRects
   if (localStorage.dontCalibrate !== undefined) {
-    let coloredRects = findBulbsFromCalibrationData(trackerHistory);
+    coloredRects = findBulbsFromCalibrationData(trackerHistory);
   } else {
-    let coloredRects = [findRedLightbulb(trackerHistory), findGreenLightbulb(trackerHistory), findBlueLightbulb(trackerHistory)];    
+    coloredRects = [findRedLightbulb(trackerHistory), findGreenLightbulb(trackerHistory), findBlueLightbulb(trackerHistory)];    
   }
   
   //event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));  

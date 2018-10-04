@@ -3,6 +3,7 @@ Vector = function(elements) {
 };
 
 Vector.prototype.push = function(value) {
+  this.sorted = undefined;
 	this.elements.push(value);
 };
 
@@ -142,15 +143,20 @@ Vector.prototype.geomean = function() {
 };
 
 Vector.prototype.sortElements = function() {
-	var sorted = this.elements.slice(0);
-	for (var i = 0, j, tmp; i < sorted.length; ++i) {
-		tmp = sorted[i];
-		for (j = i - 1; j >= 0 && sorted[j] > tmp; --j) {
-			sorted[j + 1] = sorted[j];
-		}
-		sorted[j + 1] = tmp;
-	}
-	return sorted;
+  if (this.sorted !== undefined) {
+    return this.sorted;
+  } else {
+  	var sorted = this.elements.slice(0);
+   	for (var i = 0, j, tmp; i < sorted.length; ++i) {
+  		tmp = sorted[i];
+  		for (j = i - 1; j >= 0 && sorted[j] > tmp; --j) {
+  			sorted[j + 1] = sorted[j];
+  		}
+  		sorted[j + 1] = tmp;
+  	}
+    this.sorted = sorted;
+  	return sorted;
+  }
 };
 
 Vector.prototype._ecdf = function(x) {
@@ -183,7 +189,8 @@ Vector.prototype.min = function() {
 };
 
 Vector.prototype.max = function() {
-	return this.sortElements().pop();
+	let sorted = this.sortElements()
+  return sorted[sorted.length-1];
 };
 
 Vector.prototype.toString = function() {
