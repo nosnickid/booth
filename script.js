@@ -467,8 +467,17 @@ function onTrack(event) {
     return;
   }
   
+  if (calibrating["color"] !== null) {
+    let trackingRect = event.data.find((tr) => tr.historyId === calibrating["rectNumber"]);
+    if (trackingRect !== undefined) {
+      calibrationData[calibrating["color"]].push(trackingRect);
+    } else {
+      console.warn("trying to calibrate but can't find rect with correct historyId", calibrating);
+    }
+  }
+  
   //event.data.forEach((tr) => toDraw.push(new Particle(tr)));
-  //event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));   
+  event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));   
       
   let coloredRects = [
     findRedLightbulb(trackerHistory),
