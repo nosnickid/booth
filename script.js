@@ -441,23 +441,26 @@ function mapRectsToHistory(now, histories, trackingRects) {
 
 function findBulbsFromCalibrationData(histories) {  
   for (let history of Object.values(histories)) {
-    allCalib = calibrationData[RED] + calibrationData[BLUE] + calibrationData[GREEN];
+    allCalib = calibrationData[RED].concat(calibrationData[BLUE]).concat(calibrationData[GREEN]);
     calibSkew = allCalib.map((r) => r.analysisData["skew"]);
     calibPropWhite = allCalib.map((r) => r.analysisData["skew"]);    
-    histRedScore = [];
-    histBlueScore = [];
-    histGreenScore = [];
-    histSkew = [];
-    histPropWhite = [];
-    for (let rect of history) {
+    let histRedScore = [];
+    let histGreenScore = [];    
+    let histBlueScore = [];
+    let histSkew = [];
+    let histPropWhite = [];
+    console.log(history);
+    for (let i=0; i<history.length; i++) {
+      let rect = history.get(i);
       histRedScore.push(rect.analysisData["scores"][RED]);
-      histRedScore.push(rect.analysisData["scores"][RED]);                        
+      histGreenScore.push(rect.analysisData["scores"][GREEN]);
+      histBlueScore.push(rect.analysisData["scores"][BLUE]);
+      histSkew.push(rect.analysisData["skew"]);
+      histPropWhite.push(rect.analysisData["prop_white"]);
     }
     
-    let skewResults = kolmogorovSmirnov(
-      historyArray.map((r) => r.analysisData["skew"]),
-      calibHistory.map((r) => r.analysisData["skew"])
-    );
+    let skewResults = kolmogorovSmirnov(histSkew,calibSkew);
+    let propWhiteResults = kolmogorovSmirnov(histPropWhite,calibPropWhite);
     
     let avgDs = [null, null, null];
     for (let calibColor of [RED, GREEN, BLUE]) {
@@ -468,13 +471,6 @@ function findBulbsFromCalibrationData(histories) {
           calibHistory.map((r) => r.analysisData.scores[scoreColor])
         ));
       
-      stats.push(skewResults);
-      let propWhiteResults = kolmogorovSmirnov(
-       history.toArray().map((r) => r.analysisData["prop_white"]),
-       calibHistory.map((r) => r.analysisData["prop_white"])
-      );
-      stats.push(propWhiteResults);
-      
       avgDs[calibColor] = 0;
       for (let result of stats) {
         avgDs[calibColor] += result["d"];
@@ -484,6 +480,8 @@ function findBulbsFromCalibrationData(histories) {
     }
 
     history.last().avgDs = avgDs;
+    history.last().skewD = skewResults["d"];
+    history.last().propWhiteD = skewResults["d"]; 
   }
 }
 
@@ -529,10 +527,11 @@ function onTrack(event) {
     }
   }
   
-  findBulbsFromCalibrationData(trackerHistory);
-  
+  //findBulbsFromCalibrationData(trackerHistory);
+
+  //event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));  
+
   //event.data.forEach((tr) => toDraw.push(new Particle(tr)));
-  event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));  
   
   let coloredRects = [
     findRedLightbulb(trackerHistory),
@@ -619,8 +618,11 @@ function diagnosticRect(trackingRect) {
         "dR: " + (trackingRect.avgDs[RED] || NaN).toFixed(2),
         "dG: " + (trackingRect.avgDs[GREEN] || NaN).toFixed(2),
         "dB: " + (trackingRect.avgDs[BLUE] || NaN).toFixed(2),
+        "dS: " + (trackingRect.skewD || NaN).toFixed(2),
+        "dW: " + (trackingRect.propWhiteD || NaN).toFixed(2),                
         "#: " + trackingRect.historyId,
       ];
+      
       
       for (let i = 0; i < toType.length; i++) {
         text(toType[i], canvasWidth-x-width, y-(fontSize*(toType.length-i))-boost);
