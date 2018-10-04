@@ -82,12 +82,12 @@ function yellowtailModeColor(color) {
 
 function splineModeColor(color, alpha) {
   noFill();
-  if (color === RED) {
-    stroke(255,0,0,200 * alpha);
+    if (color === RED) {
+    stroke(130,5,5, alpha * 255);
   } else if (color === GREEN) {
-    stroke(0,255,0,200 * alpha);
+    stroke(255,210,175, alpha * 255);
   } else if (color === BLUE) {
-    stroke(0,0,255,200*alpha);
+    stroke(200,250,240, alpha * 255);
   }
 }
 
@@ -168,7 +168,7 @@ function renderGestureCurve(gesture, w, h, color) {
       var noise2 = (2 * GetBias(noiseTemp2, 0.1) - 1) * scale;
 
 
-      var offset = normalize(crossSectionVector, noise1 * 60);
+      var offset = normalize(crossSectionVector, noise1 * 40);
       
       curveVertex(p.x + offset.x + noise1, p.y + offset.x + noise2);
     }

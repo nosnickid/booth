@@ -510,11 +510,6 @@ function findBulbsFromCalibrationData(histories) {
     let best = null;
     for (let history of Object.values(histories)) {
       let rect = history.last();
-      if (history.length > 3) {
-        if(distance(rect, history.get(history.length-2))) {
-          continue;
-        }
-      }
       if (rect.avgColorDs[color] < COLOR_D_THRESH && rect.skewD < SKEW_D_THRESH && rect.propWhiteD < PROP_WHITE_D_THRESH) {
         if (best === null) {
           best = rect;
