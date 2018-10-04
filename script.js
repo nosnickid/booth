@@ -434,6 +434,10 @@ function mapRectsToHistory(now, histories, trackingRects) {
   }
 }
 
+function findBulbsFromCalibrationData(histories) {
+  
+}
+
 function onTrack(event) {
   if (ui.state === "countdown") {
     // we don't want to be drawing while the countdown is going

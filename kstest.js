@@ -273,6 +273,24 @@ function Sequence(min, max, step) {
 
 
 /*
+ * bisection
+ */
+
+
+bisection = function(f, a, b, eps) {
+	eps = typeof eps !== "undefined" ? eps : 1e-9;
+	while (Math.abs(a - b) > eps) {
+ 		if (f(a) * f((a + b) / 2) < 0) {
+ 			b = (a + b) / 2;
+ 		} else {
+ 			a = (a + b) / 2;
+ 		}
+ 	}
+	return (a + b) / 2;
+}
+
+
+/*
  * Kolmogorov distribution
  */
 
@@ -304,7 +322,7 @@ Kolmogorov.prototype.distr = function(arg) {
 
 Kolmogorov.prototype.inverse = function(x) {
 	return (function (o, x) {
-		var t = Numeric.bisection(function(y) {
+		var t = bisection(function(y) {
 			return o._di(y) - x;
 		}, 0, 1);
 		return t;
