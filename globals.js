@@ -17,7 +17,7 @@ GREEN = 1;
 BLUE = 2
 
 vizModes = ['yellowtail', 'dna', 'curve'];
-vizModeCurrent = 1;
+vizModeCurrent = 2;
 
 lastTimeStamp = 0;
 deltaTime = 0;

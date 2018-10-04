@@ -142,13 +142,13 @@ function renderGesture(gesture, w, h, color) {
 function renderGestureCurve(gesture, w, h, color) {
     var points = gesture.path;
     
-    var numCurves = 10;
-    var organicConstant = 0.5;
+    var numCurves = 50.0;
+    var organicConstant = 0.1;
     curveTightness(organicConstant);
 
   for (let n = 0; n < numCurves; ++n) {
     var scale = n / numCurves;
-    splineModeColor(gesture.color, scale);
+    splineModeColor(gesture.color, log(scale));
 
     beginShape();
 

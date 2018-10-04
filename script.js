@@ -356,6 +356,7 @@ function findRedLightbulb(histories) {
 async function calibrate(color, rectNumber) {
   calibrating["color"] = color;
   calibrating["rectNumber"] = rectNumber;
+  calibrationData[color] = [];
   await sleep(5000);
   localStorage.calibrationData = JSON.stringify(calibrationData);
   calibrating["color"] = null;
@@ -444,17 +445,14 @@ function findBulbsFromCalibrationData(histories) {
     allCalib = calibrationData[RED].concat(calibrationData[BLUE]).concat(calibrationData[GREEN]);
     calibSkew = allCalib.map((r) => r.analysisData["skew"]);
     calibPropWhite = allCalib.map((r) => r.analysisData["skew"]);    
-    let histRedScore = [];
-    let histGreenScore = [];    
-    let histBlueScore = [];
+    let histScores = [[],[],[]]
     let histSkew = [];
     let histPropWhite = [];
-    console.log(history);
     for (let i=0; i<history.length; i++) {
       let rect = history.get(i);
-      histRedScore.push(rect.analysisData["scores"][RED]);
-      histGreenScore.push(rect.analysisData["scores"][GREEN]);
-      histBlueScore.push(rect.analysisData["scores"][BLUE]);
+      histScores[RED].push(rect.analysisData["scores"][RED]);
+      histScores[GREEN].push(rect.analysisData["scores"][GREEN]);
+      histScores[BLUE].push(rect.analysisData["scores"][BLUE]);
       histSkew.push(rect.analysisData["skew"]);
       histPropWhite.push(rect.analysisData["prop_white"]);
     }
@@ -467,9 +465,9 @@ function findBulbsFromCalibrationData(histories) {
       let calibHistory = calibrationData[calibColor];
       if (calibHistory.length === 0) { continue };
       let stats = [RED, GREEN, BLUE].map((scoreColor) => kolmogorovSmirnov(
-          histArray.map((r) => r.analysisData.scores[scoreColor]),
-          calibHistory.map((r) => r.analysisData.scores[scoreColor])
-        ));
+        histScores[scoreColor],
+        calibHistory.map((r) => r.analysisData.scores[scoreColor])
+      ));
       
       avgDs[calibColor] = 0;
       for (let result of stats) {
@@ -527,9 +525,9 @@ function onTrack(event) {
     }
   }
   
-  //findBulbsFromCalibrationData(trackerHistory);
+  findBulbsFromCalibrationData(trackerHistory);
 
-  //event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));  
+  event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));  
 
   //event.data.forEach((tr) => toDraw.push(new Particle(tr)));
   
