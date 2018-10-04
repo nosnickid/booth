@@ -90,7 +90,7 @@ function setup() {
     });
   
     var tracker = new tracking.ColorTracker("white");
-    tracker.setMinDimension(5);
+    tracker.setMinDimension(20/downsampleFactor);
   
     tracking.track('#trackingVideo', tracker, {
         camera: true
@@ -444,7 +444,7 @@ function mapRectsToHistory(now, histories, trackingRects) {
 
 function findBulbsFromCalibrationData(histories) {
   const COLOR_D_THRESH = 0.6;
-  const SKEW_D_THRESH = 0.9;
+  const SKEW_D_THRESH = 0.8;
   const PROP_WHITE_D_THRESH = 0.9;
   for (let history of Object.values(histories)) {
     allCalib = calibrationData[RED].concat(calibrationData[BLUE]).concat(calibrationData[GREEN]);
@@ -453,6 +453,7 @@ function findBulbsFromCalibrationData(histories) {
     let histScores = [[],[],[]]
     let histSkew = [];
     let histPropWhite = [];
+    let nInHistory = [0,0,0];
     for (let i=0; i<history.length; i++) {
       let rect = history.get(i);
       histScores[RED].push(rect.analysisData["scores"][RED]);
@@ -460,10 +461,17 @@ function findBulbsFromCalibrationData(histories) {
       histScores[BLUE].push(rect.analysisData["scores"][BLUE]);
       histSkew.push(rect.analysisData["skew"]);
       histPropWhite.push(rect.analysisData["prop_white"]);
+      if (rect.color === RED) {
+        nInHistory[RED]++; 
+      } else if (rect.color === GREEN) {
+        nInHistory[GREEN]++;         
+      } else if (rect.color === BLUE) {
+        nInHistory[BLUE]++;
+      }
     }
-    
-    let skewResults = kolmogorovSmirnov(histSkew,calibSkew);
-    let propWhiteResults = kolmogorovSmirnov(histPropWhite,calibPropWhite);
+         
+    let skewResults = kolmogorovSmirnov(histSkew, calibSkew);
+    let propWhiteResults = kolmogorovSmirnov(histPropWhite, calibPropWhite);
     
     let avgDs = [null, null, null];
     for (let calibColor of [RED, GREEN, BLUE]) {
@@ -489,10 +497,17 @@ function findBulbsFromCalibrationData(histories) {
   
   let ret = [];
   for (let color in [RED, GREEN, BLUE]) {
+    // short circuit using >90% autowin rule
+    if (nInHistory[color] / history.length > 0.9) {
+      let rect = history.last()
+      rect.color = color;
+      ret.push(rect);
+      continue;
+    }
     let best = null
     for (let history of Object.values(histories)) {
       let rect = history.last()
-      if (rect.avgColorDs[color] < COLOR_D_THRESH && rect.skewD < SKEW_D_THRESH && rect.propWhiteD < PROP_WHITE_D_THRESH) {
+      if (rect.avgColorDs[color] < COLOR_D_THRESH && rect.skewD < SKEW_D_THRESH && rect.propWhiteD < PROP_WHITE_D_THRESH &) {
         if (best === null) {
           best = rect;
         } else if (rect.avgColorDs[color] < best.avgColorDs[color]) {
@@ -503,7 +518,7 @@ function findBulbsFromCalibrationData(histories) {
     if (best !== null) {
       best.color = color;
     }
-    ret.push(best);
+    ret[color] = best;
   }
   return ret;
 }

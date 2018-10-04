@@ -162,12 +162,15 @@ function renderGestureCurve(gesture, w, h, color) {
       
       var crossSectionVector = subtract(points[(i+1) % gesture.nPoints], p);
       var f = 0.0007 * p.p;
-      var noiseTemp1 = noise(p.x * f + n*1000, (n + p.y) * f);
-      var noiseTemp2 = noise(p.x * f + n*1000, (n + p.y) * f);
-      var noise1 = (2 * GetBias(noiseTemp, 0.1) - 1) * 60;
-      var offset = normalize(crossSectionVector, noise1);
+      var noiseTemp1 = noise(p.x * f + (n+2)*1000, (n + p.y) * f);
+      var noiseTemp2 = noise(p.x * f + (n+1)*-1000, (n + p.y) * f);
+      var noise1 = (2 * GetBias(noiseTemp1, 0.1) - 1) * 60;
+      var noise2 = (2 * GetBias(noiseTemp2, 0.1) - 1) * 60;
+
+
+      //var offset = normalize(crossSectionVector, noise1);
       
-      curveVertex(p.x + offset.x, p.y + offset.y);
+      curveVertex(p.x + noise1, p.y + noise2);
     }
     endShape();
   }
