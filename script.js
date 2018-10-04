@@ -440,7 +440,10 @@ function mapRectsToHistory(now, histories, trackingRects) {
   }
 }
 
-function findBulbsFromCalibrationData(histories) {  
+function findBulbsFromCalibrationData(histories) {
+  const COLOR_D_THRESH = 0.7;
+  const SKEW_D_THRESH = 0.6;
+  const PROP_WHITE_D_THRESH = 0.6;
   for (let history of Object.values(histories)) {
     allCalib = calibrationData[RED].concat(calibrationData[BLUE]).concat(calibrationData[GREEN]);
     calibSkew = allCalib.map((r) => r.analysisData["skew"]);
@@ -477,10 +480,27 @@ function findBulbsFromCalibrationData(histories) {
     
     }
 
-    history.last().avgDs = avgDs;
+    history.last().avgColorDs = avgDs;
     history.last().skewD = skewResults["d"];
-    history.last().propWhiteD = skewResults["d"]; 
+    history.last().propWhiteD = skewResults["d"];
   }
+  
+  let ret = [];
+  for (let color in [RED, GREEN, BLUE]) {
+    let best = null
+    for (let history in Object.values(histories)) {
+      rect = history.last()
+      if (rect.avgD[color] < COLOR_D_THRESH && rect.skewD < SKEW_D_THRESH && rect.propWhiteD < PROP_WHITE_D_THRESH) {
+        if (best === null) {
+          best = rect;
+        } else if (rect.avgD[color] < best.avgD[color]) {
+          best = rect;
+        }
+      }
+    }
+    ret.push(best);
+  }
+  return ret;
 }
 
 function onTrack(event) {
@@ -525,17 +545,13 @@ function onTrack(event) {
     }
   }
   
-  findBulbsFromCalibrationData(trackerHistory);
+//  let coloredRects = findBulbsFromCalibrationData(trackerHistory);
 
   event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));  
 
   //event.data.forEach((tr) => toDraw.push(new Particle(tr)));
   
-  let coloredRects = [
-    findRedLightbulb(trackerHistory),
-    findGreenLightbulb(trackerHistory),
-    findBlueLightbulb(trackerHistory),
-  ];
+  let coloredRects = [findRedLightbulb(trackerHistory), findGreenLightbulb(trackerHistory), findBlueLightbulb(trackerHistory)];
     
   for (let trackingRect of coloredRects) {    
     if (trackingRect === null) { continue };
@@ -613,9 +629,9 @@ function diagnosticRect(trackingRect) {
       */
 
       let toType = [
-        "dR: " + (trackingRect.avgDs[RED] || NaN).toFixed(2),
-        "dG: " + (trackingRect.avgDs[GREEN] || NaN).toFixed(2),
-        "dB: " + (trackingRect.avgDs[BLUE] || NaN).toFixed(2),
+        "dR: " + (trackingRect.avgColorDs[RED] || NaN).toFixed(2),
+        "dG: " + (trackingRect.avgColorDs[GREEN] || NaN).toFixed(2),
+        "dB: " + (trackingRect.avgColorDs[BLUE] || NaN).toFixed(2),
         "dS: " + (trackingRect.skewD || NaN).toFixed(2),
         "dW: " + (trackingRect.propWhiteD || NaN).toFixed(2),                
         "#: " + trackingRect.historyId,
