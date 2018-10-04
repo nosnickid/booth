@@ -153,7 +153,7 @@ function renderGestureCurve(gesture, w, h, color) {
 
   for (let n = 0; n < numCurves; ++n) {
     var scale = n / numCurves;
-    splineModeColor(gesture.color, GetBias(scale, 0.3));
+    splineModeColor(color, GetBias(scale, 0.3));
 
     beginShape();
 
@@ -161,8 +161,8 @@ function renderGestureCurve(gesture, w, h, color) {
       var p = points[i];
       
       var crossSectionVector = subtract(points[(i+1) % gesture.nPoints], p);
-      var noise1 = noise(p.x, p.y) * 40 * (1.0 - scale);
-      var offset = normalize(crossSectionVector, noise);
+      var noise1 = (2 * noise(p.x * 0.1, p.y * 0.1)) - 1) * 40 * (scale);
+      var offset = normalize(crossSectionVector, noise1);
       
       curveVertex(p.x + noise1, p.y + noise1);
     }
@@ -186,7 +186,7 @@ function renderGestureSpline(gesture, w, h, color) {
       // Draw the multiple offset splines for the current segment
       for (let j = 0; j < splineNum; ++j) {
         
-        splineModeColor(gesture.color, j / splineNum);
+        splineModeColor(color, j / splineNum);
         
         var offsetStart = j + splineInitialBend;
         if (parity % 2 == 0) {
