@@ -477,7 +477,7 @@ function findBulbsFromCalibrationData(histories) {
         avgDs[calibColor] += result["d"];
       }
       avgDs[calibColor] /= stats.length;
-    
+          
     }
 
     history.last().avgColorDs = avgDs;
