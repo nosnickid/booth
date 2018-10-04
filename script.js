@@ -10,13 +10,21 @@ currHistoryId = 0
 // so we know when to start a new Gesture
 lastTimeSeen = [-Infinity, -Infinity, -Infinity] // this is R, G, B
 
-document.onkeydown = processKeyInput;
+calibrating = {
+  "color": null,
+  "rectNumber": null
+};
+
+// R, G, B
+calibrationData = [[], [], []]
 
 ui = new UI()
 
 function clearVisuals() {
   yellowtailSetup(); 
 }
+
+document.onkeydown = processKeyInput;
 
 function processKeyInput(e) {
   let canvas = document.querySelector(".p5Canvas");
@@ -340,6 +348,15 @@ function findRedLightbulb(histories) {
   }
 }
 
+// This is intended to be called from the console, passing the relevant info
+async function calibrate(color, rectNumber) {
+  calibrating["color"] = color;
+  calibrating["rectNumber"] = rectNumber;
+  await sleep(5000);
+  calibrating["color"] = null;
+  calibrating["rectNumber"] = null;
+}
+
 function mapRectsToHistory(now, histories, trackingRects) {
   if (trackingRects.length >= Object.keys(histories).length) {
     // there's either a rect for each history, or some extra rects
@@ -528,7 +545,8 @@ function diagnosticRect(trackingRect) {
         "B: " + trackingRect.analysisData["scores"][BLUE].toFixed(2),
         "G/B: " + (trackingRect.analysisData["scores"][GREEN]/trackingRect.analysisData["scores"][BLUE]).toFixed(2),
         "W: " + trackingRect.analysisData["prop_white"].toFixed(2),
-        "S: " + trackingRect.analysisData["skew"].toFixed(2),                
+        "S: " + trackingRect.analysisData["skew"].toFixed(2),
+        "#: " + trackingRect.historyId,
       ];
       
       for (let i = 0; i < toType.length; i++) {
