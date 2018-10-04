@@ -439,8 +439,10 @@ function mapRectsToHistory(now, histories, trackingRects) {
   }
 }
 
-function findBulbsFromCalibrationData(histories) {
+function findBulbsFromCalibrationData(histories) {  
   for (let history of Object.values(histories)) {
+    
+    
     let avgDs = [null, null, null];
     for (let calibColor of [RED, GREEN, BLUE]) {
       let calibHistory = calibrationData[calibColor];
