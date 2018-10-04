@@ -470,18 +470,19 @@ function findBulbsFromCalibrationData(histories) {
         nInHistory[BLUE]++;
       }
     }
+
     console.log(history);
     for (let color of colors) {
       // short circuit using >90% autowin rule
       if (nInHistory[color] / history.length > 0.9) {
         console.log("autowin");
         let rect = history.last()
-        rect.color = color;
+        rect["color"] = color;
         ret[color] = rect;
         break;
       }
     }
-         
+    
     let skewResults = kolmogorovSmirnov(histSkew, calibSkew);
     let propWhiteResults = kolmogorovSmirnov(histPropWhite, calibPropWhite);
     
@@ -510,7 +511,7 @@ function findBulbsFromCalibrationData(histories) {
   for (let color in [RED, GREEN, BLUE]) {
     let best = null;
     for (let history of Object.values(histories)) {
-      let rect = history.last()
+      let rect = history.last();
       if (rect.avgColorDs[color] < COLOR_D_THRESH && rect.skewD < SKEW_D_THRESH && rect.propWhiteD < PROP_WHITE_D_THRESH &&
           distance(rect, history.get(history.length-2)) < 500) {
         if (best === null) {
@@ -521,8 +522,9 @@ function findBulbsFromCalibrationData(histories) {
       }
     }
     if (best !== null) {
-      best.color = color;
-      ret[color] = best;      
+      histories[best.historyId].last()["color"] = color;
+      best["color"] = color;
+      ret[color] = best;   
     }
   }
   return ret;
@@ -581,7 +583,7 @@ function onTrack(event) {
 
   //event.data.forEach((tr) => toDraw.push(new Particle(tr)));
   
-      for (let trackingRect of coloredRects) {    
+  for (let trackingRect of coloredRects) {    
     if (trackingRect === null) { continue };
     var c = center(trackingRect);
     var rect = {
