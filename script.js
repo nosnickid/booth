@@ -550,9 +550,9 @@ function onTrack(event) {
   
   let coloredRects = findBulbsFromCalibrationData(trackerHistory);
 
-  event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));  
+  //event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));  
 
-  event.data.forEach((tr) => toDraw.push(new Particle(tr)));
+  //event.data.forEach((tr) => toDraw.push(new Particle(tr)));
   
   //let coloredRects = [findRedLightbulb(trackerHistory), findGreenLightbulb(trackerHistory), findBlueLightbulb(trackerHistory)];
     
