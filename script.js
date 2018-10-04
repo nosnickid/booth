@@ -90,7 +90,7 @@ function setup() {
     });
   
     var tracker = new tracking.ColorTracker("white");
-    tracker.setMinDimension(10);
+    tracker.setMinDimension(5);
   
     tracking.track('#trackingVideo', tracker, {
         camera: true
@@ -557,7 +557,7 @@ function onTrack(event) {
     coloredRects = [findRedLightbulb(trackerHistory), findGreenLightbulb(trackerHistory), findBlueLightbulb(trackerHistory)];    
   }
   
-  //event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));  
+  event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));  
 
   //event.data.forEach((tr) => toDraw.push(new Particle(tr)));
   

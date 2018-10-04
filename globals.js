@@ -10,7 +10,7 @@ canvasHeight = monitorHeight/2;
 // do the blob detection, and then scale the blobs up, for performance reasons.
 // the tracking.js color detection algorithm is the most computationally expensive part of
 // this whole program. 
-downsampleFactor = 2;
+downsampleFactor = 4;
 
 RED = 0;
 GREEN = 1;
