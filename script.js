@@ -454,7 +454,19 @@ function findBulbsFromCalibrationData(histories) {
         avgDs[calibColor] += result["d"];
       }
       avgDs[calibColor] /= stats.length;
+      
+      let skewResults = kolmogorovSmirnov(
+        history.toArray().map((r) => r.analysisData["skew"]),
+        calibHistory.map((r) => r.analysisData["skew"])
+      );
     }
+
+    history.last().skewD = skewResults["d"]; 
+    let propWhiteResults = kolmogorovSmirnov(
+      history.toArray().map((r) => r.analysisData["prop_white"]),
+      calibHistory.map((r) => r.analysisData["prop_white"])
+    );
+    history.last().propWhiteD = skewResults["d"];      
     history.last().avgDs = avgDs;
   }
 }
@@ -591,6 +603,8 @@ function diagnosticRect(trackingRect) {
         "dR: " + (trackingRect.avgDs[RED] || NaN).toFixed(2),
         "dG: " + (trackingRect.avgDs[GREEN] || NaN).toFixed(2),
         "dB: " + (trackingRect.avgDs[BLUE] || NaN).toFixed(2),
+        "dS: " + (trackingRect.skewD || NaN).toFixed(2),
+        "dW: " + (trackingRect.propWhiteD || NaN).toFixed(2),
         "#: " + trackingRect.historyId,
       ];
       
