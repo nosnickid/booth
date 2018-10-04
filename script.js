@@ -488,15 +488,18 @@ function findBulbsFromCalibrationData(histories) {
   let ret = [];
   for (let color in [RED, GREEN, BLUE]) {
     let best = null
-    for (let history in Object.values(histories)) {
-      rect = history.last()
-      if (rect.avgD[color] < COLOR_D_THRESH && rect.skewD < SKEW_D_THRESH && rect.propWhiteD < PROP_WHITE_D_THRESH) {
+    for (let history of Object.values(histories)) {
+      let rect = history.last()
+      if (rect.avgColorDs[color] < COLOR_D_THRESH && rect.skewD < SKEW_D_THRESH && rect.propWhiteD < PROP_WHITE_D_THRESH) {
         if (best === null) {
           best = rect;
         } else if (rect.avgD[color] < best.avgD[color]) {
           best = rect;
         }
       }
+    }
+    if (best !== null) {
+      best.color = color;
     }
     ret.push(best);
   }
@@ -545,14 +548,15 @@ function onTrack(event) {
     }
   }
   
-//  let coloredRects = findBulbsFromCalibrationData(trackerHistory);
+  let coloredRects = findBulbsFromCalibrationData(trackerHistory);
 
-  event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));  
+  //event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));  
 
-  //event.data.forEach((tr) => toDraw.push(new Particle(tr)));
+  event.data.forEach((tr) => toDraw.push(new Particle(tr)));
   
-  let coloredRects = [findRedLightbulb(trackerHistory), findGreenLightbulb(trackerHistory), findBlueLightbulb(trackerHistory)];
+  //let coloredRects = [findRedLightbulb(trackerHistory), findGreenLightbulb(trackerHistory), findBlueLightbulb(trackerHistory)];
     
+  console.log(coloredRects);
   for (let trackingRect of coloredRects) {    
     if (trackingRect === null) { continue };
     var c = center(trackingRect);
