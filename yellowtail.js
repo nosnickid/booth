@@ -164,13 +164,13 @@ function renderGestureCurve(gesture, w, h, color) {
       var f = 0.0007 * p.p;
       var noiseTemp1 = noise(p.x * f + (n+2)*1000, (n + p.y) * f);
       var noiseTemp2 = noise(p.x * f + (n+1)*-1000, (n + p.y) * f);
-      var noise1 = (2 * GetBias(noiseTemp1, 0.1) - 1) * 60;
-      var noise2 = (2 * GetBias(noiseTemp2, 0.1) - 1) * 60;
+      var noise1 = (2 * GetBias(noiseTemp1, 0.1) - 1) * scale;
+      var noise2 = (2 * GetBias(noiseTemp2, 0.1) - 1) * scale;
 
 
-      //var offset = normalize(crossSectionVector, noise1);
+      var offset = normalize(crossSectionVector, noise1 * 60);
       
-      curveVertex(p.x + noise1, p.y + noise2);
+      curveVertex(p.x + offset.x + noise1, p.y + offset.x + noise2);
     }
     endShape();
   }
