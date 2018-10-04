@@ -435,16 +435,14 @@ function mapRectsToHistory(now, histories, trackingRects) {
 }
 
 function findBulbsFromCalibrationData(histories) {
-  for (let history of histories) {
+  for (let history of Object.values(histories)) {
     for (let calibColor of [RED, GREEN, BLUE]) {
       let calibHistory = calibrationData[calibColor];
       if (calibHistory.length === 0) { continue };
-      let stats = [RED, GREEN, BLUE].map((scoreColor) => {
-        stats.push(kolomogorovSmirnov(
-          history.map((r) => r.analysisData.scores[scoreColor]),
+      let stats = [RED, GREEN, BLUE].map((scoreColor) => kolmogorovSmirnov(
+          history.toArray().map((r) => r.analysisData.scores[scoreColor]),
           calibHistory.map((r) => r.analysisData.scores[scoreColor])
-        ))
-      });
+        ));
       console.log(stats);
     }
   }
