@@ -443,7 +443,7 @@ function mapRectsToHistory(now, histories, trackingRects) {
 }
 
 function findBulbsFromCalibrationData(histories) {
-  const COLOR_D_THRESH = 0.7;
+  const COLOR_D_THRESH = 0.6;
   const SKEW_D_THRESH = 0.9;
   const PROP_WHITE_D_THRESH = 0.9;
   for (let history of Object.values(histories)) {
@@ -557,7 +557,7 @@ function onTrack(event) {
     coloredRects = [findRedLightbulb(trackerHistory), findGreenLightbulb(trackerHistory), findBlueLightbulb(trackerHistory)];    
   }
   
-  event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));  
+  //event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));  
 
   //event.data.forEach((tr) => toDraw.push(new Particle(tr)));
   
