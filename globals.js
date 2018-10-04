@@ -11,6 +11,7 @@ canvasHeight = monitorHeight/2;
 // the tracking.js color detection algorithm is the most computationally expensive part of
 // this whole program. 
 downsampleFactor = 2;
+
 RED = 0;
 GREEN = 1;
 BLUE = 2

@@ -443,7 +443,6 @@ function findBulbsFromCalibrationData(histories) {
           history.toArray().map((r) => r.analysisData.scores[scoreColor]),
           calibHistory.map((r) => r.analysisData.scores[scoreColor])
         ));
-      console.log(stats);
     }
   }
 }
