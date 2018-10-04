@@ -444,9 +444,10 @@ function findBulbsFromCalibrationData(histories) {
           history.toArray().map((r) => r.analysisData.scores[scoreColor]),
           calibHistory.map((r) => r.analysisData.scores[scoreColor])
         ));
-      
+      avgDs[calibColor] = 0;
       for (let result of stats) {
-        avgDs[calibColor] += stats["d"];
+        console.log(result["d"]);
+        avgDs[calibColor] += result["d"];
       }
       avgDs[calibColor] /= stats.length;
     }
@@ -582,10 +583,12 @@ function diagnosticRect(trackingRect) {
       ];
       */
 
+      console.log(trackingRect.avgDs);
       let toType = [
         "dR: " + (trackingRect.avgDs[RED] || NaN).toFixed(2),
         "dG: " + (trackingRect.avgDs[GREEN] || NaN).toFixed(2),
         "dB: " + (trackingRect.avgDs[BLUE] || NaN).toFixed(2),
+        "#: " + trackingRect.historyId,
       ];
       
       for (let i = 0; i < toType.length; i++) {
