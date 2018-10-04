@@ -129,11 +129,29 @@ function renderGesture(gesture, w, h, color) {
       case 0:
         renderGestureYellowtail(gesture, w, h, color);
         break;
+      case 1:
+        renderGestureSpline(gesture, w, h, color);        
       default:
-        renderGestureSpline(gesture, w, h, color);
+        renderGestureCurve(gesture, w, h, color);
         break;
     }
   }
+}
+
+function renderGestureCurve(gesture, w, h, color) {
+    var points = gesture.path;
+    
+    var organicConstant = 0.5;
+    curveTightness(organicConstant);
+
+      fill(255);
+      beginShape();
+
+    for (let i = 0; i < gesture.nPoints; ++i) {
+      var p = points[i];
+      curveVertex(p.x, p.y);
+    }
+  endShape(CLOSE);
 }
 
 function renderGestureSpline(gesture, w, h, color) {
