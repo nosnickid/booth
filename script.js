@@ -436,6 +436,7 @@ function mapRectsToHistory(now, histories, trackingRects) {
 
 function findBulbsFromCalibrationData(histories) {
   for (let history of Object.values(histories)) {
+    let avgDs = [null, null, null];
     for (let calibColor of [RED, GREEN, BLUE]) {
       let calibHistory = calibrationData[calibColor];
       if (calibHistory.length === 0) { continue };
@@ -443,7 +444,13 @@ function findBulbsFromCalibrationData(histories) {
           history.toArray().map((r) => r.analysisData.scores[scoreColor]),
           calibHistory.map((r) => r.analysisData.scores[scoreColor])
         ));
+      
+      for (let result of stats) {
+        avgDs[calibColor] += stats["d"];
+      }
+      avgDs[calibColor] /= stats.length;
     }
+    history.last().avgDs = avgDs;
   }
 }
 
@@ -489,10 +496,10 @@ function onTrack(event) {
     }
   }
   
-  //event.data.forEach((tr) => toDraw.push(new Particle(tr)));
-  event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));   
-  
   findBulbsFromCalibrationData(trackerHistory);
+  
+  //event.data.forEach((tr) => toDraw.push(new Particle(tr)));
+  event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));  
   
   let coloredRects = [
     findRedLightbulb(trackerHistory),
@@ -563,6 +570,7 @@ function diagnosticRect(trackingRect) {
       
       let boost = 5
       
+      /*
       let toType = [
         "R: " + trackingRect.analysisData["scores"][RED].toFixed(2),
         "G: " + trackingRect.analysisData["scores"][GREEN].toFixed(2),
@@ -571,6 +579,13 @@ function diagnosticRect(trackingRect) {
         "W: " + trackingRect.analysisData["prop_white"].toFixed(2),
         "S: " + trackingRect.analysisData["skew"].toFixed(2),
         "#: " + trackingRect.historyId,
+      ];
+      */
+
+      let toType = [
+        "dR: " + (trackingRect.avgDs[RED] || NaN).toFixed(2),
+        "dG: " + (trackingRect.avgDs[GREEN] || NaN).toFixed(2),
+        "dB: " + (trackingRect.avgDs[BLUE] || NaN).toFixed(2),
       ];
       
       for (let i = 0; i < toType.length; i++) {
