@@ -441,21 +441,33 @@ function mapRectsToHistory(now, histories, trackingRects) {
 
 function findBulbsFromCalibrationData(histories) {  
   for (let history of Object.values(histories)) {
+    allCalib = calibrationData[RED] + calibrationData[BLUE] + calibrationData[GREEN];
+    calibSkew = allCalib.map((r) => r.analysisData["skew"]);
+    calibPropWhite = allCalib.map((r) => r.analysisData["skew"]);    
+    histRedScore = [];
+    histBlueScore = [];
+    histGreenScore = [];
+    histSkew = [];
+    histPropWhite = [];
+    for (let rect of history) {
+      histRedScore.push(rect.analysisData["scores"][RED]);
+      histRedScore.push(rect.analysisData["scores"][RED]);                        
+    }
     
+    let skewResults = kolmogorovSmirnov(
+      historyArray.map((r) => r.analysisData["skew"]),
+      calibHistory.map((r) => r.analysisData["skew"])
+    );
     
     let avgDs = [null, null, null];
     for (let calibColor of [RED, GREEN, BLUE]) {
       let calibHistory = calibrationData[calibColor];
       if (calibHistory.length === 0) { continue };
       let stats = [RED, GREEN, BLUE].map((scoreColor) => kolmogorovSmirnov(
-          history.toArray().map((r) => r.analysisData.scores[scoreColor]),
+          histArray.map((r) => r.analysisData.scores[scoreColor]),
           calibHistory.map((r) => r.analysisData.scores[scoreColor])
         ));
       
-      let skewResults = kolmogorovSmirnov(
-        history.toArray().map((r) => r.analysisData["skew"]),
-        calibHistory.map((r) => r.analysisData["skew"])
-      );
       stats.push(skewResults);
       let propWhiteResults = kolmogorovSmirnov(
        history.toArray().map((r) => r.analysisData["prop_white"]),

@@ -139,26 +139,28 @@ function renderGesture(gesture, w, h, color) {
   }
 }
 
-function renderGestureCurve(gesture, w, h, color) {
-    var points = gesture.path;
+// function renderGestureCurve(gesture, w, h, color) {
+//     var points = gesture.path;
     
-    var numCurves = 10;
-    var organicConstant = 0.5;
-    curveTightness(organicConstant);
+//     var numCurves = 10;
+//     var organicConstant = 0.5;
+//     curveTightness(organicConstant);
 
-  for (let n = 0; n < numCurves; ++n) {
-    splineModeColor(gesture.color, n / numCurves);
+//   for (let n = 0; n < numCurves; ++n) {
+//     var scale = n / numCurves;
+//     splineModeColor(gesture.color, scale);
 
-    beginShape();
+//     beginShape();
 
-    for (let i = 0; i < gesture.nPoints; ++i) {
-      var p = points[i];
-      var noise = noise(p.x, p.y);
-      var noise + noise(p.y, p.x);
-      curveVertex(p.x + noise, p.y);
-    }
-  endShape();
-}
+//     for (let i = 0; i < gesture.nPoints; ++i) {
+//       var p = points[i];
+//       var noise1 = noise(p.x, p.y) * scale;
+//       var noise2 = noise(p.y, p.x) * scale;
+//       curveVertex(p.x + noise1, p.y + noise2);
+//     }
+//     endShape();
+//   }
+// }
 
 function renderGestureSpline(gesture, w, h, color) {
     var points = gesture.path;
