@@ -331,7 +331,9 @@ Kolmogorov.prototype.inverse = function(x) {
 
 
 
-kolmogorovSmirnov = function(x, y) {
+kolmogorovSmirnov = function(xArray, yArray) {
+  let x = new Vector(xArray);
+  let y = new Vector(yArray);
 	var all = new Vector(x.elements.concat(y.elements)).sort();
 	var ecdfx = x.ecdf(all);
 	var ecdfy = y.ecdf(all);

@@ -435,7 +435,19 @@ function mapRectsToHistory(now, histories, trackingRects) {
 }
 
 function findBulbsFromCalibrationData(histories) {
-  
+  for (let history of histories) {
+    for (let calibColor of [RED, GREEN, BLUE]) {
+      let calibHistory = calibrationData[calibColor];
+      if (calibHistory.length === 0) { continue };
+      let stats = [RED, GREEN, BLUE].map((scoreColor) => {
+        stats.push(kolomogorovSmirnov(
+          history.map((r) => r.analysisData.scores[scoreColor]),
+          calibHistory.map((r) => r.analysisData.scores[scoreColor])
+        ))
+      });
+      console.log(stats);
+    }
+  }
 }
 
 function onTrack(event) {
@@ -482,7 +494,9 @@ function onTrack(event) {
   
   //event.data.forEach((tr) => toDraw.push(new Particle(tr)));
   event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));   
-      
+  
+  findBulbsFromCalibrationData(trackerHistory);
+  
   let coloredRects = [
     findRedLightbulb(trackerHistory),
     findGreenLightbulb(trackerHistory),
