@@ -147,13 +147,13 @@ function GetBias(time,bias)
 function renderGestureCurve(gesture, w, h, color) {
     var points = gesture.path;
     
-    var numCurves = 40.0;
+    var numCurves = 20.0;
     var organicConstant = 0.1;
     curveTightness(organicConstant);
 
   for (let n = 0; n < numCurves; ++n) {
     var scale = n / numCurves;
-    splineModeColor(color, GetBias(scale, 0.3));
+    splineModeColor(color, GetBias(1-scale, 0.3));
 
     beginShape();
 
@@ -161,7 +161,7 @@ function renderGestureCurve(gesture, w, h, color) {
       var p = points[i];
       
       var crossSectionVector = subtract(points[(i+1) % gesture.nPoints], p);
-      var noise1 = (2 * noise(p.x * 0.01, p.y * 0.01) - 1) * 40 * (scale);
+      var noise1 = (2 * GetBias(noise(p.x * 0.01, p.y * 0.01), 0.1) - 1) * 40 * (scale);
       var offset = normalize(crossSectionVector, noise1);
       
       curveVertex(p.x + offset.x, p.y + offset.y);

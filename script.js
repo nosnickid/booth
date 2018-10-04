@@ -357,10 +357,12 @@ async function calibrate(color, rectNumber) {
   calibrating["color"] = color;
   calibrating["rectNumber"] = rectNumber;
   calibrationData[color] = [];
-  await sleep(5000);
+  await sleep(15000);
+  console.log("done calibrating");
   localStorage.calibrationData = JSON.stringify(calibrationData);
   calibrating["color"] = null;
   calibrating["rectNumber"] = null;
+  
 }
 
 function mapRectsToHistory(now, histories, trackingRects) {
