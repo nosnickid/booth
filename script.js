@@ -16,7 +16,11 @@ calibrating = {
 };
 
 // R, G, B
-calibrationData = [[], [], []]
+if (localStorage.calibrationData === undefined) {
+  calibrationData = [[], [], []]
+} else {
+  calibrationData = JSON.parse(localStorage.calibrationData);
+}
 
 ui = new UI()
 
@@ -353,6 +357,7 @@ async function calibrate(color, rectNumber) {
   calibrating["color"] = color;
   calibrating["rectNumber"] = rectNumber;
   await sleep(5000);
+  localStorage.calibrationData = JSON.stringify(calibrationData);
   calibrating["color"] = null;
   calibrating["rectNumber"] = null;
 }
@@ -446,7 +451,6 @@ function findBulbsFromCalibrationData(histories) {
         ));
       avgDs[calibColor] = 0;
       for (let result of stats) {
-        console.log(result["d"]);
         avgDs[calibColor] += result["d"];
       }
       avgDs[calibColor] /= stats.length;
@@ -583,7 +587,6 @@ function diagnosticRect(trackingRect) {
       ];
       */
 
-      console.log(trackingRect.avgDs);
       let toType = [
         "dR: " + (trackingRect.avgDs[RED] || NaN).toFixed(2),
         "dG: " + (trackingRect.avgDs[GREEN] || NaN).toFixed(2),
