@@ -462,20 +462,18 @@ function findBulbsFromCalibrationData(histories) {
       histScores[BLUE].push(rect.analysisData["scores"][BLUE]);
       histSkew.push(rect.analysisData["skew"]);
       histPropWhite.push(rect.analysisData["prop_white"]);
-      if (rect.color === RED) {
+      if (rect.color === String(RED)) {
         nInHistory[RED]++; 
-      } else if (rect.color === GREEN) {
+      } else if (rect.color === String(GREEN)) {
         nInHistory[GREEN]++;         
-      } else if (rect.color === BLUE) {
+      } else if (rect.color === String(BLUE)) {
         nInHistory[BLUE]++;
       }
     }
 
-    console.log(history);
-    for (let color of colors) {
+    for (let color of [RED, GREEN, BLUE]) {
       // short circuit using >90% autowin rule
       if (nInHistory[color] / history.length > 0.9) {
-        console.log("autowin");
         let rect = history.last()
         rect["color"] = color;
         ret[color] = rect;
@@ -512,8 +510,12 @@ function findBulbsFromCalibrationData(histories) {
     let best = null;
     for (let history of Object.values(histories)) {
       let rect = history.last();
-      if (rect.avgColorDs[color] < COLOR_D_THRESH && rect.skewD < SKEW_D_THRESH && rect.propWhiteD < PROP_WHITE_D_THRESH &&
-          distance(rect, history.get(history.length-2)) < 500) {
+      if (history.length > 3) {
+        if(distance(rect, history.get(history.length-2))) {
+          continue;
+        }
+      }
+      if (rect.avgColorDs[color] < COLOR_D_THRESH && rect.skewD < SKEW_D_THRESH && rect.propWhiteD < PROP_WHITE_D_THRESH) {
         if (best === null) {
           best = rect;
         } else if (rect.avgColorDs[color] < best.avgColorDs[color]) {
@@ -522,7 +524,6 @@ function findBulbsFromCalibrationData(histories) {
       }
     }
     if (best !== null) {
-      histories[best.historyId].last()["color"] = color;
       best["color"] = color;
       ret[color] = best;   
     }
