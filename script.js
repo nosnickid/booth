@@ -549,19 +549,17 @@ function onTrack(event) {
   }
   
   let coloredRects
-  if (localStorage.dontCalibrate !== undefined) {
+  if (localStorage.dontCalibrate === undefined) {
     coloredRects = findBulbsFromCalibrationData(trackerHistory);
   } else {
     coloredRects = [findRedLightbulb(trackerHistory), findGreenLightbulb(trackerHistory), findBlueLightbulb(trackerHistory)];    
   }
   
-  //event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));  
+  event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));  
 
   //event.data.forEach((tr) => toDraw.push(new Particle(tr)));
   
-    
-  console.log(coloredRects);
-  for (let trackingRect of coloredRects) {    
+      for (let trackingRect of coloredRects) {    
     if (trackingRect === null) { continue };
     var c = center(trackingRect);
     var rect = {
@@ -624,27 +622,27 @@ function diagnosticRect(trackingRect) {
       
       let boost = 5
       
-      /*
-      let toType = [
-        "R: " + trackingRect.analysisData["scores"][RED].toFixed(2),
-        "G: " + trackingRect.analysisData["scores"][GREEN].toFixed(2),
-        "B: " + trackingRect.analysisData["scores"][BLUE].toFixed(2),
-        "G/B: " + (trackingRect.analysisData["scores"][GREEN]/trackingRect.analysisData["scores"][BLUE]).toFixed(2),
-        "W: " + trackingRect.analysisData["prop_white"].toFixed(2),
-        "S: " + trackingRect.analysisData["skew"].toFixed(2),
-        "#: " + trackingRect.historyId,
-      ];
-      */
-
-      let toType = [
-        "dR: " + (trackingRect.avgColorDs[RED] || NaN).toFixed(2),
-        "dG: " + (trackingRect.avgColorDs[GREEN] || NaN).toFixed(2),
-        "dB: " + (trackingRect.avgColorDs[BLUE] || NaN).toFixed(2),
-        "dS: " + (trackingRect.skewD || NaN).toFixed(2),
-        "dW: " + (trackingRect.propWhiteD || NaN).toFixed(2),                
-        "#: " + trackingRect.historyId,
-      ];
-      
+      let toType;
+      if (trackingRect.avgColorDs === undefined) {
+        toType = [
+          "R: " + trackingRect.analysisData["scores"][RED].toFixed(2),
+          "G: " + trackingRect.analysisData["scores"][GREEN].toFixed(2),
+          "B: " + trackingRect.analysisData["scores"][BLUE].toFixed(2),
+          "G/B: " + (trackingRect.analysisData["scores"][GREEN]/trackingRect.analysisData["scores"][BLUE]).toFixed(2),
+          "W: " + trackingRect.analysisData["prop_white"].toFixed(2),
+          "S: " + trackingRect.analysisData["skew"].toFixed(2),
+          "#: " + trackingRect.historyId,
+        ];
+      } else {
+        toType = [
+          "dR: " + (trackingRect.avgColorDs[RED] || NaN).toFixed(2),
+          "dG: " + (trackingRect.avgColorDs[GREEN] || NaN).toFixed(2),
+          "dB: " + (trackingRect.avgColorDs[BLUE] || NaN).toFixed(2),
+          "dS: " + (trackingRect.skewD || NaN).toFixed(2),
+          "dW: " + (trackingRect.propWhiteD || NaN).toFixed(2),                
+          "#: " + trackingRect.historyId,
+        ];
+      }
       
       for (let i = 0; i < toType.length; i++) {
         text(toType[i], canvasWidth-x-width, y-(fontSize*(toType.length-i))-boost);

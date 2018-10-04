@@ -69,14 +69,14 @@ function yellowtailDraw() {
 
 function yellowtailModeColor(color) {
   if (color === RED) {
-    fill(255,0,0);
-    stroke(255,0,0);
+    fill(130,5,5);
+    stroke(130,5,5);
   } else if (color === GREEN) {
-    fill(0,255,0);
-    stroke(0,255,0);
+    fill(255,210,175);
+    stroke(255,210,175);
   } else if (color === BLUE) {
-    fill(0,0,255);
-    stroke(0,0,255);
+    fill(200,250,240);
+    stroke(200,250,240);
   }
 }
 
@@ -161,10 +161,10 @@ function renderGestureCurve(gesture, w, h, color) {
       var p = points[i];
       
       var crossSectionVector = subtract(points[(i+1) % gesture.nPoints], p);
-      var noise1 = (2 * noise(p.x * 0.1, p.y * 0.1) - 1) * 40 * (scale);
+      var noise1 = (2 * noise(p.x * 0.01, p.y * 0.01) - 1) * 40 * (scale);
       var offset = normalize(crossSectionVector, noise1);
       
-      curveVertex(p.x + noise1, p.y + noise1);
+      curveVertex(p.x + offset.x, p.y + offset.y);
     }
     endShape();
   }
