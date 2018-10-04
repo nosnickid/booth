@@ -442,8 +442,8 @@ function mapRectsToHistory(now, histories, trackingRects) {
 
 function findBulbsFromCalibrationData(histories) {
   const COLOR_D_THRESH = 0.7;
-  const SKEW_D_THRESH = 0.6;
-  const PROP_WHITE_D_THRESH = 0.6;
+  const SKEW_D_THRESH = 0.9;
+  const PROP_WHITE_D_THRESH = 0.9;
   for (let history of Object.values(histories)) {
     allCalib = calibrationData[RED].concat(calibrationData[BLUE]).concat(calibrationData[GREEN]);
     calibSkew = allCalib.map((r) => r.analysisData["skew"]);
@@ -493,7 +493,7 @@ function findBulbsFromCalibrationData(histories) {
       if (rect.avgColorDs[color] < COLOR_D_THRESH && rect.skewD < SKEW_D_THRESH && rect.propWhiteD < PROP_WHITE_D_THRESH) {
         if (best === null) {
           best = rect;
-        } else if (rect.avgD[color] < best.avgD[color]) {
+        } else if (rect.avgColorDs[color] < best.avgColorDs[color]) {
           best = rect;
         }
       }
@@ -550,7 +550,7 @@ function onTrack(event) {
   
   let coloredRects = findBulbsFromCalibrationData(trackerHistory);
 
-  //event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));  
+  event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));  
 
   event.data.forEach((tr) => toDraw.push(new Particle(tr)));
   
