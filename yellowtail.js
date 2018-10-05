@@ -145,6 +145,7 @@ function GetBias(time,bias)
 }
 
 function renderGestureCurve(gesture, w, h, color) {
+    ANIMATION_SPEED = 25000.0;
     var points = gesture.path;
     
     var numCurves = 40.0;
@@ -176,6 +177,7 @@ function renderGestureCurve(gesture, w, h, color) {
 }
 
 function renderGestureSpline(gesture, w, h, color) {
+    ANIMATION_SPEED = 50.0;
     var points = gesture.path;
     
   // vizParams
@@ -241,6 +243,7 @@ function renderGestureSpline(gesture, w, h, color) {
 }
 
 function renderGestureYellowtail(gesture, w, h, color) {
+      ANIMATION_SPEED = 50.0;
           if (gesture.nPolys > 0) {
             var polygons = gesture.polygons;
             var crosses = gesture.crosses;
