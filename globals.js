@@ -23,7 +23,7 @@ lastTimeStamp = 0;
 deltaTime = 0;
 timeElapsed = 0;
 
-ANIMATION_SPEED = 5.00000000000; 
+ANIMATION_SPEED = 50.00000000000; 
 
 // Object storing various misc visual parameters
 vizParams = {mode : vizModes[vizModeCurrent]};
