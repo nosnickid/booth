@@ -145,8 +145,7 @@ function GetBias(time,bias)
 }
 
 function renderGestureCurve(gesture, w, h, color) {
-    ANIMATION_SPEED = 25000.0;
-    var points = gesture.path;
+      var points = gesture.path;
     
     var numCurves = 40.0;
     var organicConstant = 0;
@@ -163,19 +162,21 @@ function renderGestureCurve(gesture, w, h, color) {
         var p = points[i];
 
         var crossSectionVector = perpendicular(subtract(points[(i+1) % gesture.nPoints], p));
-        var f = 0.1 * p.p;
+        var f = p.p *  100;
         var noiseTemp1 = noise((scale + p.x * f), (p.y + scale) * f);
         var noiseTemp2 = noise((scale + p.x * f), (n + p.y) * f);
-        var noise1 = (2 * GetBias(noiseTemp1, 0.1) - 1) * scale;
-        var noise2 = (2 * GetBias(noiseTemp2, 0.1) - 1) * scale;
+        var noise1 = (2 * GetBias(noiseTemp1, 0.1) - 1) * scale * 20;
+        var noise2 = (2 * GetBias(noiseTemp2, 0.1) - 1) * scale * 20;
 
-        var offset = normalize(crossSectionVector, noise1 * 60);
+        var offset = normalize(crossSectionVector, noise1 * 3);
 
         curveVertex(p.x + offset.x + noise2, p.y + offset.y + noise1);
       }
       endShape();
     }
   }
+  
+  drawCurve();
 }
 
 function renderGestureSpline(gesture, w, h, color) {
