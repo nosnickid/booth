@@ -185,12 +185,15 @@ Vector.prototype.sort = function() {
 };
 
 Vector.prototype.min = function() {
-	return this.sortElements()[0];
+  return this.elements.reduce(function(a, b) {
+      return Math.min(a, b);
+  });
 };
 
 Vector.prototype.max = function() {
-	let sorted = this.sortElements()
-  return sorted[sorted.length-1];
+  return this.elements.reduce(function(a, b) {
+      return Math.max(a, b);
+  });
 };
 
 Vector.prototype.toString = function() {

@@ -134,19 +134,15 @@ function renderGesture(gesture, w, h, color) {
     var mode = vizModeCurrent;
     switch (mode) {
       case 0:
-        renderGestureYellowtail(gesture, w, h, color);
+        renderGestureYellowtail(gesture, w, h, color, false);
         break;
       case 1:
-        renderGestureSpline(gesture, w, h, color); 
+        renderGestureCurve(gesture, w, h, color, false); 
         break;
       case 2:
-        translate(width, 0);
-        scale(-1, 1);
-        dra
-        scale(1, 1);
-        translate(-width, 0);
+        renderGestureYellowtail(gesture, w, h, color, true);
       default:
-        renderGestureCurve(gesture, w, h, color);
+        renderGestureCurve(gesture, w, h, color, true);
         break;
     }
   }
@@ -157,7 +153,7 @@ function GetBias(time,bias)
   return (time / ((((1.0/bias) - 2.0)*(1.0 - time))+1.0));
 }
 
-function renderGestureCurve(gesture, w, h, color) {
+function renderGestureCurve(gesture, w, h, color, mirror) {
       ANIMATION_SPEED = 25000000000.0;
 
   var points = gesture.path;
@@ -192,8 +188,14 @@ function renderGestureCurve(gesture, w, h, color) {
   }
   
   drawCurve();
-  
-  
+
+  if (mirror) {
+    translate(width, 0);
+    scale(-1, 1);
+    drawCurve();
+    scale(1, 1);
+    translate(-width, 0);
+  }
 }
 
 function renderGestureSpline(gesture, w, h, color) {
@@ -265,6 +267,7 @@ function renderGestureSpline(gesture, w, h, color) {
 function renderGestureYellowtail(gesture, w, h, color) {
       ANIMATION_SPEED = 50.0;
           if (gesture.nPolys > 0) {
+            var draw = function () {
             var polygons = gesture.polygons;
             var crosses = gesture.crosses;
 
@@ -316,6 +319,17 @@ function renderGestureYellowtail(gesture, w, h, color) {
                 }
             }
             endShape();
+            }
+            
+            draw();
+            
+            if (mirror) {
+              translate(width, 0);
+              scale(-1, 1);
+              draw();
+              scale(1, 1);
+              translate(-width, 0);
+            }
         }
 }
 

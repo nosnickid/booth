@@ -365,7 +365,7 @@ async function calibrate(color, rectNumber) {
   calibrating["color"] = color;
   calibrating["rectNumber"] = rectNumber;
   calibrationData[color] = [];
-  await sleep(15000);
+  await sleep(5000);
   console.log("done calibrating");
   localStorage.calibrationData = JSON.stringify(calibrationData);
   calibrating["color"] = null;
