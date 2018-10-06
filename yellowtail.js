@@ -67,6 +67,10 @@ function yellowtailDraw() {
     }
   }
 
+const rcGreen = [61,192,108];
+const rcBlue = [];
+const rcDarkPink = [];
+
 function yellowtailModeColor(color) {
   if (color === RED) {
     fill(130,5,5);
@@ -145,9 +149,11 @@ function GetBias(time,bias)
 }
 
 function renderGestureCurve(gesture, w, h, color) {
-      var points = gesture.path;
+      ANIMATION_SPEED = 25000000000.0;
+
+  var points = gesture.path;
     
-    var numCurves = 40.0;
+    var numCurves = 30.0;
     var organicConstant = 0;
     curveTightness(organicConstant);
 
@@ -162,13 +168,13 @@ function renderGestureCurve(gesture, w, h, color) {
         var p = points[i];
 
         var crossSectionVector = perpendicular(subtract(points[(i+1) % gesture.nPoints], p));
-        var f = p.p *  100;
-        var noiseTemp1 = noise((scale + p.x * f), (p.y + scale) * f);
-        var noiseTemp2 = noise((scale + p.x * f), (n + p.y) * f);
+        var f = p.p * 10;
+        var noiseTemp1 = noise((scale + p.x) * f, (p.y + scale) * f);
+        var noiseTemp2 = noise((scale + p.x) * f, (n + p.y) * f);
         var noise1 = (2 * GetBias(noiseTemp1, 0.1) - 1) * scale * 20;
         var noise2 = (2 * GetBias(noiseTemp2, 0.1) - 1) * scale * 20;
 
-        var offset = normalize(crossSectionVector, noise1 * 3);
+        var offset = normalize(crossSectionVector, noise1 * 2);
 
         curveVertex(p.x + offset.x + noise2, p.y + offset.y + noise1);
       }

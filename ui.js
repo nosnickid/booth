@@ -85,7 +85,7 @@ class UI {
     let form = createDOMElement(
       `<form class="text-entry" autocomplete="off">
         <label class="text-entry shadow bigtext" id="name-label">
-          Name:<br/>
+          Name(s):<br/>
            <input class="text-entry" type="text" id="name-input" name="name"/>
         </label>
         <br/>
