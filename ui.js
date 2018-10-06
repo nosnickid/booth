@@ -147,7 +147,7 @@ note: ${this.formData["note"]}`;
   }
   
   async runTimer() {
-    for (let i=29; i > 0; i--) {
+    for (let i=59; i > 0; i--) {
       await sleep(1000);
       document.querySelector("#timer").innerHTML = String(i);
     }
@@ -186,7 +186,7 @@ note: ${this.formData["note"]}`;
   }
   
   drawRecording() {
-    let timer = createDOMElement(`<div class="shadow" id="timer">30</div>`);
+    let timer = createDOMElement(`<div class="shadow" id="timer">60</div>`);
     document.body.appendChild(timer);
   }
 }

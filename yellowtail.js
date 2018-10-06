@@ -139,6 +139,12 @@ function renderGesture(gesture, w, h, color) {
       case 1:
         renderGestureSpline(gesture, w, h, color); 
         break;
+      case 2:
+        translate(width, 0);
+        scale(-1, 1);
+        dra
+        scale(1, 1);
+        translate(-width, 0);
       default:
         renderGestureCurve(gesture, w, h, color);
         break;
@@ -155,8 +161,8 @@ function renderGestureCurve(gesture, w, h, color) {
       ANIMATION_SPEED = 25000000000.0;
 
   var points = gesture.path;
-    
-    var numCurves = 30.0;
+     
+    var numCurves = 20.0;
     var organicConstant = 0;
     curveTightness(organicConstant);
 
@@ -187,14 +193,6 @@ function renderGestureCurve(gesture, w, h, color) {
   
   drawCurve();
   
-  var mirror = true;
-  if (mirror) {
-    translate(width, 0);
-    scale(-1, 1);
-    drawCurve();
-    scale(1, 1);
-//    translate(width, 0);
-  }
   
 }
 
