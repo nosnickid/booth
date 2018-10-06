@@ -170,9 +170,9 @@ Vector.prototype._ecdf = function(x) {
 
 Vector.prototype.ecdf = function(arg) {
 	if (arg instanceof Vector) {
-		var result = new Vector([]);
+		var result = new Vector(new Array(arg.length()));
 		for (var i = 0; i < arg.length(); i++) {
-			result.push(this._ecdf(arg.elements[i]));
+			result[i] = this._ecdf(arg.elements[i]);
 		}
 		return result;
 	} else {

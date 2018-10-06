@@ -6,7 +6,7 @@ class Particle {
     this.acceleration = createVector(0, 0.05);
     this.velocity = createVector(random(-1, 1), random(-1, 0));
     this.position = createVector(rect.x, rect.y);
-    this.lifespan = 255;
+    this.lifespan = 100000000;
   }
   
   ellapsed(now) {
@@ -19,6 +19,7 @@ class Particle {
   };
   
   drawCircleShape() {
+    scale(-1, 1);
     stroke(200, this.lifespan);
     strokeWeight(0);
     fill(127, this.lifespan);

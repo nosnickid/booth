@@ -137,10 +137,10 @@ function renderGesture(gesture, w, h, color) {
         renderGestureYellowtail(gesture, w, h, color, false);
         break;
       case 1:
-        renderGestureCurve(gesture, w, h, color, false); 
+        renderGestureYellowtail(gesture, w, h, color, true); 
         break;
       case 2:
-        renderGestureYellowtail(gesture, w, h, color, true);
+        renderGestureCurve(gesture, w, h, color, false);
       default:
         renderGestureCurve(gesture, w, h, color, true);
         break;
@@ -198,7 +198,7 @@ function renderGestureCurve(gesture, w, h, color, mirror) {
   }
 }
 
-function renderGestureSpline(gesture, w, h, color) {
+function renderGestureSpline(gesture, w, h, color, mirror) {
     ANIMATION_SPEED = 50.0;
     var points = gesture.path;
     
@@ -264,7 +264,7 @@ function renderGestureSpline(gesture, w, h, color) {
   }
 }
 
-function renderGestureYellowtail(gesture, w, h, color) {
+function renderGestureYellowtail(gesture, w, h, color, mirror) {
       ANIMATION_SPEED = 50.0;
           if (gesture.nPolys > 0) {
             var draw = function () {
