@@ -190,6 +190,7 @@ function renderGestureCurve(gesture, w, h, color, mirror) {
   drawCurve();
 
   if (mirror) {
+    console.log("in mirrormode");
     translate(width, 0);
     scale(-1, 1);
     drawCurve();

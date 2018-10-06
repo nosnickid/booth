@@ -585,7 +585,7 @@ function onTrack(event) {
   
   event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));  
 
-  event.data.forEach((tr) => toDraw.push(new Particle(tr)));
+  //event.data.forEach((tr) => toDraw.push(new Particle(tr)));
   
   for (let trackingRect of coloredRects) {    
     if (trackingRect === null) { continue };

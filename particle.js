@@ -19,7 +19,6 @@ class Particle {
   };
   
   drawCircleShape() {
-    scale(-1, 1);
     stroke(200, this.lifespan);
     strokeWeight(0);
     fill(127, this.lifespan);

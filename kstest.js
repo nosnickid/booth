@@ -170,9 +170,9 @@ Vector.prototype._ecdf = function(x) {
 
 Vector.prototype.ecdf = function(arg) {
 	if (arg instanceof Vector) {
-		var result = new Vector(new Array(arg.length()));
+		var result = new Vector([]);
 		for (var i = 0; i < arg.length(); i++) {
-			result[i] = this._ecdf(arg.elements[i]);
+			result.push(this._ecdf(arg.elements[i]));
 		}
 		return result;
 	} else {
@@ -186,7 +186,7 @@ Vector.prototype.sort = function() {
 
 Vector.prototype.min = function() {
   return this.elements.reduce(function(a, b) {
-      return Math.min(a, b);
+      return Math.max(a, b);
   });
 };
 
