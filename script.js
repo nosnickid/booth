@@ -452,8 +452,8 @@ function mapRectsToHistory(now, histories, trackingRects) {
 
 function findBulbsFromCalibrationData(histories) {
   let ret = [null, null, null];
-  const COLOR_D_THRESH = 0.6;
-  const SKEW_D_THRESH = 0.8;
+  const COLOR_D_THRESH = 0.7;
+  const SKEW_D_THRESH = 0.9;
   const PROP_WHITE_D_THRESH = 0.9;
   for (let history of Object.values(histories)) {
     allCalib = calibrationData[RED].concat(calibrationData[BLUE]).concat(calibrationData[GREEN]);

@@ -152,7 +152,7 @@ function GetBias(time,bias)
 }
 
 function renderGestureCurve(gesture, w, h, color, mirror) {
-      ANIMATION_SPEED = 25000000000.0;
+      ANIMATION_SPEED = 2500000000000.0;
 
   var points = gesture.path;
      
