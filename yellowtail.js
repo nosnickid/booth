@@ -152,27 +152,29 @@ function renderGestureCurve(gesture, w, h, color) {
     var organicConstant = 0;
     curveTightness(organicConstant);
 
-  for (let n = 0; n < numCurves; ++n) {
-    var scale = 1 - (n / numCurves);
-    splineModeColor(color, GetBias(scale, 0.6));
+  var drawCurve = function() {
+    for (let n = 0; n < numCurves; ++n) {
+      var scale = 1 - (n / numCurves);
+      splineModeColor(color, GetBias(scale, 0.6));
 
-    beginShape();
+      beginShape();
 
-    for (let i = 0; i < gesture.nPoints; i += 4) {
-      var p = points[i];
-      
-      var crossSectionVector = perpendicular(subtract(points[(i+1) % gesture.nPoints], p));
-      var f = 0.1 * p.p;
-      var noiseTemp1 = noise((scale + p.x * f), (p.y + scale) * f);
-      var noiseTemp2 = noise((scale + p.x * f), (n + p.y) * f);
-      var noise1 = (2 * GetBias(noiseTemp1, 0.1) - 1) * scale;
-      var noise2 = (2 * GetBias(noiseTemp2, 0.1) - 1) * scale;
+      for (let i = 0; i < gesture.nPoints; i += 4) {
+        var p = points[i];
 
-      var offset = normalize(crossSectionVector, noise1 * 60);
-      
-      curveVertex(p.x + offset.x + noise2, p.y + offset.y + noise1);
+        var crossSectionVector = perpendicular(subtract(points[(i+1) % gesture.nPoints], p));
+        var f = 0.1 * p.p;
+        var noiseTemp1 = noise((scale + p.x * f), (p.y + scale) * f);
+        var noiseTemp2 = noise((scale + p.x * f), (n + p.y) * f);
+        var noise1 = (2 * GetBias(noiseTemp1, 0.1) - 1) * scale;
+        var noise2 = (2 * GetBias(noiseTemp2, 0.1) - 1) * scale;
+
+        var offset = normalize(crossSectionVector, noise1 * 60);
+
+        curveVertex(p.x + offset.x + noise2, p.y + offset.y + noise1);
+      }
+      endShape();
     }
-    endShape();
   }
 }
 
