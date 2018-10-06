@@ -27,7 +27,7 @@ class Gesture {
         this.jumpDx = 0;
         this.jumpDy = 0;
 
-        this.INIT_TH = 14;
+        this.INIT_TH = 18;
       	this.thickness = this.INIT_TH;
     }
 

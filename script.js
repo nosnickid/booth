@@ -37,10 +37,18 @@ function processKeyInput(e) {
       vizModeCurrent = (vizModeCurrent - 1) % vizModes.length;
       clearVisuals();
       break;
+    case 40: // down
+      vizModeCurrent = (vizModeCurrent - 1) % vizModes.length;
+      clearVisuals();
+      break;      
     case 39: // Right
       vizModeCurrent = (vizModeCurrent + 1) % vizModes.length;
       clearVisuals();
       break;
+    case 38: // Up
+      vizModeCurrent = (vizModeCurrent + 1) % vizModes.length;
+      clearVisuals();
+      break;      
     case 32: // Space
       clearVisuals();
       break;

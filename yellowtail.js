@@ -68,30 +68,33 @@ function yellowtailDraw() {
   }
 
 const rcGreen = [61,192,108];
-const rcBlue = [];
-const rcDarkPink = [];
+const rcBlue = [77,155,216];
+const rcDarkPink = [189,81,121];
+const rcLightPink = [251,112,167];
+const rcLightBlue = [102,189,255];
+const rcLightGreen = [105,220,146];
 
 function yellowtailModeColor(color) {
   if (color === RED) {
-    fill(130,5,5);
-    stroke(130,5,5);
+    fill(...rcLightPink);
+    stroke(...rcLightPink);
   } else if (color === GREEN) {
-    fill(255,210,175);
-    stroke(255,210,175);
+    fill(...rcLightGreen);
+    stroke(...rcLightGreen);
   } else if (color === BLUE) {
-    fill(200,250,240);
-    stroke(200,250,240);
+    fill(...rcLightBlue);
+    stroke(...rcLightBlue);
   }
 }
 
 function splineModeColor(color, alpha) {
   noFill();
     if (color === RED) {
-    stroke(130,5,5, alpha * 255);
+    stroke(...rcLightPink, alpha * 255);
   } else if (color === GREEN) {
-    stroke(255,210,175, alpha * 255);
+    stroke(...rcLightGreen, alpha * 255);
   } else if (color === BLUE) {
-    stroke(200,250,240, alpha * 255);
+    stroke(...rcLightBlue, alpha * 255);
   }
 }
 
@@ -183,6 +186,16 @@ function renderGestureCurve(gesture, w, h, color) {
   }
   
   drawCurve();
+  
+  var mirror = true;
+  if (mirror) {
+    translate(width, 0);
+    scale(-1, 1);
+    drawCurve();
+    scale(1, 1);
+//    translate(width, 0);
+  }
+  
 }
 
 function renderGestureSpline(gesture, w, h, color) {
