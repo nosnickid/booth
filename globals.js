@@ -16,7 +16,7 @@ RED = 0;
 GREEN = 1;
 BLUE = 2
 
-vizModes = ['yellowtail', 'curve', 'yellowtail_mirror', 'curve_mirror'];
+vizModes = ['yellowtail', 'curve', 'curve_mirror'];
 vizModeCurrent = 0;
 
 lastTimeStamp = 0;

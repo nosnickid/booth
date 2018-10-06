@@ -137,10 +137,8 @@ function renderGesture(gesture, w, h, color) {
         renderGestureYellowtail(gesture, w, h, color, false);
         break;
       case 1:
-        renderGestureYellowtail(gesture, w, h, color, true); 
-        break;
-      case 2:
         renderGestureCurve(gesture, w, h, color, false);
+        break;
       default:
         renderGestureCurve(gesture, w, h, color, true);
         break;
@@ -265,73 +263,65 @@ function renderGestureSpline(gesture, w, h, color, mirror) {
   }
 }
 
-function renderGestureYellowtail(gesture, w, h, color, mirror) {
+function renderGestureYellowtail(gesture, w, h, color) {
       ANIMATION_SPEED = 50.0;
-          if (gesture.nPolys > 0) {
-            var draw = function () {
-            var polygons = gesture.polygons;
-            var crosses = gesture.crosses;
+      if (gesture.nPolys > 0) {
+        var draw = function () {
+        var polygons = gesture.polygons;
+        var crosses = gesture.crosses;
 
-            var xpts = [];
-            var ypts = [];
-            var p;
-            var cr;
+        var xpts = [];
+        var ypts = [];
+        var p;
+        var cr;
 
-            beginShape(QUADS);
-            var gnp = gesture.nPolys;
-            for (let i = 0; i < gnp; i++) {
+        beginShape(QUADS);
+        var gnp = gesture.nPolys;
+        for (let i = 0; i < gnp; i++) {
 
-                p = polygons[i];
-                xpts = p.xpoints;
-                ypts = p.ypoints;
+            p = polygons[i];
+            xpts = p.xpoints;
+            ypts = p.ypoints;
 
-                vertex(xpts[0], ypts[0]);
-                vertex(xpts[1], ypts[1]);
-                vertex(xpts[2], ypts[2]);
-                vertex(xpts[3], ypts[3]);
+            vertex(xpts[0], ypts[0]);
+            vertex(xpts[1], ypts[1]);
+            vertex(xpts[2], ypts[2]);
+            vertex(xpts[3], ypts[3]);
 
-                if ((cr = crosses[i]) > 0) {
-                    if ((cr & 3)>0) {
-                        vertex(xpts[0]+w, ypts[0]);
-                        vertex(xpts[1]+w, ypts[1]);
-                        vertex(xpts[2]+w, ypts[2]);
-                        vertex(xpts[3]+w, ypts[3]);
+            if ((cr = crosses[i]) > 0) {
+                if ((cr & 3)>0) {
+                    vertex(xpts[0]+w, ypts[0]);
+                    vertex(xpts[1]+w, ypts[1]);
+                    vertex(xpts[2]+w, ypts[2]);
+                    vertex(xpts[3]+w, ypts[3]);
 
-                        vertex(xpts[0]-w, ypts[0]);
-                        vertex(xpts[1]-w, ypts[1]);
-                        vertex(xpts[2]-w, ypts[2]);
-                        vertex(xpts[3]-w, ypts[3]);
-                    }
-                    if ((cr & 12)>0) {
-                        vertex(xpts[0], ypts[0]+h);
-                        vertex(xpts[1], ypts[1]+h);
-                        vertex(xpts[2], ypts[2]+h);
-                        vertex(xpts[3], ypts[3]+h);
-
-                        vertex(xpts[0], ypts[0]-h);
-                        vertex(xpts[1], ypts[1]-h);
-                        vertex(xpts[2], ypts[2]-h);
-                        vertex(xpts[3], ypts[3]-h);
-                    }
-
-                    // I have knowingly retained the small flaw of not
-                    // completely dealing with the corner conditions
-                    // (the case in which both of the above are true).
+                    vertex(xpts[0]-w, ypts[0]);
+                    vertex(xpts[1]-w, ypts[1]);
+                    vertex(xpts[2]-w, ypts[2]);
+                    vertex(xpts[3]-w, ypts[3]);
                 }
-            }
-            endShape();
-            }
-            
-            draw();
-            
-            if (mirror) {
-              translate(width, 0);
-              scale(-1, 1);
-              draw();
-              scale(1, 1);
-              translate(-width, 0);
+                if ((cr & 12)>0) {
+                    vertex(xpts[0], ypts[0]+h);
+                    vertex(xpts[1], ypts[1]+h);
+                    vertex(xpts[2], ypts[2]+h);
+                    vertex(xpts[3], ypts[3]+h);
+
+                    vertex(xpts[0], ypts[0]-h);
+                    vertex(xpts[1], ypts[1]-h);
+                    vertex(xpts[2], ypts[2]-h);
+                    vertex(xpts[3], ypts[3]-h);
+                }
+
+                // I have knowingly retained the small flaw of not
+                // completely dealing with the corner conditions
+                // (the case in which both of the above are true).
             }
         }
+        endShape();
+        }
+            
+        draw();
+    }
 }
 
 function updateGeometry() {
