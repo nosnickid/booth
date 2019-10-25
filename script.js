@@ -582,8 +582,11 @@ function onTrack(event) {
   } else {
     coloredRects = [findRedLightbulb(trackerHistory), findGreenLightbulb(trackerHistory), findBlueLightbulb(trackerHistory)];    
   }
-  
-  // event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));
+
+  if (window.boothdebug) {
+    event.data.forEach((tr) => toDraw.push(diagnosticRect(tr)));
+  }
+
 
   //event.data.forEach((tr) => toDraw.push(new Particle(tr)));
   

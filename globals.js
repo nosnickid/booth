@@ -27,3 +27,5 @@ ANIMATION_SPEED = 25000.0;
 
 // Object storing various misc visual parameters
 vizParams = {mode : vizModes[vizModeCurrent]};
+
+boothdebug = false
