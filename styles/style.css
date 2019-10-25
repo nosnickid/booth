@@ -35,8 +35,8 @@ canvas {
 
 .bigtext {
   color: white;
-  font-size: 90px;
-  font-family: 'Satisfy', cursive;
+  font-size: 45px;
+  font-family: sans-serif;
   font-weight: 700;
   text-align: center;
 }
