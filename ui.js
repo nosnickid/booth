@@ -3,6 +3,7 @@
 
 // I don't even know why I'm trying to encapsulate this in a class, it's a pretty futile gesture at this point
 
+let boothTime = 5;
   
 function createDOMElement(s) {
   let el = document.createElement('div');
@@ -53,7 +54,7 @@ class UI {
   drawInitial() {
     let title = createDOMElement(
       `<div class="initial bigtext shadow">
-         Leave a video message for John and Emily!<br/>(use the lightbulbs to draw in the air)
+         Amuse yourself with torches!<br/>(use the lightbulbs to draw in the air)
       </div>`
     );
     let start = createDOMElement(
@@ -90,7 +91,7 @@ class UI {
         </label>
         <br/>
         <label class="text-entry shadow bigtext" id="note-label">
-          Note to John and Emily:<br/>
+          Any comment?<br/>
           <input class="text-entry" type="text" id="note-input" name="note"/>
         </label>
         <div class="bigtext shadow text-entry" style="margin-top: 200px"">Press ENTER to continue</div>
@@ -112,7 +113,7 @@ class UI {
   }  
   
   drawFinal() {
-    let finalText = createDOMElement(`<div class="bigtext shadow final">Thank you!<br/>Your video will be sent to John and Emily</div>`);
+    let finalText = createDOMElement(`<div class="bigtext shadow final">Thank you!<br/></div>`);
     document.body.appendChild(finalText);
   }
   
@@ -147,7 +148,7 @@ note: ${this.formData["note"]}`;
   }
   
   async runTimer() {
-    for (let i=59; i > 0; i--) {
+    for (let i=boothTime-1; i > 0; i--) {
       await sleep(1000);
       document.querySelector("#timer").innerHTML = String(i);
     }
@@ -186,7 +187,7 @@ note: ${this.formData["note"]}`;
   }
   
   drawRecording() {
-    let timer = createDOMElement(`<div class="shadow" id="timer">60</div>`);
+    let timer = createDOMElement(`<div class="shadow" id="timer">${boothTime}</div>`);
     document.body.appendChild(timer);
   }
 }

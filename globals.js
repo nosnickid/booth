@@ -1,7 +1,7 @@
 // these are the sizes that James' laptop chooses when optimized for the 
 // Dell monitor we'll be using.
-monitorWidth = 1920;
-monitorHeight = 1200;
+monitorWidth = 1366;
+monitorHeight = 728;
 
 canvasWidth = monitorWidth/2;
 canvasHeight = monitorHeight/2;
@@ -14,7 +14,7 @@ downsampleFactor = 2;
 
 RED = 0;
 GREEN = 1;
-BLUE = 2
+BLUE = 2;
 
 vizModes = ['yellowtail', 'curve', 'curve_mirror'];
 vizModeCurrent = 0;
