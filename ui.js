@@ -54,12 +54,12 @@ class UI {
   drawInitial() {
     let title = createDOMElement(
       `<div class="initial bigtext shadow">
-        <ul>
-         <li>Amuse yourself with torches!</li>
-         <li>(use the torches to draw in the air.</li>
-         <li>make sure you really point them at the screen</li>
-         <li>arrow keys will reset your <br/> picture and draw in a different mode</li>
-         </ul>
+         <p>Amuse yourself with torches!</p>
+         <p>Use the torches to draw in the air.</p>
+         <p>Make sure you really point them at the screen</p>
+         <p>Arrow keys will reset your <br/> picture and draw in a different mode</p>
+         <p>Press Enter to start</p>
+         <p>(this is being recorded... <img src="hal.jpg" alt="hal" style="width: 64px" />)</p>
       </div>`
     );
     let start = createDOMElement(
